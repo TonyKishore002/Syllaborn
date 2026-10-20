@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Do Or Die - Academic Boss Fights (Level Devil Syllabus Edition)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Syllaborn Header & HUD -->
+  <header class="game-header">
+    <div class="header-top">
+      <div class="game-title-group">
+        <span style="font-size: 22px;">⚔️</span>
+        <div>
+          <h1 class="game-title font-fantasy">DO OR DIE</h1>
+          <div style="font-size: 11px; color: #a78bfa;" class="font-mono">Academic Boss Fights • Level Devil Edition</div>
+        </div>
+        <span class="badge-tag badge-rose" id="badgeDifficulty">Boss Encounter</span>
+      </div>
+
+      <!-- Action Toolbar -->
+      <div class="toolbar">
+        <div class="mode-switch-group">
+          <button type="button" class="mode-btn active" id="btnModeActual">🎮 Actual Game</button>
+          <button type="button" class="mode-btn" id="btnModeSyllabus">📖 Syllabus Arena</button>
+        </div>
+        <button type="button" class="btn-arcade primary" id="btnUploadModal">
+          <span>📄</span> Upload Syllabus PDF
+        </button>
+        <button type="button" class="btn-arcade" id="btnCourseModal">
+          <span>📚</span> Change Topic / Course
+        </button>
+        <button type="button" class="btn-arcade" id="btnMute" onclick="window.game && window.game.toggleSound()">
+          <span>🔊</span> Sound
+        </button>
+        <button type="button" class="btn-arcade" id="btnRestart">
+          <span>🔄</span> Restart (R)
+        </button>
+        <button type="button" class="btn-arcade" id="btnFullscreen">
+          <span>⛶</span> Fullscreen
+        </button>
+      </div>
+    </div>
+
+    <!-- Syllabus Course & Boss Health Bar -->
+    <div class="boss-hud-bar">
+      <div class="boss-hud-info">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">🐉</span>
+          <div>
+            <span class="font-fantasy" style="font-weight: 700; color: #f8fafc;" id="hudBossName">Final Examination Boss</span>
+            <span style="color: #94a3b8; font-size: 10px; margin-left: 6px;" id="hudCourse">CS 101: Data Structures</span>
+          </div>
+        </div>
+        <div class="font-mono" style="font-size: 11px; color: #f43f5e; font-weight: 700;" id="hudBossHpText">
+          400 / 400 HP (40% Course Weight)
+        </div>
+      </div>
+
+      <div class="hp-bar-track">
+        <div id="hudBossHpBar" class="h-full bg-purple-500" style="width: 100%; height: 100%; transition: width 0.2s ease;"></div>
+      </div>
+
+      <div class="stats-row font-mono">
+        <div>
+          <span style="color: #38bdf8;">Stage:</span> <span id="hudStage" style="color: #e2e8f0;">Stage 1: The Syllabus Pop Quiz</span>
+        </div>
+        <div style="display: flex; gap: 16px;">
+          <div><span style="color: #fb7185;">Troll Deaths:</span> <span id="hudDeaths" style="color: #fff;">0</span></div>
+          <div><span style="color: #34d399;">XP:</span> <span id="hudScore" style="color: #fff;">0</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Game Container -->
+  <main class="canvas-wrapper" id="gameWrapper">
+    <!-- Official Poki Level Devil Game (Default Mode) -->
+    <iframe
+      id="actualGameFrame"
+      class="actual-game-iframe"
+      src="https://games.poki.com/458768/13acae8c-ec6a-4823-b1a2-8ea20cea56e7?tag=pg-b066b738fe363ca2419811a5838e1d13276e5980&site_id=3&iso_lang=en&country=US&poki_url=https://poki.com/en/g/level-devil&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&device=desktop"
+      allow="autoplay; fullscreen; keyboard-map; focus-without-user-activation; accelerometer; gyroscope; gamepad"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock allow-modals allow-downloads"
+      tabindex="0"
+    ></iframe>
+
+    <!-- Syllabus Academic Boss Canvas (Syllabus Arena Mode) -->
+    <canvas id="gameCanvas" width="800" height="480" class="hidden"></canvas>
+    <div id="stageAnnouncement" class="hidden"></div>
+  </main>
+
+  <!-- Controls & Milestone Bar -->
+  <div class="controls-info-bar">
+    <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+      <span>🎮 <strong>Controls:</strong> A / D or ◀ ▶ to Move</span>
+      <span>▲ <strong>Jump:</strong> W / Space / ▲</span>
+      <span>🔄 <strong>Restart Level:</strong> R</span>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button type="button" class="btn-victory-claim" id="btnClaimVictory">
+        🏆 Claim Milestone Victory (+400 XP)
+      </button>
+      <a href="https://poki.com/en/g/level-devil" target="_blank" rel="noopener noreferrer" style="color: #a78bfa; text-decoration: none; display: flex; align-items: center; gap: 4px; font-weight: 600;">
+        <span>Poki.com</span> ↗
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Touch Controls -->
+  <div class="touch-controls" id="touchControls" style="display: none;">
+    <div style="display: flex; gap: 10px;">
+      <button type="button" class="touch-btn" id="touchLeft">◀ Left</button>
+      <button type="button" class="touch-btn" id="touchRight">Right ▶</button>
+    </div>
+    <button type="button" class="touch-btn" id="touchJump" style="background: #4338ca;">JUMP ▲</button>
+  </div>
+
+  <!-- Modal: Upload Syllabus PDF or Set Custom Topic -->
+  <div id="uploadModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title font-fantasy">Upload Syllabus PDF or Custom Topic</h2>
+        <button type="button" class="modal-close" onclick="closeModal('uploadModal')">&times;</button>
+      </div>
+
+      <div class="upload-dropzone" id="dropZone" onclick="document.getElementById('pdfInput').click()">
+        <input type="file" id="pdfInput" accept="application/pdf" style="display: none;">
+        <div style="font-size: 32px; margin-bottom: 8px;">📄</div>
+        <div style="font-size: 13px; font-weight: 600; color: #e2e8f0;">Click or Drop University Syllabus PDF here</div>
+        <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Automatically extracts course name, grading weights, and boss exam parameters!</div>
+      </div>
+
+      <div style="margin: 16px 0; display: flex; align-items: center; gap: 8px;">
+        <hr style="flex: 1; border-color: rgba(255,255,255,0.1);">
+        <span style="font-size: 11px; color: #64748b; text-transform: uppercase;">or type any topic</span>
+        <hr style="flex: 1; border-color: rgba(255,255,255,0.1);">
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <input type="text" id="topicInput" placeholder="e.g. Organic Chemistry, Quantum Physics, Machine Learning..."
+               style="flex: 1; background: #090b14; border: 1px solid #334155; border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 12px;">
+        <button type="button" class="btn-arcade primary" id="btnApplyTopic">Generate Boss</button>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="btn-arcade" onclick="closeModal('uploadModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Select Course / Topic Presets -->
+  <div id="courseModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title font-fantasy">Select Course or Syllabus Preset</h2>
+        <button type="button" class="modal-close" onclick="closeModal('courseModal')">&times;</button>
+      </div>
+
+      <div style="margin-bottom: 12px; font-size: 12px; color: #94a3b8;">
+        The game content, traps, and boss health dynamically calibrate to the selected syllabus:
+      </div>
+
+      <div id="coursePresetsList" style="display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto;">
+        <!-- Dynamically populated via JS -->
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+        <button type="button" class="btn-arcade" onclick="closeModal('courseModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Victory Report Card -->
+  <div id="victoryModal" class="modal-overlay hidden">
+    <div class="modal-content victory-card">
+      <div class="victory-trophy">🏆</div>
+      <h2 class="font-fantasy" style="font-size: 22px; font-weight: 900; color: #34d399; margin-bottom: 4px;">
+        SYLLABUS BOSS VANQUISHED!
+      </h2>
+      <div style="font-size: 13px; color: #f1f5f9; font-weight: 600;" id="vicExam">Final Examination Boss</div>
+      <div style="font-size: 11px; color: #94a3b8; margin-bottom: 16px;" id="vicCourse">CS 101 - Algorithms</div>
+
+      <div style="background: #090b14; border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 16px; text-align: left;">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+          <span style="color: #94a3b8;">Semester Grade:</span>
+          <span style="color: #34d399; font-weight: 700;">A+ (100% Mastery)</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+          <span style="color: #94a3b8;">Grading Weight Defeated:</span>
+          <span class="font-mono" style="color: #e2e8f0;" id="vicWeight">40% Course Weight</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+          <span style="color: #94a3b8;">Troll Traps Survived:</span>
+          <span class="font-mono" style="color: #f43f5e;" id="vicDeaths">0 Deaths</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px;">
+          <span style="color: #38bdf8; font-weight: 600;">Syllaborn Progress:</span>
+          <span class="font-mono" style="color: #38bdf8; font-weight: 700;" id="vicXp">+400 XP Added!</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; justify-content: center;">
+        <button type="button" class="btn-arcade primary" id="btnPlayAgain" onclick="closeModal('victoryModal'); if (window.game) window.game.restartGame();">
+          Play Again ⚔️
+        </button>
+        <button type="button" class="btn-arcade" onclick="closeModal('victoryModal')">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="pdf-reader.js"></script>
+  <script src="levels.js"></script>
+  <script src="game.js"></script>
+
+  <script>
+    // Game Mode Toggling (Actual Official Game vs Syllabus Arena)
+    const actualGameFrame = document.getElementById('actualGameFrame');
+    const gameCanvas = document.getElementById('gameCanvas');
+    const btnModeActual = document.getElementById('btnModeActual');
+    const btnModeSyllabus = document.getElementById('btnModeSyllabus');
+    const touchControls = document.getElementById('touchControls');
+    let activeMode = 'actual';
+
+    function setGameMode(mode) {
+      activeMode = mode;
+      if (mode === 'actual') {
+        btnModeActual.classList.add('active');
+        btnModeSyllabus.classList.remove('active');
+        actualGameFrame.classList.remove('hidden');
+        gameCanvas.classList.add('hidden');
+        if (touchControls) touchControls.style.display = 'none';
+        try { actualGameFrame.focus(); } catch (e) {}
+      } else {
+        btnModeSyllabus.classList.add('active');
+        btnModeActual.classList.remove('active');
+        actualGameFrame.classList.add('hidden');
+        gameCanvas.classList.remove('hidden');
+        if (touchControls && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+          touchControls.style.display = 'flex';
+        }
+        if (window.game) {
+          window.game.initGame();
+        }
+      }
+    }
+
+    btnModeActual.addEventListener('click', () => setGameMode('actual'));
+    btnModeSyllabus.addEventListener('click', () => setGameMode('syllabus'));
+
+    // Auto-focus the actual game iframe on page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        try { actualGameFrame.focus(); } catch (e) {}
+      }, 350);
+    });
+
+    // Restart Button Handler
+    document.getElementById('btnRestart').addEventListener('click', () => {
+      if (activeMode === 'actual') {
+        actualGameFrame.src = actualGameFrame.src;
+        setTimeout(() => {
+          try { actualGameFrame.focus(); } catch (e) {}
+        }, 300);
+      } else if (window.game) {
+        window.game.restartLevel();
+      }
+    });
+
+    // Claim Milestone Victory Button
+    document.getElementById('btnClaimVictory').addEventListener('click', () => {
+      // 1. Notify parent Syllaborn app window if embedded
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'SYLLABORN_BOSS_VANQUISHED',
+          courseCode: window.syllabusEngine?.currentCourse?.courseCode || 'LEVEL_DEVIL',
+          examTitle: window.syllabusEngine?.currentCourse?.examTitle || 'Official Level Devil Assessment',
+          xpEarned: 400
+        }, '*');
+      }
+
+      // 2. Direct Syllaborn localStorage update
+      try {
+        const raw = localStorage.getItem('syllaborn:data:v1');
+        if (raw) {
+          const data = JSON.parse(raw);
+          data.profile = data.profile || {};
+          data.profile.xp = (data.profile.xp || 0) + 400;
+          localStorage.setItem('syllaborn:data:v1', JSON.stringify(data));
+        }
+      } catch (err) {
+        console.warn('LocalStorage update ignored:', err);
+      }
+
+      const btn = document.getElementById('btnClaimVictory');
+      btn.textContent = 'Milestone Claimed! 🏆 (+400 XP)';
+      btn.style.background = 'rgba(52, 211, 153, 0.2)';
+      btn.style.color = '#34d399';
+      btn.style.borderColor = '#34d399';
+      btn.disabled = true;
+      alert('Victory recorded! +400 XP added to your Syllaborn semester progress!');
+    });
+
+    // Modal Helpers
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Fullscreen Toggle
+    document.getElementById('btnFullscreen').addEventListener('click', () => {
+      const container = document.querySelector('.canvas-wrapper');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+
+    // Upload Modal Wiring
+    document.getElementById('btnUploadModal').addEventListener('click', () => openModal('uploadModal'));
+    document.getElementById('btnCourseModal').addEventListener('click', () => {
+      renderCoursePresets();
+      openModal('courseModal');
+    });
+
+    // Custom Topic Input
+    document.getElementById('btnApplyTopic').addEventListener('click', () => {
+      const val = document.getElementById('topicInput').value;
+      if (val && val.trim()) {
+        window.syllabusEngine.setCustomTopic(val);
+        setGameMode('syllabus');
+        window.game.initGame();
+        closeModal('uploadModal');
+      }
+    });
+
+    // PDF File Handler
+    document.getElementById('pdfInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        try {
+          const parsed = await window.syllabusEngine.parseUploadedPDF(file);
+          setGameMode('syllabus');
+          window.game.initGame();
+          closeModal('uploadModal');
+          alert(`Syllabus loaded successfully!\nCourse: ${parsed.courseCode} - ${parsed.courseName}\nBoss: ${parsed.examTitle} (${parsed.weightPercent}% weight / ${parsed.bossHp} HP)`);
+        } catch (err) {
+          alert('Error parsing PDF: ' + err.message);
+        }
+      }
+    });
+
+    // Course Presets List Rendering
+    function renderCoursePresets() {
+      const container = document.getElementById('coursePresetsList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      window.syllabusEngine.allCourses.forEach(c => {
+        const item = document.createElement('div');
+        item.style.cssText = 'background: #15192e; border: 1px solid rgba(139,92,246,0.25); border-radius: 10px; padding: 10px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.15s;';
+        item.innerHTML = `
+          <div>
+            <div style="font-weight: 700; color: #f1f5f9; font-size: 13px;">${c.courseCode}: ${c.courseName}</div>
+            <div style="font-size: 11px; color: #a78bfa;">Boss: ${c.examTitle} • ${c.weightPercent}% Weight (${c.bossHp} HP)</div>
+          </div>
+          <button class="btn-arcade" style="padding: 4px 10px; font-size: 10px;">Select ⚔️</button>
+        `;
+        item.addEventListener('click', () => {
+          window.game.changeCourse(c.id);
+          setGameMode('syllabus');
+          closeModal('courseModal');
+        });
+        container.appendChild(item);
+      });
+    }
+
+    // Listen for incoming messages from parent Syllaborn app
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SYLLABORN_LOAD_BOSS') {
+        const payload = event.data;
+        if (payload.courseCode) {
+          window.syllabusEngine.setCustomTopic(`${payload.courseCode} ${payload.courseName || ''}`);
+          if (payload.bossHp) window.syllabusEngine.currentCourse.bossHp = payload.bossHp;
+          if (payload.weightPercent) window.syllabusEngine.currentCourse.weightPercent = payload.weightPercent;
+          if (payload.examTitle) window.syllabusEngine.currentCourse.examTitle = payload.examTitle;
+          setGameMode('syllabus');
+          window.game.initGame();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

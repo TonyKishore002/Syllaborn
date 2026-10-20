@@ -1,0 +1,612 @@
+body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+
+
+
+.m8FXBR {
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+}
+
+.m8FXBR.t_E9eW {
+	position: fixed;
+}
+
+.nAM_hf {
+	background: #000;
+	backdrop-filter: blur(10px);
+
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.qmpUYt {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.qmpUYt.qWB0AN {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+	cursor: pointer;
+}
+
+.aPwh82 {
+	position: absolute;
+	z-index: 9999;
+	top: 0;
+
+	padding-top: 10%;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: #FFF;
+
+	font: 700 15pt 'Arial', sans-serif;
+	font-weight: bold;
+	letter-spacing: 1px;
+	transition: 0.1s ease-in-out;
+	line-height: 1em;
+
+	display: none;
+}
+
+.qQtYdx {
+    background: rgba(0, 43, 80, 0.5);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+	z-index: 11;
+}
+
+.PBq_cb {
+	cursor:pointer;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+
+.PBq_cb:hover .qQtYdx {
+		background: rgba(0, 43, 80, 0.7);
+	}
+
+.o_W9J9 {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 12;
+}
+
+.o_W9J9:before {
+		content: '';
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		display: block;
+		border: 2px solid #fff;
+		border-radius: 50%;
+		-webkit-user-select: none;
+		   -moz-user-select: none;
+		        user-select: none;
+		background-color: rgba(0, 0, 0, 0.6);
+		transition: background-color 0.5s ease;
+		animation: 1s linear infinite vCajRE;
+		z-index: 12;
+	}
+
+.o_W9J9:after {
+		content: '';
+		position: absolute;
+		display: block;
+		box-sizing: border-box;
+		border-color: transparent transparent transparent #fff;
+		border-style: solid;
+		border-width: 26px 0 26px 40px;
+		pointer-events: none;
+		animation: 1s linear infinite vCajRE;
+		left: 6px;
+		z-index: 12;
+	}
+
+@keyframes vCajRE {
+	0% {
+		transform: translate(-50%, -50%) scale(0.95);
+	}
+	70% {
+		transform: translate(-50%, -50%) scale(1.1);
+	}
+	100% {
+		transform: translate(-50%, -50%) scale(0.95);
+	}
+}
+
+.LI2Nug {
+	bottom: 10px;
+	position: absolute;
+	left: 10px;
+	z-index: 9999;
+	color: #FFF;
+	font: 700 9pt 'Arial', sans-serif;
+	filter: drop-shadow(0 0 0.2rem black);
+}
+
+.pkttBY {
+	display: block;
+	pointer-events: auto;
+}
+
+.pkttBY .nAM_hf {
+		opacity: 1;
+	}
+
+.Q94dIO {
+	display: none;
+	pointer-events: none;
+}
+
+
+
+.FjjCJP {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  --dur: 2133ms;
+  --errorDur: 500ms;
+  --size: 60px;
+  --barSize: 200px;
+  pointer-events: none;
+}
+/* from 1031px width game player to large desktop fullscreen */
+@media (min-width: 1031px) {
+  .FjjCJP {
+    --size: 72px;
+    --barSize: 280px;
+  }
+}
+
+.GsO7De {
+  position: absolute;
+  width: var(--size); height: var(--size);
+}
+
+.GsO7De path,.GsO7De g { fill: #fff; }
+
+.GsO7De .frame1,.GsO7De .frame2,.GsO7De .frame3,.GsO7De .frame4 { opacity: 0; will-change: opacity; }
+
+.GsO7De .frame1 { animation: Wp_s2_ var(--dur) steps(1, end) infinite; }
+
+.GsO7De .frame2 { animation: YCGD0t var(--dur) steps(1, end) infinite; }
+
+.GsO7De .frame3 { animation: uJR22D var(--dur) steps(1, end) infinite; }
+
+.GsO7De .frame4 { animation: cI9czW var(--dur) steps(1, end) infinite; }
+
+.GsO7De {
+
+  animation: vULq29 var(--dur) both infinite;
+}
+
+.khQs_o {
+  position: absolute;
+  width: var(--size); height: var(--size);
+  transform: translateY(-19px);
+}
+
+.khQs_o .frame1,.khQs_o .frame2,.khQs_o .frame3 { opacity: 0; will-change: opacity; }
+
+.khQs_o .frame1 { animation: iusfI7 var(--errorDur) steps(1, end) 1; }
+
+.khQs_o .frame2 { animation: iusfI7 var(--errorDur) steps(1, end) 1; animation-delay: calc(var(--errorDur) / 3); }
+
+.khQs_o .frame3 { animation: vwMEal var(--errorDur) steps(1, end) 1 forwards; }
+
+.khQs_o path,.khQs_o g { fill: #fff; }
+
+@media (min-width: 1031px) {
+  .khQs_o {
+    transform: translateY(-23px);
+  }
+}
+
+@property --progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.IaCzLs {
+  width: var(--barSize);
+  --progress: 0;
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  position: relative;
+  transform: translateY(var(--size));
+  animation: Z9_n3_ 15000ms forwards;
+}
+
+.IaCzLs::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: calc(var(--progress) * 100%);
+    background: #fff;
+  }
+
+.zANqA4 {
+  position: absolute;
+  background: var(--image-url) no-repeat center;
+  width: var(--size); height: var(--size);
+  filter: invert(1);
+  opacity: 0;
+  transform-origin: center bottom;
+  animation: lErRGR var(--dur) both infinite;
+}
+
+.nU7255 {
+  display: none;
+}
+
+@keyframes Wp_s2_ {
+  0%, 7.811% { opacity: 1; }
+  7.812%, 100% { opacity: 0; }
+}
+
+@keyframes YCGD0t {
+  7.812% { opacity: 1; }
+  15.624% { opacity: 0; }
+}
+
+@keyframes uJR22D {
+  15.624% { opacity: 1; }
+  23.437% { opacity: 0; }
+}
+
+@keyframes cI9czW {
+  0%, 23.437% { opacity: 0; }
+  23.438%, 100% { opacity: 1; }
+}
+
+@keyframes iusfI7 {
+  0%, 33.333% { opacity: 1; }
+  33.334%, 100% { opacity: 0; }
+}
+@keyframes vwMEal {
+  0%, 66.666% { opacity: 0; }
+  66.667%, 100% { opacity: 1; }
+}
+
+@keyframes Z9_n3_ {
+  0% { --progress: 0; }
+  6.667% { --progress: 0.3; }
+  13.333% { --progress: 0.5; }
+  20.000% { --progress: 0.65; }
+  100% { --progress: 0.95; }
+}
+
+@keyframes vULq29 {
+  /* intro */
+  0% {
+    opacity: 0;
+    transform:
+      translate(0px, 0px)
+      translateY(50%)
+      scale(1.21, .44) rotate(0deg)
+      translateY(-50%);
+  }
+  6.250%  { animation-timing-function: cubic-bezier(.167, .167, .833, .833); opacity: 1; }
+
+  3.125%  {
+    animation-timing-function: cubic-bezier(.612, 0, .667, 1);
+    transform:
+      translate(0px, 0px)
+      translateY(50%)
+      scale(1.21, .44) rotate(0deg)
+      translateY(-50%);
+  }
+  9.375% {
+    animation-timing-function: cubic-bezier(.612, 0, .167, 1);
+    transform:
+      translate(0px, 0px)
+      translateY(50%)
+      scale(.935, 1.21) rotate(0deg)
+      translateY(-50%);
+  }
+  15.625% {
+    transform:
+      translate(0px, 0px)
+      translateY(50%)
+      scale(1, 1) rotate(0deg)
+      translateY(-50%);
+  }
+
+  /* base spin  */
+  25.000% {
+    animation-timing-function: cubic-bezier(.167, .167, .833, .833);
+    transform: translate(0px, 0px) scale(1, 1) rotate(0deg);
+    opacity: 1;
+  }
+  39.062% {
+    transform: translate(0px, 0px) scale(1, 1) rotate(180deg);
+  }
+
+  /* step to bobbing track */
+  39.063% {
+    animation-timing-function: cubic-bezier(.707, 0, .333, 1);
+    transform:
+      translate(0px, -100%)
+      translateY(50%)
+      scale(1, 1) rotate(180deg)
+      translateY(-50%);
+  }
+
+  /* middle scale waypoints */
+  46.875% {
+    animation-timing-function: cubic-bezier(.333, 0, .333, 1);
+    transform:
+      translate(0px, -27.8%)
+      translateY(50%)
+      scale(1.667, 0.278) rotate(180deg)
+      translateY(-50%);
+  }
+  50.000% {
+    animation-timing-function: cubic-bezier(.862, 0, .854, 1);
+    transform:
+      translate(0px, -70.6%)
+      translateY(50%)
+      scale(1.294, 0.706) rotate(180deg)
+      translateY(-50%);
+  }
+  54.688% {
+    animation-timing-function: cubic-bezier(.333, .509, .333, .889);
+    transform:
+      translate(0px, -150%)
+      translateY(50%)
+      scale(0.611, 1.5) rotate(180deg)
+      translateY(-50%);
+  }
+  57.813% {
+    animation-timing-function: cubic-bezier(1, 0, .51);
+    transform:
+      translate(0px, -188.3%)
+      translateY(50%)
+      scale(0.850, 1.183) rotate(180deg)
+      translateY(-50%);
+  }
+  65.625% {
+    transform:
+      translate(0px, -111.1%)
+      translateY(50%)
+      scale(1.050, 0.911) rotate(180deg)
+      translateY(-50%);
+  }
+  62.500% {
+    animation-timing-function: cubic-bezier(.707, 0, .333, 1);
+    transform:
+      translate(0px, -105%)
+      translateY(50%)
+      scale(1.117, 0.750) rotate(180deg)
+      translateY(-50%);
+  }
+  71.875% {
+    transform:
+      translate(0px, 0px)
+      translateY(50%)
+      scale(1.0, 1.0) rotate(180deg)
+      translateY(-50%);
+  }
+
+  /* Y bob & fade */
+  60.938% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); opacity: 1; }
+  67.188%, 100% { opacity: 0; }
+}
+
+
+@keyframes lErRGR {
+  /* intro */
+  0.00% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, -50%) scale(1, 1); opacity: 0.67; }
+  1.563% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, 0px) scale(1.429, 0.531) }
+  3.125% { opacity: 0; }
+  4.688% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, 0px) scale(1, 1) }
+
+  /* opacity 0→1→1→0 (scaled to 2s) */
+  /* merged with scale frames below 
+  62.500% { animation-timing-function: cubic-bezier(.167,.167,.833,.833); opacity: 0; }
+  */
+  67.188% { animation-timing-function: cubic-bezier(.167,.167,.833,.833); opacity: 1; }
+
+  
+  /* scale */
+  62.500% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, -40%) scale(1, 1); opacity: 0; }
+  70.313% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, 0px) scale(1.427, 0.533) }
+  79.688% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, -40%) scale(0.490, 1.571) }
+  89.063% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, -80%) scale(1, 1) }
+  98.438% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, -60%) scale(1, 1) }
+  100.00% { animation-timing-function: cubic-bezier(.862, 0, .854, 1); transform: translate(0px, -50%) scale(1, 1); opacity: 0.67; }
+
+  /* position */
+  /* merged in with scale keyframes above for performance */
+
+
+  98.438% { animation-timing-function: cubic-bezier(.167,.167,.833,.833); opacity: 1; }
+  /* merged with scale frames above
+  100.00% { opacity: 0; }
+  */
+}
+
+.HvnqCV {
+    height: 128px;
+    width: 128px;
+    --scale: 0.32;
+    --scaledOffsetX: -32px;
+    --scaledOffsetY: -32px;
+    position: absolute;
+    transform: translate(-32px, -32px) scale(0.32);
+    transform: translate(var(--scaledOffsetX), var(--scaledOffsetY)) scale(var(--scale));
+    background-position: 0 50%;
+    background-size: auto 100%;
+    background-image: url(https://a.poki-cdn.com/sdk/sparkle-10-frame-128x.png);
+    opacity: 0;
+    animation: fHRqNn var(--dur) linear infinite both;
+}
+
+.HvnqCV:nth-of-type(1) {
+      --scaledOffsetX: -50px;
+    }
+
+.IzVgTg {
+    --scaledOffsetX: -52px;
+    --scaledOffsetY: 33px;
+}
+
+.GZhz6A {
+    --scaledOffsetX: 33px;
+    --scaledOffsetY: 45px;
+    animation-delay: 80ms;
+}
+
+.EZrx7j {
+    --scaledOffsetX: 61px;
+    --scaledOffsetY: -8px;
+    animation-delay: 160ms;
+}
+
+.bjjAlE {
+    --scaledOffsetX: 45px;
+    --scaledOffsetY: -43px;
+    animation-delay: 200ms;
+}
+
+.gS0QSy {
+    --scaledOffsetX: -44px;
+    --scaledOffsetY: -54px;
+    animation-delay: 200ms;
+}
+
+@media (min-width: 1031px) {
+  .HvnqCV {
+    --scale: 0.38;
+  }
+
+  .IzVgTg {
+      --scaledOffsetX: -61px;
+      --scaledOffsetY: 39px;
+  }
+
+  .GZhz6A {
+      --scaledOffsetX: 40px;
+      --scaledOffsetY: 54px;
+  }
+
+  .EZrx7j {
+      --scaledOffsetX: 74px;
+      --scaledOffsetY: -9px;
+  }
+
+  .bjjAlE {
+      --scaledOffsetX: 53px;
+      --scaledOffsetY: -51px;
+  }
+
+  .gS0QSy {
+      --scaledOffsetX: -52px;
+      --scaledOffsetY: -65px;
+  }
+}
+
+@keyframes fHRqNn {
+  0%, 60.1874% {
+    opacity: 0;
+    background-position: 0 0;
+  }
+  60.1875% {
+    opacity: 1;
+    background-position: 0 0;
+    animation-timing-function: steps(10, end);
+  }
+  88.3125% {
+    opacity: 1;
+    background-position: -1280px 0;
+    animation-timing-function: linear;
+  }
+  88.3126% {
+    opacity: 0;
+  }
+
+  95.313%,
+  100% {
+    opacity: 0;
+    background-position: -1280px 0;
+  }
+}
+
+.NtgiXM {
+    opacity: 1;
+		animation: NtgiXM .8s steps(10) forwards;
+}
+
+@keyframes NtgiXM {
+  0% {
+    opacity: 1;
+  }
+  99.999% {
+    opacity: 1;
+		background-position: -1280px;
+	}
+  100% {
+    opacity: 0;
+  }
+}
+
+.c_zPyG {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  background: url('https://a.poki-cdn.com/sdk/oops-icon.svg') no-repeat center;
+  background-size: contain;
+  filter: invert(1);
+  transform: translateY(72px);
+}
+
+
+
+	
+	canvas{
+		touch-action: none;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+
+
+undefined
