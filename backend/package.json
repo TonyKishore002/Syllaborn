@@ -2,12 +2,11 @@
   "name": "syllaborn-backend",
   "version": "1.0.0",
   "description": "Secure server-side AI processing endpoint for Syllaborn",
-  "type": "module",
-  "main": "app.cjs",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc && esbuild src/server.ts --bundle --platform=node --target=node20 --outfile=app.cjs --format=cjs --packages=external --footer:js=\"module.exports = server_default; module.exports.default = server_default;\"",
-    "start": "node app.cjs"
+    "build": "tsc --noEmit && esbuild src/server.ts --bundle --platform=node --target=node20 --outfile=dist/server.js --format=cjs --footer:js=\"module.exports = server_default; module.exports.default = server_default;\"",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@google/genai": "^2.29.1",
