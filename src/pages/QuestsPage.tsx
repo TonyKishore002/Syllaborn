@@ -203,11 +203,11 @@ export const QuestsPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Swords className="w-6 h-6 text-cyan-400" />
+            <Swords className="w-6 h-6 text-sky-400" />
             <h1 className="text-2xl sm:text-3xl font-fantasy font-black text-slate-100">
               My Quests
             </h1>
-            <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+            <span className="text-xs font-mono font-black px-3 py-0.5 rounded-full bg-[#070b14] text-sky-300 border border-sky-500/30 shadow-neu-inset-sm">
               {activeCount} Active
             </span>
           </div>
@@ -218,7 +218,7 @@ export const QuestsPage: React.FC = () => {
 
         <div className="flex items-center gap-2.5">
           <Button variant="primary" size="sm" onClick={() => setIsUploadModalOpen(true)}>
-            <FileUp className="w-4 h-4 mr-1.5 text-cyan-300" />
+            <FileUp className="w-4 h-4 mr-1.5 text-white" />
             <span>Upload Syllabus</span>
           </Button>
 
@@ -230,23 +230,23 @@ export const QuestsPage: React.FC = () => {
               setIsMilestoneModalOpen(true);
             }}
           >
-            <Plus className="w-4 h-4 mr-1.5 text-purple-300" />
+            <Plus className="w-4 h-4 mr-1.5 text-sky-300" />
             <span>New Quest</span>
           </Button>
         </div>
       </div>
 
-      {/* Tabs & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-purple-500/15">
-        {/* Status Tabs */}
-        <div className="flex items-center gap-2">
+      {/* Tabs & Controls - Sunken Pill Container */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/[0.04]">
+        {/* Status Tabs in Inset Slot */}
+        <div className="p-1.5 rounded-2xl bg-[#060810] border border-white/[0.04] shadow-neu-inset flex items-center gap-1.5">
           <button
             type="button"
             onClick={() => setActiveTab('active')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold font-fantasy transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-xs font-bold font-fantasy transition-all ${
               activeTab === 'active'
-                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-900/30 border border-purple-400/30'
-                : 'text-slate-400 hover:text-slate-200 bg-[#121528] border border-slate-800'
+                ? 'bg-gradient-to-br from-[#161e34] to-[#0c101c] text-white border border-white/[0.08] shadow-neu-raised'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             Active Quests ({activeCount})
@@ -255,10 +255,10 @@ export const QuestsPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveTab('completed')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold font-fantasy transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-xs font-bold font-fantasy transition-all ${
               activeTab === 'completed'
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-900/30 border border-emerald-400/30'
-                : 'text-slate-400 hover:text-slate-200 bg-[#121528] border border-slate-800'
+                ? 'bg-gradient-to-br from-[#161e34] to-[#0c101c] text-emerald-300 border border-emerald-400/30 shadow-neu-raised'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             Completed ({completedCount})
@@ -271,7 +271,7 @@ export const QuestsPage: React.FC = () => {
             <select
               value={selectedCourseId}
               onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="bg-[#121528] border border-purple-500/20 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"
+              className="bg-[#060810] border border-white/[0.04] shadow-neu-inset text-xs font-bold text-slate-200 rounded-2xl px-4 py-2.5 focus:outline-none focus:border-indigo-500/50"
             >
               <option value="all">All Courses ({courses.length})</option>
               {courses.map((c) => (
@@ -283,13 +283,13 @@ export const QuestsPage: React.FC = () => {
           )}
 
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-3" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search quests..."
-              className="bg-[#121528] border border-purple-500/20 text-xs text-slate-200 rounded-xl pl-8 pr-3 py-2 focus:outline-none focus:border-cyan-400 w-36 sm:w-48"
+              className="bg-[#060810] border border-white/[0.04] shadow-neu-inset text-xs font-bold text-slate-200 rounded-2xl pl-9 pr-4 py-2.5 focus:outline-none focus:border-indigo-500/50 w-36 sm:w-52 placeholder:text-slate-500"
             />
           </div>
         </div>
@@ -298,20 +298,20 @@ export const QuestsPage: React.FC = () => {
       {/* Quests Display */}
       {courses.length === 0 ? (
         <EmptyState
-          icon={<Swords className="w-8 h-8 text-cyan-400" />}
+          icon={<Swords className="w-8 h-8 text-sky-400" />}
           title="No Quests Yet"
           description="Upload your course syllabus PDF to automatically generate study quests and turn your topics into adventure tasks."
           actionLabel="Upload Syllabus PDF"
           onAction={() => setIsUploadModalOpen(true)}
         />
       ) : filteredQuests.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-[#101324] border border-purple-500/15 space-y-2">
-          <p className="text-slate-300 font-fantasy text-sm font-bold">
+        <div className="p-12 text-center rounded-3xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised space-y-2">
+          <p className="text-slate-200 font-fantasy text-sm font-black">
             {activeTab === 'active'
               ? 'No active quests found!'
               : 'No completed quests in this view.'}
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400 font-medium">
             {activeTab === 'active'
               ? 'Great job! You have cleared all pending quests in this filter.'
               : 'Complete active quests to populate your conquest history.'}
@@ -324,77 +324,76 @@ export const QuestsPage: React.FC = () => {
               {/* Course Group Header */}
               <div className="flex items-center gap-2.5 px-1">
                 <span
-                  className="w-3 h-3 rounded-full shrink-0"
+                  className="w-3.5 h-3.5 rounded-full shrink-0 border border-white/20 shadow-neu-raised-sm"
                   style={{ backgroundColor: group.color }}
                 />
-                <h3 className="font-fantasy font-bold text-sm text-slate-200">
+                <h3 className="font-fantasy font-black text-sm text-slate-200">
                   {group.courseName}
                 </h3>
-                <span className="text-[10px] font-mono text-slate-400">
+                <span className="text-[10px] font-mono font-bold text-slate-400">
                   ({group.courseCode})
                 </span>
-                <span className="text-xs font-mono text-purple-300 ml-auto">
+                <span className="text-xs font-mono font-black px-2.5 py-0.5 rounded-full bg-[#070b14] text-indigo-300 border border-indigo-500/30 shadow-neu-inset-sm ml-auto">
                   {group.quests.length} {group.quests.length === 1 ? 'quest' : 'quests'}
                 </span>
               </div>
 
               {/* Grid of Quest Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {group.quests.map((quest) => (
                   <Card
                     key={quest.id}
-                    className="p-4 rounded-2xl bg-[#121528] hover:bg-[#161a33] border-purple-500/15 hover:border-purple-500/35 transition-all flex flex-col justify-between gap-3 group"
+                    className="p-5 rounded-3xl bg-[#0E1322] hover:bg-[#12182a] border border-white/[0.04] shadow-neu-raised hover:shadow-neu-raised-lg transition-all flex flex-col justify-between gap-3 group"
                   >
                     <div>
                       {/* Top Badges */}
                       <div className="flex items-center justify-between gap-2 mb-2">
                         <div className="flex items-center gap-1.5 flex-wrap">
                           <span
-                            className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full"
+                            className="text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full border border-white/10 shadow-neu-raised-sm"
                             style={{
-                              backgroundColor: `${quest.courseColor}20`,
-                              color: quest.courseColor,
-                              border: `1px solid ${quest.courseColor}40`,
+                              backgroundColor: quest.courseColor,
+                              color: '#ffffff',
                             }}
                           >
                             {quest.courseCode}
                           </span>
 
-                          <span className="text-[10px] text-slate-400 flex items-center gap-1 font-mono">
-                            <Clock className="w-3 h-3" />
+                          <span className="text-[10px] text-slate-300 flex items-center gap-1 font-mono font-bold">
+                            <Clock className="w-3 h-3 text-slate-400" />
                             {quest.timeEstimate}
                           </span>
 
                           <span
-                            className={`text-[9px] uppercase font-bold px-1.5 py-0.2 rounded border ${
+                            className={`text-[9px] uppercase font-black px-2 py-0.5 rounded-full border ${
                               quest.difficulty === 'Easy'
-                                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                                ? 'bg-sky-500/15 text-sky-300 border-sky-500/30 shadow-neu-inset-sm'
                                 : quest.difficulty === 'Medium'
-                                ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                                : 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+                                ? 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 shadow-neu-inset-sm'
+                                : 'bg-rose-500/15 text-rose-300 border-rose-500/30 shadow-neu-inset-sm'
                             }`}
                           >
                             {quest.difficulty}
                           </span>
                         </div>
 
-                        <span className="text-xs font-mono font-bold text-amber-300 shrink-0">
+                        <span className="text-xs font-mono font-black text-amber-300 shrink-0">
                           +{quest.xpReward} XP
                         </span>
                       </div>
 
                       {/* Quest Title & Description */}
-                      <h4 className="font-fantasy font-bold text-sm text-slate-100 group-hover:text-cyan-300 transition-colors">
+                      <h4 className="font-fantasy font-black text-sm text-slate-100 group-hover:text-sky-300 transition-colors">
                         {quest.title}
                       </h4>
-                      <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed font-medium">
                         {quest.description}
                       </p>
                     </div>
 
                     {/* Bottom Action Footer */}
-                    <div className="pt-2 border-t border-purple-500/10 flex items-center justify-between gap-2">
-                      <span className="text-[10px] text-slate-500 font-mono">
+                    <div className="pt-2.5 border-t border-white/[0.04] flex items-center justify-between gap-2">
+                      <span className="text-[10px] text-slate-400 font-mono font-bold">
                         {quest.dueDate ? `Due: ${quest.dueDate}` : 'Self-paced'}
                       </span>
 
@@ -402,19 +401,19 @@ export const QuestsPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handlePlayQuest(quest)}
-                          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-fantasy font-semibold text-xs shadow-md shadow-purple-900/30 border border-purple-400/30 transition-all active:scale-95 group"
+                          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-[#5357c8] to-[#397db8] hover:from-[#5c61d6] hover:to-[#4189c7] text-white font-fantasy font-black text-xs border border-indigo-400/25 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5 group"
                         >
-                          <Gamepad2 className="w-3.5 h-3.5 text-cyan-300 group-hover:scale-110 transition-transform" />
+                          <Gamepad2 className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" />
                           <span>Play Quest</span>
                         </button>
                       ) : (
                         <button
                           type="button"
                           onClick={() => handlePlayQuest(quest)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-emerald-400 hover:text-emerald-300 text-xs font-medium border border-emerald-500/30 transition-colors"
+                          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-[#0E1322] hover:bg-[#131a2e] text-slate-200 text-xs font-bold font-fantasy border border-white/[0.04] shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5"
                           title="Replay in practice mode (0 duplicate XP)"
                         >
-                          <RotateCcw className="w-3.5 h-3.5 text-emerald-400" />
+                          <RotateCcw className="w-3.5 h-3.5 text-slate-200" />
                           <span>Replay Quest</span>
                         </button>
                       )}
@@ -426,6 +425,7 @@ export const QuestsPage: React.FC = () => {
           ))}
         </div>
       )}
+
 
       {/* Syllabus Upload Modal */}
       <SyllabusUploadModal

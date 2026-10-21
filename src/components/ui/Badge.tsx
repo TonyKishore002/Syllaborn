@@ -14,24 +14,24 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const variants = {
-    purple: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
-    cyan: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
-    pink: 'bg-pink-500/15 text-pink-300 border-pink-500/30',
-    emerald: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
-    amber: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
-    rose: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
-    slate: 'bg-slate-800 text-slate-300 border-slate-700',
+    purple: 'bg-indigo-950/40 text-indigo-300 border border-indigo-500/20 shadow-neu-raised-sm',
+    cyan: 'bg-sky-950/40 text-sky-300 border border-sky-500/20 shadow-neu-raised-sm',
+    pink: 'bg-violet-950/40 text-violet-300 border border-violet-500/20 shadow-neu-raised-sm',
+    emerald: 'bg-emerald-950/40 text-emerald-300 border border-emerald-500/20 shadow-neu-raised-sm',
+    amber: 'bg-amber-950/40 text-amber-300 border border-amber-500/20 shadow-neu-raised-sm',
+    rose: 'bg-rose-950/40 text-rose-300 border border-rose-500/20 shadow-neu-raised-sm',
+    slate: 'bg-slate-900/60 text-slate-300 border border-slate-700/30 shadow-neu-raised-sm',
   };
 
   const sizes = {
-    sm: 'text-[11px] px-2 py-0.5 font-medium',
-    md: 'text-xs px-2.5 py-1 font-semibold',
+    sm: 'text-[11px] px-3 py-0.5 font-bold',
+    md: 'text-xs px-3.5 py-1 font-bold',
   };
 
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full border tracking-wide uppercase font-mono select-none',
+        'inline-flex items-center gap-1 rounded-full tracking-wide uppercase font-mono select-none',
         variants[variant],
         sizes[size],
         className
@@ -42,3 +42,4 @@ export const Badge: React.FC<BadgeProps> = ({
     </span>
   );
 };
+

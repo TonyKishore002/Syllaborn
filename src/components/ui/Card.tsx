@@ -12,12 +12,12 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-2xl border p-5 backdrop-blur-md',
-          'bg-[#121526]/80 border-purple-500/15 shadow-[0_4px_24px_rgba(0,0,0,0.3)]',
+          'rounded-3xl border border-white/[0.05] p-5.5',
+          'bg-gradient-to-br from-[#101524] to-[#0a0d17] shadow-neu-raised transition-all duration-200',
           hoverEffect &&
-            'transition-all duration-200 hover:-translate-y-1 hover:border-purple-500/35 hover:shadow-[0_8px_32px_rgba(139,92,246,0.15)] cursor-pointer',
-          glow === 'purple' && 'shadow-[0_0_20px_rgba(168,85,247,0.25)] border-purple-500/40',
-          glow === 'cyan' && 'shadow-[0_0_20px_rgba(6,182,212,0.25)] border-cyan-500/40',
+            'hover:-translate-y-1 hover:shadow-neu-raised-lg hover:border-indigo-500/30 cursor-pointer active:translate-y-0.5 active:shadow-neu-inset-sm',
+          glow === 'purple' && 'border-indigo-500/30 shadow-neo-purple',
+          glow === 'cyan' && 'border-sky-500/30 shadow-neo-cyan',
           className
         )}
         {...props}
@@ -29,3 +29,4 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 );
 
 Card.displayName = 'Card';
+

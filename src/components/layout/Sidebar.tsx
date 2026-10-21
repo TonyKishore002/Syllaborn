@@ -71,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Mobile Backdrop */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 lg:hidden"
           onClick={onMobileClose}
         />
       )}
@@ -79,22 +79,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Sidebar Container */}
       <aside
         className={cn(
-          'fixed top-0 bottom-0 left-0 z-40 w-64 bg-[#0d0f1b]/95 border-r border-purple-500/15 backdrop-blur-xl flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0',
+          'fixed top-0 bottom-0 left-0 z-40 w-64 bg-[#0B0F19] border-r border-slate-800/80 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0',
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Brand Header */}
-        <div className="h-16 flex items-center gap-3 px-6 border-b border-purple-500/15">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-cyan-500 to-pink-500 p-[1.5px] shadow-lg shadow-purple-900/30">
-            <div className="w-full h-full rounded-[10px] bg-[#0d0f1b] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-            </div>
+        <div className="h-16 flex items-center gap-3 px-6 border-b border-white/[0.04] bg-[#0E1322]">
+          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 shadow-neu-raised-sm flex items-center justify-center border border-indigo-400/30">
+            <Sparkles className="w-4 h-4 text-white" />
           </div>
           <div>
-            <span className="font-fantasy font-bold text-lg tracking-wider bg-gradient-to-r from-purple-300 via-cyan-300 to-pink-300 bg-clip-text text-transparent">
+            <span className="font-fantasy font-black text-lg tracking-wider text-white">
               SYLLABORN
             </span>
-            <p className="text-[10px] text-slate-400 font-medium tracking-tight">The Semesterverse</p>
+            <p className="text-[10px] text-[#38BDF8] font-mono font-bold tracking-wider uppercase">
+              The Semesterverse
+            </p>
           </div>
         </div>
 
@@ -106,15 +106,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onUploadClick();
               if (onMobileClose) onMobileClose();
             }}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium text-xs shadow-lg shadow-purple-900/30 border border-purple-400/30 transition-all duration-200 active:scale-[0.98]"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold text-xs border border-indigo-400/30 shadow-neu-raised active:shadow-neu-inset transition-all active:translate-y-0.5 duration-150"
           >
-            <FileUp className="w-4 h-4 text-cyan-300" />
+            <FileUp className="w-4 h-4 text-sky-200" />
             <span>Upload Syllabus PDF</span>
           </button>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto">
+        {/* Navigation Items (Sunken active slot inspired by reference image 'Player' pill) */}
+        <nav className="flex-1 px-3 py-2 space-y-2 overflow-y-auto">
           {navLinks.map((item) => (
             <NavLink
               key={item.to}
@@ -122,34 +122,52 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={onMobileClose}
               className={({ isActive }) =>
                 cn(
-                  'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-150',
+                  'flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs transition-all duration-200 select-none',
                   isActive
-                    ? 'bg-gradient-to-r from-purple-600/20 to-cyan-600/10 text-cyan-300 border border-purple-500/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
+                    ? 'bg-[#060912] text-sky-300 shadow-neu-inset border border-sky-400/30 font-bold scale-[0.99]'
+                    : 'text-slate-400 hover:text-slate-100 hover:bg-gradient-to-br hover:from-[#13192c] hover:to-[#0c101c] hover:shadow-neu-raised-sm border border-transparent font-medium active:shadow-neu-inset-sm'
                 )
               }
             >
-              <div className="flex items-center gap-3">
-                <item.icon className="w-4 h-4 shrink-0" />
-                <span>{item.label}</span>
-              </div>
-              {item.badge !== null && (
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                  {item.badge}
-                </span>
+              {({ isActive }) => (
+                <>
+                  <div className="flex items-center gap-3">
+                    {/* Active glowing indicator inside sunken well like reference image */}
+                    {isActive ? (
+                      <div className="w-4 h-4 rounded-full bg-[#070b14] shadow-neu-inset-sm border border-sky-500/30 flex items-center justify-center shrink-0">
+                        <span className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8] shrink-0" />
+                      </div>
+                    ) : (
+                      <item.icon className="w-4 h-4 shrink-0 text-slate-400" />
+                    )}
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge !== null && (
+                    <span
+                      className={cn(
+                        'text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full border',
+                        isActive
+                          ? 'bg-sky-500/20 text-sky-200 border-sky-400/30 shadow-neu-raised-sm'
+                          : 'bg-[#0b0f1a] text-slate-400 border-slate-700/40 shadow-neu-inset-sm'
+                      )}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </>
               )}
             </NavLink>
           ))}
         </nav>
 
         {/* Semester Quest Summary Box in Footer */}
-        <div className="p-4 border-t border-purple-500/15">
-          <div className="p-3 rounded-xl bg-[#121528] border border-purple-500/20">
+        <div className="p-4 border-t border-white/[0.04] bg-[#0A0E1A]">
+          <div className="p-3.5 rounded-2xl bg-[#0E1322] shadow-neu-raised-sm border border-white/[0.03]">
             <div className="flex items-center justify-between text-xs mb-1">
-              <span className="text-slate-400 font-fantasy text-[11px]">Pending Quests</span>
-              <span className="font-mono text-cyan-400 font-bold">{pendingQuestsCount}</span>
+              <span className="text-slate-300 font-fantasy text-[11px] font-bold">Pending Quests</span>
+              <span className="font-mono text-[#38BDF8] font-bold">{pendingQuestsCount}</span>
             </div>
-            <p className="text-[11px] text-slate-500 leading-tight">
+            <p className="text-[11px] text-slate-400 font-medium leading-tight">
               {pendingQuestsCount === 0
                 ? 'All quests cleared! Peace in the realm.'
                 : `${pendingQuestsCount} quests awaiting conquest.`}
@@ -160,3 +178,4 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </>
   );
 };
+

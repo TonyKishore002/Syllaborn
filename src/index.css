@@ -124,3 +124,251 @@
 .animate-pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
 }
+
+/* ==========================================================================
+   Royal Indigo & Electric Cobalt Design System (Linear / Raycast Style)
+   Palette:
+   - #6366F1 (Royal Indigo - Primary magic, brand, hero CTA)
+   - #38BDF8 (Electric Cobalt - Secondary intel, syllabus, time & active tabs)
+   - #10B981 (Achievement Emerald - Quests complete, XP milestones, success)
+   - #FDE68A (Warm Champagne - Level rank, trophies, high-stakes badges)
+   ========================================================================== */
+
+:root {
+  --color-indigo: #5b5fc7;
+  --color-cobalt: #38a2d8;
+  --color-emerald: #14a07a;
+  --color-champagne: #edd485;
+  --neo-purple: #5b5fc7;
+  --neo-blue: #38a2d8;
+  --neo-cyan: #38a2d8;
+  --neo-cream: #edd485;
+}
+
+/* ==========================================================================
+   Dark Neumorphism UI System (Clearly Visible Soft UI Depth, Balanced Color Strength)
+   ========================================================================== */
+
+/* Raised / Extruded Neumorphic Surfaces */
+.shadow-neo-sm, .shadow-neu-raised-sm {
+  box-shadow: 
+    4px 4px 10px #010204, 
+    -4px -4px 10px rgba(255, 255, 255, 0.11), 
+    inset 1px 1px 1px rgba(255, 255, 255, 0.14),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.shadow-neo, .shadow-neu-raised {
+  box-shadow: 
+    9px 9px 24px #010204, 
+    16px 16px 36px rgba(0, 0, 0, 0.75),
+    -8px -8px 20px rgba(255, 255, 255, 0.12),
+    -2px -2px 6px rgba(255, 255, 255, 0.16),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.16),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.7);
+}
+
+.shadow-neo-lg, .shadow-neu-raised-lg {
+  box-shadow: 
+    14px 14px 34px #010204, 
+    22px 22px 48px rgba(0, 0, 0, 0.8),
+    -12px -12px 26px rgba(255, 255, 255, 0.13),
+    -3px -3px 8px rgba(255, 255, 255, 0.18),
+    inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.2),
+    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.75);
+}
+
+.shadow-neo-xl {
+  box-shadow: 
+    20px 20px 48px #010204, 
+    -16px -16px 36px rgba(255, 255, 255, 0.14),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.22),
+    inset -2px -2px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Inset / Sunken / Debossed Neumorphic Surfaces (Reference image 'Player' pill, slider track & search fields) */
+.shadow-neu-inset {
+  box-shadow: 
+    inset 6px 6px 14px #010204, 
+    inset 10px 10px 24px rgba(0, 0, 0, 0.8),
+    inset -5px -5px 12px rgba(255, 255, 255, 0.11),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.shadow-neu-inset-sm {
+  box-shadow: 
+    inset 3px 3px 8px #010204, 
+    inset 6px 6px 14px rgba(0, 0, 0, 0.7),
+    inset -3px -3px 7px rgba(255, 255, 255, 0.1),
+    inset -1px -1px 1.5px rgba(255, 255, 255, 0.16);
+}
+
+/* Subtle, Muted Accent Glow Shadows (Slightly Reduced Color Strength) */
+.shadow-neo-purple {
+  box-shadow: 
+    8px 8px 22px #010204, 
+    -7px -7px 18px rgba(255, 255, 255, 0.13),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.22),
+    0 0 16px -2px rgba(91, 95, 199, 0.24);
+}
+
+.shadow-neo-blue, .shadow-neo-cyan {
+  box-shadow: 
+    8px 8px 22px #010204, 
+    -7px -7px 18px rgba(255, 255, 255, 0.13),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.22),
+    0 0 16px -2px rgba(56, 162, 216, 0.24);
+}
+
+.shadow-neo-cream, .shadow-neo-yellow {
+  box-shadow: 
+    8px 8px 22px #010204, 
+    -7px -7px 18px rgba(255, 255, 255, 0.13),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.22),
+    0 0 16px -2px rgba(237, 212, 133, 0.2);
+}
+
+.shadow-neo-pink {
+  box-shadow: 
+    8px 8px 22px #010204, 
+    -7px -7px 18px rgba(255, 255, 255, 0.13),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.22),
+    0 0 16px -2px rgba(224, 67, 96, 0.24);
+}
+
+.shadow-neo-emerald {
+  box-shadow: 
+    8px 8px 22px #010204, 
+    -7px -7px 18px rgba(255, 255, 255, 0.13),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.22),
+    0 0 16px -2px rgba(20, 160, 122, 0.24);
+}
+
+/* Color Palette Utilities */
+.bg-neo-purple { background-color: #5b5fc7; }
+.bg-neo-blue { background-color: #38a2d8; }
+.bg-neo-cyan { background-color: #38a2d8; }
+.bg-neo-cream { background-color: #edd485; }
+
+.text-neo-purple { color: #5b5fc7; }
+.text-neo-blue { color: #38a2d8; }
+.text-neo-cyan { color: #38a2d8; }
+.text-neo-cream { color: #edd485; }
+
+.border-neo-purple { border-color: #5b5fc7; }
+.border-neo-blue { border-color: #38a2d8; }
+.border-neo-cyan { border-color: #38a2d8; }
+.border-neo-cream { border-color: #edd485; }
+
+/* Interactive Smooth Neumorphic Tactile Press */
+.neo-press, .neu-btn {
+  transition: transform 0.16s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.neo-press:hover, .neu-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 11px 11px 26px #010204, -9px -9px 24px rgba(255, 255, 255, 0.14), inset 1px 1px 1.5px rgba(255, 255, 255, 0.2);
+}
+
+.neo-press:active, .neu-btn:active, .neu-btn-active {
+  transform: translateY(1.5px);
+  box-shadow: inset 6px 6px 14px #010204, inset -4px -4px 10px rgba(255, 255, 255, 0.12), inset -1px -1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Convex Pill & Dial Surfaces (Slightly Reduced Saturation) */
+.neu-convex {
+  background: linear-gradient(145deg, #121728 0%, #0a0d17 100%);
+  box-shadow: 
+    8px 8px 20px #010204, 
+    -7px -7px 18px rgba(255, 255, 255, 0.12),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.18),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.7);
+}
+
+.neu-concave {
+  background: linear-gradient(145deg, #080b13 0%, #111524 100%);
+  box-shadow: 
+    inset 6px 6px 14px #010204, 
+    inset -5px -5px 12px rgba(255, 255, 255, 0.1),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.18);
+}
+
+/* Circular Dials (Reference Image Center Dial) */
+.neu-dial {
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #13192c 0%, #090c15 100%);
+  box-shadow: 
+    11px 11px 26px #010204, 
+    -10px -10px 24px rgba(255, 255, 255, 0.14),
+    -2px -2px 6px rgba(255, 255, 255, 0.18),
+    inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.22),
+    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.85);
+}
+
+.neu-dial-moat {
+  border-radius: 9999px;
+  background: #060810;
+  box-shadow: 
+    inset 6px 6px 14px #010204, 
+    inset 10px 10px 22px rgba(0, 0, 0, 0.75),
+    inset -5px -5px 12px rgba(255, 255, 255, 0.11),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.neu-dial-inset {
+  border-radius: 9999px;
+  background: #060912;
+  box-shadow: 
+    inset 5px 5px 12px #010204, 
+    inset -4px -4px 10px rgba(255, 255, 255, 0.1),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Inset Field for Inputs, Search Bars, and Progress Tracks */
+.neu-inset-field {
+  background-color: #060810;
+  box-shadow: 
+    inset 4px 4px 10px #010204, 
+    inset 8px 8px 18px rgba(0, 0, 0, 0.7),
+    inset -4px -4px 9px rgba(255, 255, 255, 0.1),
+    inset -1px -1px 1.5px rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Canvas Background Pattern (Calm, Soft Matte Obsidian Surface) */
+.neo-canvas-grid {
+  background-color: #090C16;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(91, 95, 199, 0.035) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(56, 162, 216, 0.025) 0%, transparent 40%);
+}
+
+/* Card Surface Defaults with Muted 3D Convex Gradient */
+.neo-card-base, .neu-card {
+  background: linear-gradient(145deg, #101524 0%, #0a0d17 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    9px 9px 24px #010204, 
+    16px 16px 36px rgba(0, 0, 0, 0.75),
+    -8px -8px 20px rgba(255, 255, 255, 0.12),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.15),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.7);
+  border-radius: 1.5rem;
+}
+
+.neo-card-interactive {
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.neo-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: rgba(91, 95, 199, 0.3);
+  box-shadow: 
+    12px 12px 28px #010204, 
+    -10px -10px 24px rgba(255, 255, 255, 0.14), 
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.2),
+    0 0 16px -2px rgba(91, 95, 199, 0.14);
+}
+

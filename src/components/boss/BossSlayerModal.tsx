@@ -54,11 +54,11 @@ export const BossSlayerModal: React.FC<BossSlayerModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl h-[92vh] bg-[#0a0d1a] border border-purple-500/30 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative w-full max-w-5xl h-[92vh] bg-[#0B0F19] border border-slate-700/80 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
         {/* Top Control Bar with Engine Switcher & Close */}
-        <div className="px-4 py-2.5 bg-[#0f1429] border-b border-purple-500/20 flex items-center justify-between flex-wrap gap-2">
+        <div className="px-4 py-2.5 bg-[#0E1322]/95 border-b border-slate-800/80 flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 h-8 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+            <div className="w-8 h-8 rounded-xl bg-rose-500/20 border border-rose-500/40 shadow-neo-sm flex items-center justify-center text-rose-300">
               <Swords className="w-4 h-4" />
             </div>
             <div>
@@ -66,11 +66,11 @@ export const BossSlayerModal: React.FC<BossSlayerModalProps> = ({
                 <h3 className="font-fantasy font-black text-sm sm:text-base text-slate-100 flex items-center gap-1.5">
                   <span>BOSS SLAYER ARENA</span>
                 </h3>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-300 border border-sky-500/30 shadow-neo-sm font-bold">
                   {selectedCourse?.courseCode || 'ACADEMIC BOSS'}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 hidden sm:block">
+              <p className="text-[11px] text-slate-300 hidden sm:block">
                 {selectedBoss?.title
                   ? `Challenging ${selectedBoss.title} (${selectedBoss.weightPercent || 30}% Weight • ${bossConfig.maxHp} HP)`
                   : 'Multi-Phase RPG Boss Encounter with Real-Time Telegraphs & Dodges'}
@@ -80,40 +80,40 @@ export const BossSlayerModal: React.FC<BossSlayerModalProps> = ({
 
           <div className="flex items-center gap-2">
             {/* Mode Switcher */}
-            <div className="flex items-center bg-slate-900/90 p-0.5 rounded-xl border border-slate-700/60 text-xs">
+            <div className="flex items-center bg-[#131B2E] p-1 rounded-xl border border-slate-700/80 text-xs gap-1">
               <button
                 type="button"
                 onClick={() => setActiveEngine('boss-slayer')}
-                className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                   activeEngine === 'boss-slayer'
-                    ? 'bg-gradient-to-r from-rose-600 to-purple-600 text-white shadow-sm font-bold'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-gradient-to-r from-indigo-600 to-rose-600 text-white border border-indigo-400/40 shadow-neo-purple font-bold'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                 }`}
-                title="3-Phase Real-Time RPG Combat"
+                title="3D Real-Time RPG Combat"
               >
-                <Gamepad2 className="w-3.5 h-3.5 text-amber-300" />
-                <span>Boss Slayer RPG</span>
+                <Gamepad2 className="w-3.5 h-3.5 text-white" />
+                <span>Boss Slayer 3D</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveEngine('do-or-die')}
-                className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                   activeEngine === 'do-or-die'
-                    ? 'bg-purple-600 text-white shadow-sm font-bold'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-indigo-600 text-white border border-indigo-400/40 shadow-neo-purple font-bold'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                 }`}
-                title="2D Survival Platformer"
+                title="3D Cyber Runner / Platformer"
               >
-                <Flame className="w-3.5 h-3.5 text-rose-400" />
-                <span>Survival Mode</span>
+                <Flame className="w-3.5 h-3.5 text-amber-300" />
+                <span>Do-or-Die 3D</span>
               </button>
             </div>
 
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
+              className="p-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-rose-500/20 hover:border-rose-500/40 border border-slate-700/80 shadow-neo-sm transition-all"
               title="Close Arena"
             >
               <X className="w-5 h-5" />

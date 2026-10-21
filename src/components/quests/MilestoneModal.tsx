@@ -148,9 +148,9 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
       title={
         <div className="flex items-center gap-2">
           {difficulty === 'boss_fight' || difficulty === 'final_raid' ? (
-            <Swords className="w-5 h-5 text-purple-400" />
+            <Swords className="w-5 h-5 text-rose-400" />
           ) : (
-            <Sparkles className="w-5 h-5 text-cyan-400" />
+            <Sparkles className="w-5 h-5 text-sky-400" />
           )}
           <span>{milestoneToEdit ? 'Inspect Quest / Boss Encounter' : 'Inscribe New Academic Quest'}</span>
         </div>
@@ -160,19 +160,19 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Dynamic RPG Preview Banner */}
-        <div className="p-3.5 rounded-xl bg-gradient-to-r from-purple-950/40 via-[#13162b] to-cyan-950/30 border border-purple-500/30 flex items-center justify-between">
+        <div className="p-4 rounded-3xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span
-                className={`text-[11px] px-2 py-0.5 rounded-full font-mono uppercase border ${difficultyInfo.badgeColor}`}
+                className={`text-[11px] px-2.5 py-0.5 rounded-full font-mono uppercase border border-white/10 shadow-neu-raised-sm ${difficultyInfo.badgeColor}`}
               >
                 {difficultyInfo.label}
               </span>
-              <span className="text-xs text-amber-300 font-mono font-bold">
+              <span className="text-xs text-emerald-400 font-mono font-bold">
                 +{xpReward} XP Bounty
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">{difficultyInfo.description}</p>
+            <p className="text-[11px] text-slate-300">{difficultyInfo.description}</p>
           </div>
 
           {bossHp !== null && (
@@ -180,8 +180,8 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
               <span className="text-[10px] text-rose-400 font-mono uppercase block font-semibold">
                 Boss Health
               </span>
-              <span className="text-sm font-mono text-rose-300 font-bold">{bossHp} HP</span>
-              <span className="text-[10px] text-slate-500 block">({weightPercent}% grade weight)</span>
+              <span className="text-sm font-mono text-rose-400 font-bold">{bossHp} HP</span>
+              <span className="text-[10px] text-slate-400 block">({weightPercent}% grade weight)</span>
             </div>
           )}
         </div>
@@ -189,7 +189,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
         {/* Title */}
         <div>
           <label className="block text-xs font-medium text-slate-300 mb-1">
-            Quest / Assessment Title <span className="text-rose-400">*</span>
+            Quest / Assessment Title <span className="text-indigo-400 font-bold">*</span>
           </label>
           <input
             type="text"
@@ -197,7 +197,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Midterm Examination or Lab 3: Binary Search"
-            className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none"
+            className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
           />
         </div>
 
@@ -205,13 +205,13 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1">
-              Course <span className="text-rose-400">*</span>
+              Course <span className="text-indigo-400 font-bold">*</span>
             </label>
             <select
               required
               value={courseId}
               onChange={(e) => setCourseId(e.target.value)}
-              className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none"
+              className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
             >
               {courses.length === 0 && <option value="">No courses created yet</option>}
               {courses.map((c) => (
@@ -227,7 +227,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
             <select
               value={milestoneType}
               onChange={(e) => setMilestoneType(e.target.value as MilestoneType)}
-              className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none"
+              className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
             >
               <option value="assignment">Assignment (Quest)</option>
               <option value="quiz">Quiz (Elite Encounter)</option>
@@ -247,12 +247,12 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1">Due Date</label>
             <div className="relative">
-              <Calendar className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" />
+              <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -260,12 +260,12 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1">Due Time (Optional)</label>
             <div className="relative">
-              <Clock className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" />
+              <Clock className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
               <input
                 type="time"
                 value={dueTime}
                 onChange={(e) => setDueTime(e.target.value)}
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -275,7 +275,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
               Assessment Weight (%)
             </label>
             <div className="relative">
-              <Percent className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" />
+              <Percent className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
               <input
                 type="number"
                 min="0"
@@ -287,7 +287,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
                   const val = e.target.value === '' ? null : parseFloat(e.target.value);
                   setWeightPercent(isNaN(val as number) ? null : val);
                 }}
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -303,17 +303,17 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Topics covered, submission guidelines, or notes..."
-            className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none resize-none"
+            className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all resize-none"
           />
         </div>
 
         {/* Source syllabus excerpt if AI-extracted */}
         {milestoneToEdit?.sourceExcerpt && (
-          <div className="p-2.5 rounded-xl bg-purple-950/20 border border-purple-500/20 text-[11px] text-purple-300 flex items-start gap-2">
-            <FileText className="w-4 h-4 shrink-0 text-cyan-400 mt-0.5" />
+          <div className="p-3 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-[11px] text-slate-300 flex items-start gap-2">
+            <FileText className="w-4 h-4 shrink-0 text-sky-400 mt-0.5" />
             <div>
-              <span className="font-semibold text-cyan-300">Extracted from Syllabus: </span>
-              <span className="italic">"{milestoneToEdit.sourceExcerpt}"</span>
+              <span className="font-semibold text-sky-400">Extracted from Syllabus: </span>
+              <span className="italic text-slate-200">"{milestoneToEdit.sourceExcerpt}"</span>
               {milestoneToEdit.sourcePage && (
                 <span className="text-slate-400 ml-1.5">(Page {milestoneToEdit.sourcePage})</span>
               )}
@@ -329,7 +329,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
         )}
 
         {/* Actions */}
-        <div className="flex items-center justify-between pt-3 border-t border-purple-500/15">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-800/80">
           <div className="flex items-center gap-2">
             {milestoneToEdit && (
               <>
@@ -337,12 +337,11 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
                   milestoneToEdit.status === 'pending' ? (
                     <Button
                       type="button"
-                      variant="emerald"
+                      variant="cyan"
                       size="sm"
                       onClick={() => setIsPlayModalOpen(true)}
-                      className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-fantasy shadow-md"
                     >
-                      <Gamepad2 className="w-3.5 h-3.5 mr-1 text-cyan-300" />
+                      <Gamepad2 className="w-3.5 h-3.5 mr-1" />
                       <span>Play Quest</span>
                     </Button>
                   ) : (
@@ -354,7 +353,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
                         onClick={() => setIsPlayModalOpen(true)}
                         title="Replay in practice mode (0 duplicate XP)"
                       >
-                        <RotateCcw className="w-3.5 h-3.5 mr-1 text-emerald-400" />
+                        <RotateCcw className="w-3.5 h-3.5 mr-1 text-sky-400" />
                         <span>Replay</span>
                       </Button>
                       <Button
@@ -362,7 +361,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
                         variant="ghost"
                         size="sm"
                         onClick={handleToggleComplete}
-                        className="text-xs text-slate-400 hover:text-slate-200"
+                        className="text-xs text-slate-300 hover:text-white"
                         title="Reopen quest"
                       >
                         Reopen
@@ -372,7 +371,7 @@ export const MilestoneModal: React.FC<MilestoneModalProps> = ({
                 ) : (
                   <Button
                     type="button"
-                    variant={milestoneToEdit.status === 'completed' ? 'secondary' : 'emerald'}
+                    variant={milestoneToEdit.status === 'completed' ? 'secondary' : 'cyan'}
                     size="sm"
                     onClick={handleToggleComplete}
                   >

@@ -11,6 +11,7 @@ import {
 import { GameQuestion, QuestGameConfig } from '../../types';
 import { getProfessorPanicComment } from '../../lib/professor-panic';
 import { soundFX } from '../../lib/audio-effects';
+import { DoOrDie3D } from '../game3d/DoOrDie3D';
 
 interface DoOrDieGameProps {
   gameConfig: QuestGameConfig;
@@ -30,12 +31,18 @@ interface Particle {
   maxLife: number;
 }
 
-export const DoOrDieGame: React.FC<DoOrDieGameProps> = ({
+interface DoOrDieGame2DProps extends DoOrDieGameProps {
+  onSwitchTo3D?: () => void;
+}
+
+const DoOrDieGame2D: React.FC<DoOrDieGame2DProps> = ({
   gameConfig,
   onComplete,
   courseCode,
   courseTitle,
+  onSwitchTo3D,
 }) => {
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Sound state
@@ -547,6 +554,18 @@ export const DoOrDieGame: React.FC<DoOrDieGameProps> = ({
             <span>Falls: {trollFalls}</span>
           </div>
 
+          {onSwitchTo3D && (
+            <button
+              type="button"
+              onClick={onSwitchTo3D}
+              className="px-2.5 py-1 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-500/40 text-[10px] font-mono font-bold flex items-center gap-1 transition-all"
+              title="Switch to 3D Three.js Engine"
+            >
+              <Sparkles className="w-3 h-3 text-cyan-300" />
+              <span>Switch to 3D</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={() => {
@@ -799,3 +818,79 @@ export const DoOrDieGame: React.FC<DoOrDieGameProps> = ({
     </div>
   );
 };
+
+interface ErrorBoundaryProps {
+  fallback: React.ReactNode;
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class DoOrDie3DErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    console.warn('Caught error in 3D Do-Or-Die, rendering 2D fallback:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+export const DoOrDieGame: React.FC<DoOrDieGameProps> = (props) => {
+  const [use3DEngine, setUse3DEngine] = useState<boolean>(true);
+
+  if (use3DEngine) {
+    return (
+      <DoOrDie3DErrorBoundary
+        fallback={
+          <DoOrDieGame2D
+            {...props}
+          />
+        }
+      >
+        <div className="relative w-full h-full flex flex-col">
+          {/* Toggle back to 2D */}
+          <div className="absolute top-3.5 right-24 z-20 pointer-events-auto">
+            <button
+              type="button"
+              onClick={() => setUse3DEngine(false)}
+              className="px-2.5 py-1 rounded-lg bg-[#0E1322]/90 hover:bg-[#131B2E] text-[10px] font-bold text-slate-200 border border-slate-700/60 shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
+              title="Switch to Classic 2D Side-scroller"
+            >
+              <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
+              <span>3D Engine (Switch to 2D)</span>
+            </button>
+          </div>
+          <DoOrDie3D
+            gameConfig={props.gameConfig}
+            onComplete={props.onComplete}
+            courseCode={props.courseCode}
+            courseTitle={props.courseTitle}
+          />
+        </div>
+      </DoOrDie3DErrorBoundary>
+    );
+  }
+
+  return (
+    <DoOrDieGame2D
+      {...props}
+      onSwitchTo3D={() => setUse3DEngine(true)}
+    />
+  );
+};
+

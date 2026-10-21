@@ -148,7 +148,7 @@ export const CourseDetailPage: React.FC = () => {
             size="sm"
             onClick={() => setIsUploadModalOpen(true)}
           >
-            <FileUp className="w-3.5 h-3.5 mr-1 text-cyan-300" />
+            <FileUp className="w-3.5 h-3.5 mr-1 text-sky-400" />
             <span>Upload Syllabus</span>
           </Button>
 
@@ -164,75 +164,70 @@ export const CourseDetailPage: React.FC = () => {
       </div>
 
       {/* Course Realm Header Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#141830] via-[#101324] to-[#0a0d18] border border-purple-500/25 shadow-2xl relative overflow-hidden">
-        <div
-          className="absolute -top-10 -right-10 w-48 h-48 rounded-full blur-[80px] opacity-40 pointer-events-none"
-          style={{ backgroundColor: course.color }}
-        />
-
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#101524] to-[#0a0d17] border border-white/[0.05] shadow-neu-raised relative overflow-hidden backdrop-blur-md">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
           <div>
             <div className="flex items-center gap-2.5 mb-2">
               <span
-                className="w-3.5 h-3.5 rounded-full shadow-md"
+                className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-neu-raised-sm"
                 style={{ backgroundColor: course.color }}
               />
-              <span className="font-mono text-sm font-bold text-cyan-400">
+              <span className="font-mono text-sm font-black text-sky-400">
                 {course.courseCode}
               </span>
               {course.semester && (
-                <span className="text-xs text-slate-400 font-mono">
+                <span className="text-xs text-slate-300 font-mono font-bold">
                   • {course.semester}
                 </span>
               )}
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-fantasy font-bold text-slate-100">
+            <h1 className="text-2xl sm:text-3xl font-fantasy font-black text-slate-100">
               {course.courseName}
             </h1>
 
             {course.instructorName && (
-              <p className="text-xs text-slate-300 mt-1 font-medium">
+              <p className="text-xs text-slate-300 mt-1 font-bold">
                 Instructor: {course.instructorName}
               </p>
             )}
 
             {course.description && (
-              <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed">
+              <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed font-medium">
                 {course.description}
               </p>
             )}
           </div>
 
           <div className="sm:text-right shrink-0">
-            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block mb-1">
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1">
               Course Progress
             </span>
-            <div className="text-3xl font-mono font-bold text-cyan-300">
+            <div className="text-3xl font-mono font-black text-amber-300">
               {progressPercent}%
             </div>
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[11px] font-mono text-slate-400 font-bold">
               {completedCount} / {courseMilestones.length} quests completed
             </span>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-purple-500/15">
+        <div className="mt-6 pt-4 border-t border-white/[0.04]">
           <ProgressBar value={progressPercent} size="md" variant="cyan" />
         </div>
       </div>
 
       {/* Grading Structure Box if available */}
       {gradingCategories.length > 0 && (
-        <Card className="space-y-3">
+        <Card className="space-y-3 shadow-neu-raised">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Percent className="w-4 h-4 text-purple-400" />
-              <h3 className="font-fantasy font-bold text-sm text-slate-100">
+              <Percent className="w-4 h-4 text-indigo-400" />
+              <h3 className="font-fantasy font-black text-sm text-slate-100">
                 Syllabus Grading Weights Structure
               </h3>
             </div>
-            <span className="text-xs font-mono text-cyan-300 font-bold">
+            <span className="text-xs font-mono text-sky-400 font-black">
               Total Weight: {totalGradingWeight}%
             </span>
           </div>
@@ -241,10 +236,10 @@ export const CourseDetailPage: React.FC = () => {
             {gradingCategories.map((cat) => (
               <div
                 key={cat.id}
-                className="p-3 rounded-xl bg-[#090c18] border border-slate-800 text-xs"
+                className="p-3.5 rounded-2xl bg-[#060810] border border-white/[0.04] shadow-neu-inset text-xs font-bold"
               >
-                <span className="text-slate-400 block truncate">{cat.name}</span>
-                <span className="font-mono text-sm font-bold text-purple-300">
+                <span className="text-slate-300 block truncate">{cat.name}</span>
+                <span className="font-mono text-sm font-black text-indigo-400">
                   {cat.weightPercent}%
                 </span>
               </div>
@@ -258,14 +253,14 @@ export const CourseDetailPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Swords className="w-5 h-5 text-rose-400" />
-            <h2 className="text-xl font-fantasy font-bold text-slate-100">
+            <h2 className="text-xl font-fantasy font-black text-slate-100">
               Major Boss Battles ({bossEncounters.length})
             </h2>
           </div>
         </div>
 
         {bossEncounters.length === 0 ? (
-          <div className="p-6 rounded-2xl bg-[#121528]/40 border border-purple-500/15 text-center text-xs text-slate-400">
+          <div className="p-6 rounded-3xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-center text-xs text-slate-400 font-medium">
             No boss examinations registered for this course yet.
           </div>
         ) : (
@@ -277,29 +272,29 @@ export const CourseDetailPage: React.FC = () => {
                   setSelectedMilestone(boss);
                   setIsMilestoneModalOpen(true);
                 }}
-                className={`p-4 rounded-2xl border transition-all cursor-pointer space-y-3 ${
+                className={`p-5 rounded-3xl border border-white/[0.04] shadow-neu-raised hover:shadow-neu-raised-lg transition-all cursor-pointer space-y-3 ${
                   boss.status === 'completed'
-                    ? 'bg-[#101424]/60 border-emerald-500/30 opacity-75'
-                    : 'bg-gradient-to-br from-[#1c1328] to-[#121528] border-rose-500/30 hover:border-rose-500/60 shadow-lg shadow-rose-950/20'
+                    ? 'bg-[#0E1322] opacity-80'
+                    : 'bg-[#0E1322] hover:bg-[#12182a]'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
                     <div
-                      className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold ${
+                      className={`w-8 h-8 rounded-full border shadow-neu-raised-sm flex items-center justify-center shrink-0 mt-0.5 text-xs font-black ${
                         boss.status === 'completed'
-                          ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400'
-                          : 'border-rose-500/50 bg-rose-500/15 text-rose-300'
+                          ? 'bg-sky-500/20 text-sky-300 border-sky-500/40'
+                          : 'bg-indigo-600/25 text-indigo-300 border-indigo-500/40'
                       }`}
                     >
                       {boss.status === 'completed' ? '✓' : '⚔️'}
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-rose-400 uppercase font-bold tracking-wider block">
+                      <span className="text-[10px] font-mono text-indigo-400 uppercase font-black tracking-wider block">
                         {boss.difficultyCategory === 'final_raid' ? 'Final Raid' : 'Boss Fight'}
                       </span>
                       <h4
-                        className={`text-sm font-bold ${
+                        className={`text-sm font-black font-fantasy ${
                           boss.status === 'completed'
                             ? 'line-through text-slate-400'
                             : 'text-slate-100'
@@ -312,10 +307,10 @@ export const CourseDetailPage: React.FC = () => {
 
                   {boss.bossHp !== null && (
                     <div className="text-right shrink-0">
-                      <span className="font-mono text-sm font-bold text-rose-300 block">
+                      <span className="font-mono text-sm font-black text-rose-400 block">
                         {boss.bossHp} HP
                       </span>
-                      <span className="text-[10px] text-slate-500">
+                      <span className="text-[10px] text-slate-400 font-mono font-bold">
                         {boss.weightPercent}% Weight
                       </span>
                     </div>
@@ -331,32 +326,32 @@ export const CourseDetailPage: React.FC = () => {
                   />
                 )}
 
-                <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-purple-500/10">
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-slate-500" />
+                <div className="flex items-center justify-between text-xs text-slate-300 pt-2.5 border-t border-white/[0.04]">
+                  <span className="flex items-center gap-1.5 font-mono font-bold">
+                    <Clock className="w-3.5 h-3.5 text-slate-400" />
                     <span>{boss.dueDate || 'Date TBD'}</span>
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-amber-300 font-semibold mr-1">
+                    <span className="font-mono text-amber-300 font-black mr-1">
                       +{boss.xpReward} XP
                     </span>
                     {boss.status === 'pending' ? (
                       <button
                         type="button"
                         onClick={(e) => handlePlayMilestone(e, boss, true)}
-                        className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-rose-600 to-purple-600 hover:from-rose-500 hover:to-purple-500 text-white font-fantasy font-semibold text-xs shadow-md shadow-rose-950/30 border border-rose-400/30 transition-all active:scale-95"
+                        className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white font-fantasy font-black text-xs border border-indigo-400/30 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5"
                       >
-                        <Gamepad2 className="w-3.5 h-3.5 text-amber-300" />
+                        <Gamepad2 className="w-3.5 h-3.5 text-white" />
                         <span>Fight Boss</span>
                       </button>
                     ) : (
                       <button
                         type="button"
                         onClick={(e) => handlePlayMilestone(e, boss, true)}
-                        className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-800 text-emerald-400 hover:text-emerald-300 text-xs font-medium border border-emerald-500/30 transition-colors"
+                        className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-[#0E1322] hover:bg-[#131a2e] text-slate-200 text-xs font-black font-fantasy border border-white/[0.04] shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5"
                         title="Replay in practice mode"
                       >
-                        <RotateCcw className="w-3.5 h-3.5 text-emerald-400" />
+                        <RotateCcw className="w-3.5 h-3.5 text-white" />
                         <span>Replay Battle</span>
                       </button>
                     )}
@@ -372,27 +367,27 @@ export const CourseDetailPage: React.FC = () => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-xl font-fantasy font-bold text-slate-100">
+            <Sparkles className="w-5 h-5 text-sky-400" />
+            <h2 className="text-xl font-fantasy font-black text-slate-100">
               Assignments &amp; Quests ({routineQuests.length})
             </h2>
           </div>
 
           <Button
-            variant="cyan"
+            variant="secondary"
             size="sm"
             onClick={() => {
               setSelectedMilestone(null);
               setIsMilestoneModalOpen(true);
             }}
           >
-            <Plus className="w-4 h-4 mr-1" />
+            <Plus className="w-4 h-4 mr-1 text-sky-300" />
             <span>Add Quest</span>
           </Button>
         </div>
 
         {routineQuests.length === 0 ? (
-          <div className="p-8 rounded-2xl bg-[#121528]/40 border border-purple-500/15 text-center text-xs text-slate-400">
+          <div className="p-8 rounded-3xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-center text-xs text-slate-400 font-medium">
             No routine quests recorded. Click "Add Quest" to inscribe an assignment or quiz.
           </div>
         ) : (
@@ -404,18 +399,18 @@ export const CourseDetailPage: React.FC = () => {
                   setSelectedMilestone(quest);
                   setIsMilestoneModalOpen(true);
                 }}
-                className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-4 ${
+                className={`p-4 rounded-2xl border border-white/[0.03] shadow-neu-raised-sm hover:shadow-neu-raised transition-all cursor-pointer flex items-center justify-between gap-4 ${
                   quest.status === 'completed'
-                    ? 'bg-[#0f1220]/60 border-slate-800 opacity-60'
-                    : 'bg-[#121528]/90 hover:bg-[#161a32] border-purple-500/20 hover:border-purple-500/40'
+                    ? 'bg-[#0E1322] opacity-75'
+                    : 'bg-[#0E1322] hover:bg-[#12182a]'
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div
-                    className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 text-xs font-bold ${
+                    className={`w-7 h-7 rounded-full border shadow-neu-raised-sm flex items-center justify-center shrink-0 text-xs font-black ${
                       quest.status === 'completed'
-                        ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400'
-                        : 'border-slate-700 bg-slate-800/50 text-slate-400'
+                        ? 'bg-sky-500/20 text-sky-300 border-sky-500/40'
+                        : 'bg-[#070b14] text-slate-300 border-white/10'
                     }`}
                   >
                     {quest.status === 'completed' ? '✓' : '🎯'}
@@ -423,21 +418,21 @@ export const CourseDetailPage: React.FC = () => {
 
                   <div className="min-w-0">
                     <h4
-                      className={`text-sm font-semibold truncate ${
+                      className={`text-sm font-bold truncate ${
                         quest.status === 'completed'
                           ? 'line-through text-slate-400'
-                          : 'text-slate-200'
+                          : 'text-slate-100'
                       }`}
                     >
                       {quest.title}
                     </h4>
-                    <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                    <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5 font-mono font-medium">
                       <span className="capitalize">{quest.milestoneType}</span>
                       {quest.weightPercent !== null && (
                         <span>• {quest.weightPercent}% weight</span>
                       )}
                       {quest.sourceExcerpt && (
-                        <span className="italic text-slate-500 truncate max-w-xs">
+                        <span className="italic text-slate-400 truncate max-w-xs">
                           • {quest.sourceExcerpt}
                         </span>
                       )}
@@ -447,10 +442,10 @@ export const CourseDetailPage: React.FC = () => {
 
                 <div className="flex items-center gap-3 shrink-0 text-right">
                   <div>
-                    <span className="text-xs font-mono text-slate-300 block">
+                    <span className="text-xs font-mono font-bold text-slate-200 block">
                       {quest.dueDate || 'TBD'}
                     </span>
-                    <span className="text-[10px] font-mono text-amber-300">
+                    <span className="text-[10px] font-mono font-black text-amber-300">
                       +{quest.xpReward} XP
                     </span>
                   </div>
@@ -458,19 +453,19 @@ export const CourseDetailPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={(e) => handlePlayMilestone(e, quest, false)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-fantasy font-semibold text-xs shadow-md shadow-purple-900/30 border border-purple-400/30 transition-all active:scale-95 group"
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 text-slate-950 font-fantasy font-black text-xs border border-sky-400/30 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5 group"
                     >
-                      <Gamepad2 className="w-3.5 h-3.5 text-cyan-300 group-hover:scale-110 transition-transform" />
+                      <Gamepad2 className="w-3.5 h-3.5 text-slate-950 group-hover:scale-110 transition-transform" />
                       <span>Play</span>
                     </button>
                   ) : (
                     <button
                       type="button"
                       onClick={(e) => handlePlayMilestone(e, quest, false)}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-800 text-emerald-400 hover:text-emerald-300 text-xs font-medium border border-emerald-500/30 transition-colors"
+                      className="flex items-center gap-1 px-3.5 py-1.5 rounded-2xl bg-[#0E1322] hover:bg-[#131a2e] text-slate-200 text-xs font-black font-fantasy border border-white/[0.04] shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5"
                       title="Replay in practice mode"
                     >
-                      <RotateCcw className="w-3 h-3 text-emerald-400" />
+                      <RotateCcw className="w-3 h-3 text-slate-200" />
                       <span>Replay</span>
                     </button>
                   )}
@@ -483,12 +478,12 @@ export const CourseDetailPage: React.FC = () => {
 
       {/* Delete Confirmation Modal */}
       {isDeleteConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl bg-[#0f1222] border border-rose-500/30 p-6 space-y-4 text-slate-100 shadow-2xl">
-            <h3 className="text-lg font-bold font-fantasy text-rose-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-3xl bg-[#0E1322] border border-white/[0.05] shadow-neu-raised-lg p-6 space-y-4 text-slate-100">
+            <h3 className="text-lg font-black font-fantasy text-rose-400">
               Disband Course Realm?
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed font-medium">
               Are you sure you want to delete <span className="font-bold text-white">"{course.courseName}"</span>? All quests, boss encounters, and grading structures will be removed.
             </p>
             <div className="flex justify-end gap-2 pt-2">
@@ -502,6 +497,7 @@ export const CourseDetailPage: React.FC = () => {
           </div>
         </div>
       )}
+
 
       {/* Modals */}
       <MilestoneModal

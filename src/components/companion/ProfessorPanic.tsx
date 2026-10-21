@@ -157,20 +157,20 @@ export const ProfessorPanic: React.FC<ProfessorPanicProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.9 }}
             transition={{ duration: 0.2 }}
-            className="relative max-w-xs md:max-w-sm rounded-2xl p-3.5 bg-gradient-to-br from-[#181a30]/95 to-[#0f1122]/95 border border-purple-500/30 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md text-xs md:text-sm text-slate-200"
+            className="relative max-w-xs md:max-w-sm rounded-3xl p-4 bg-[#0E1322] border border-white/[0.04] shadow-neu-raised text-xs md:text-sm text-slate-200 backdrop-blur-md"
           >
             {/* Triangular pointer */}
-            <div className="absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-purple-500/40" />
+            <div className="absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#0E1322]" />
 
             <div className="flex items-start justify-between gap-2 mb-1">
-              <div className="flex items-center gap-1.5 font-bold text-cyan-400 font-fantasy tracking-wider text-[11px] uppercase">
-                <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-spin" style={{ animationDuration: '6s' }} />
+              <div className="flex items-center gap-1.5 font-bold text-sky-400 tracking-wider text-[11px] uppercase">
+                <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-spin" style={{ animationDuration: '6s' }} />
                 <span>Prof. Panic (Lvl {levelInfo.level} Advisor)</span>
               </div>
               <button
                 type="button"
                 onClick={() => setIsBubbleOpen(false)}
-                className="text-slate-500 hover:text-slate-300 transition-colors p-0.5"
+                className="text-slate-400 hover:text-white transition-colors p-0.5"
                 title="Dismiss bubble"
               >
                 <X className="w-3.5 h-3.5" />
@@ -181,9 +181,9 @@ export const ProfessorPanic: React.FC<ProfessorPanicProps> = ({
               "{currentMessage}"
             </p>
 
-            <div className="mt-2 pt-2 border-t border-purple-500/15 flex items-center justify-between text-[10px] text-slate-400">
+            <div className="mt-2 pt-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-slate-400">
               <span className="italic">Click wizard for more wisdom</span>
-              <span className="uppercase text-[9px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">
+              <span className="uppercase text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-[#070b14] text-indigo-300 border border-indigo-500/30 shadow-neu-inset-sm">
                 {humorMode} mode
               </span>
             </div>
@@ -195,35 +195,35 @@ export const ProfessorPanic: React.FC<ProfessorPanicProps> = ({
       <motion.button
         type="button"
         onClick={cycleMessage}
-        className="relative group p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-full"
-        whileHover={{ scale: 1.08 }}
+        className="relative group p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-full"
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         title="Professor Panic — Click for commentary!"
       >
         {/* Glow Aura */}
         <div
-          className={`absolute inset-0 rounded-full blur-md opacity-60 group-hover:opacity-100 transition-opacity ${
+          className={`absolute inset-0 rounded-full blur-md opacity-40 group-hover:opacity-80 transition-opacity ${
             dynamicMood === 'worried'
-              ? 'bg-rose-500'
+              ? 'bg-rose-500/30'
               : dynamicMood === 'victory'
-              ? 'bg-amber-400'
+              ? 'bg-emerald-500/30'
               : dynamicMood === 'error'
-              ? 'bg-orange-500'
-              : 'bg-gradient-to-tr from-purple-600 via-cyan-500 to-pink-500'
+              ? 'bg-rose-500/40'
+              : 'bg-gradient-to-tr from-indigo-500/40 via-sky-500/30 to-indigo-600/30'
           }`}
         />
 
-        {/* Wizard SVG Artwork */}
-        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#121424] border-2 border-cyan-400/50 p-1 shadow-lg flex items-center justify-center overflow-hidden">
+        {/* Wizard SVG Artwork inside Circular Neumorphic Dial */}
+        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full neu-dial border border-white/[0.06] shadow-neu-raised p-1 flex items-center justify-center overflow-hidden hover:scale-105 active:scale-95 transition-all">
           <svg viewBox="0 0 100 100" className="w-full h-full">
             <defs>
               <linearGradient id="hatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#7c3aed" />
-                <stop offset="100%" stopColor="#4c1d95" />
+                <stop offset="0%" stopColor="#6366F1" />
+                <stop offset="100%" stopColor="#38BDF8" />
               </linearGradient>
               <linearGradient id="orbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#22d3ee" />
-                <stop offset="100%" stopColor="#0891b2" />
+                <stop offset="0%" stopColor="#38BDF8" />
+                <stop offset="100%" stopColor="#6366F1" />
               </linearGradient>
             </defs>
 

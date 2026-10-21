@@ -73,7 +73,22 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
 
     // Ensure valid gameConfig exists
     if (quest.gameConfig && quest.gameConfig.questions && quest.gameConfig.questions.length > 0) {
-      setActiveGameConfig(quest.gameConfig);
+      let config = quest.gameConfig;
+      if (
+        initialMode === 'puzzle-quest' &&
+        (!config.puzzleData || (!config.puzzleData.pairs?.length && !config.puzzleData.steps?.length))
+      ) {
+        const fallback = generateFallbackGameConfig(
+          quest.title,
+          quest.courseName || quest.courseCode,
+          'puzzle-quest'
+        );
+        config = {
+          ...config,
+          puzzleData: fallback.puzzleData,
+        };
+      }
+      setActiveGameConfig(config);
     } else {
       const generated = generateFallbackGameConfig(
         quest.title,
@@ -101,16 +116,26 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
         ...activeGameConfig,
         gameMode: mode,
       };
-      // If switching to puzzle and no puzzleData, generate it
-      if (mode === 'puzzle-quest' && !updated.puzzleData) {
+      // If switching to puzzle and no valid puzzleData, generate it
+      if (
+        mode === 'puzzle-quest' &&
+        (!updated.puzzleData || (!updated.puzzleData.pairs?.length && !updated.puzzleData.steps?.length))
+      ) {
         const fallback = generateFallbackGameConfig(
           quest.title,
-          quest.courseName,
+          quest.courseName || quest.courseCode,
           'puzzle-quest'
         );
         updated.puzzleData = fallback.puzzleData;
       }
       setActiveGameConfig(updated);
+    } else {
+      const generated = generateFallbackGameConfig(
+        quest.title,
+        quest.courseName || quest.courseCode,
+        mode
+      );
+      setActiveGameConfig(generated);
     }
   };
 
@@ -141,24 +166,24 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl h-[92vh] bg-[#0c0f1d] border border-purple-500/30 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative w-full max-w-5xl h-[92vh] bg-[#0B0F19] border border-slate-700/80 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
         {/* Top Control Header */}
-        <div className="px-5 py-3 bg-[#11152a] border-b border-purple-500/20 flex items-center justify-between flex-wrap gap-2">
+        <div className="px-5 py-3 bg-[#0E1322]/95 border-b border-slate-800/80 flex items-center justify-between flex-wrap gap-2">
           {/* Quest Info */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-300">
+            <div className="w-8 h-8 rounded-xl bg-indigo-600/25 border border-indigo-500/40 shadow-neo-sm flex items-center justify-center text-indigo-300">
               <Swords className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-bold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-300 border border-sky-500/30 shadow-neo-sm font-bold">
                   {quest.courseCode || 'COURSE'}
                 </span>
                 <h3 className="font-fantasy font-bold text-sm text-slate-100 truncate max-w-[260px] sm:max-w-md">
                   {quest.title}
                 </h3>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-slate-300">
                 {quest.courseName} • Reward: +{quest.xpReward} XP
               </p>
             </div>
@@ -167,62 +192,62 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
           {/* Game Mode Switcher & Close Button */}
           <div className="flex items-center gap-2">
             {!victoryReport && (
-              <div className="flex items-center bg-slate-900/80 p-0.5 rounded-xl border border-slate-700/60 text-xs">
+              <div className="flex items-center bg-[#131B2E] p-1 rounded-xl border border-slate-700/80 text-xs gap-1">
                 <button
                   type="button"
                   onClick={() => handleModeSwitch('do-or-die')}
-                  className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                     selectedGameMode === 'do-or-die'
-                      ? 'bg-purple-600 text-white shadow-sm font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-indigo-600 text-white border border-indigo-400/40 shadow-neo-purple font-bold'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                   }`}
-                  title="2D Survival Side-scroller"
+                  title="3D Cyber Runner / Platformer"
                 >
-                  <Flame className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Do-or-Die</span>
+                  <Flame className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Do-or-Die 3D</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleModeSwitch('quiz-battle')}
-                  className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                     selectedGameMode === 'quiz-battle'
-                      ? 'bg-purple-600 text-white shadow-sm font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-indigo-600 text-white border border-indigo-400/40 shadow-neo-purple font-bold'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                   }`}
                   title="Monster Combat Arena"
                 >
-                  <Swords className="w-3.5 h-3.5 text-cyan-400" />
+                  <Swords className="w-3.5 h-3.5 text-sky-400" />
                   <span>Quiz Battle</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleModeSwitch('puzzle-quest')}
-                  className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                     selectedGameMode === 'puzzle-quest'
-                      ? 'bg-purple-600 text-white shadow-sm font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-indigo-600 text-white border border-indigo-400/40 shadow-neo-purple font-bold'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                   }`}
-                  title="Concept Matching & Step Ordering"
+                  title="3D Runic Dungeon Chamber"
                 >
-                  <Puzzle className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Puzzle Quest</span>
+                  <Puzzle className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Puzzle Quest 3D</span>
                 </button>
 
                 {(quest.isBoss || quest.kind === 'milestone') && (
                   <button
                     type="button"
                     onClick={() => handleModeSwitch('boss-slayer')}
-                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                    className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                       selectedGameMode === 'boss-slayer'
-                        ? 'bg-gradient-to-r from-rose-600 to-purple-600 text-white shadow-sm font-bold'
-                        : 'text-slate-400 hover:text-slate-200'
+                        ? 'bg-gradient-to-r from-indigo-600 to-rose-600 text-white border border-indigo-400/40 shadow-neo-purple font-bold'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                     }`}
-                    title="3-Phase Real-Time RPG Boss Fight"
+                    title="3D Isometric Action-RPG Boss Fight"
                   >
                     <Crown className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Boss Slayer</span>
+                    <span>Boss Slayer 3D</span>
                   </button>
                 )}
               </div>
@@ -231,7 +256,7 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
+              className="p-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-rose-500/20 hover:border-rose-500/40 border border-slate-700/80 shadow-neo-sm transition-all"
               title="Close Arena"
             >
               <X className="w-5 h-5" />
@@ -244,8 +269,8 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
           {victoryReport ? (
             /* CONQUEST VICTORY REPORT CARD */
             <div className="flex-1 flex items-center justify-center p-6 bg-gradient-to-b from-[#0e1224] to-[#070914] animate-in fade-in zoom-in-95">
-              <div className="max-w-md w-full bg-[#13172e] border border-emerald-500/40 rounded-3xl p-6 text-center shadow-2xl space-y-4">
-                <div className="w-20 h-20 rounded-3xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-5xl mx-auto shadow-xl shadow-emerald-950/50">
+              <div className="max-w-md w-full bg-[#0E1322] border border-slate-800/80 shadow-2xl rounded-3xl p-6 text-center space-y-4">
+                <div className="w-20 h-20 rounded-3xl bg-indigo-500/20 border border-indigo-400/40 shadow-neo-purple flex items-center justify-center text-5xl mx-auto">
                   🏆
                 </div>
 
@@ -253,13 +278,13 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
                   <h2 className="font-fantasy font-black text-2xl text-slate-100">
                     QUEST CONQUERED!
                   </h2>
-                  <p className="text-xs text-emerald-300 font-mono mt-0.5">
+                  <p className="text-xs text-sky-400 font-mono mt-0.5 font-bold">
                     {victoryReport.title}
                   </p>
                 </div>
 
                 {/* Score & XP details */}
-                <div className="p-4 rounded-2xl bg-[#090b16] border border-purple-500/20 text-xs text-slate-300 space-y-2.5 text-left">
+                <div className="p-4 rounded-2xl bg-[#131B2E] border border-slate-800/80 shadow-neo-sm text-xs text-slate-300 space-y-2.5 text-left font-bold">
                   <div className="flex justify-between">
                     <span className="text-slate-400">Game Mode:</span>
                     <span className="font-bold text-slate-200 uppercase tracking-wider text-[11px]">
@@ -269,12 +294,12 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
 
                   <div className="flex justify-between">
                     <span className="text-slate-400">Knowledge Points:</span>
-                    <span className="font-mono text-cyan-300 font-bold">{victoryReport.score} pts</span>
+                    <span className="font-mono text-sky-400 font-bold">{victoryReport.score} pts</span>
                   </div>
 
-                  <div className="flex justify-between border-t border-slate-800 pt-2 font-bold">
-                    <span className="text-amber-300">XP Awarded:</span>
-                    <span className="font-mono text-emerald-300 text-sm">
+                  <div className="flex justify-between border-t border-slate-800/80 pt-2 font-bold">
+                    <span className="text-slate-200">XP Awarded:</span>
+                    <span className="font-mono text-amber-300 text-sm">
                       {victoryReport.alreadyCompleted
                         ? '+0 XP (Practice Mode)'
                         : `+${victoryReport.xpEarned} XP`}
@@ -282,7 +307,7 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
                   </div>
 
                   {victoryReport.alreadyCompleted && (
-                    <p className="text-[10px] text-slate-500 italic pt-1">
+                    <p className="text-[10px] text-slate-400 italic pt-1">
                       * You previously conquered this quest. No duplicate XP was awarded.
                     </p>
                   )}
@@ -292,7 +317,7 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setVictoryReport(null)}
-                    className="flex-1 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fantasy text-xs font-bold transition-all"
+                    className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-fantasy font-bold text-xs border border-slate-700/80 shadow-neo hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
                   >
                     Play Again 🔄
                   </button>
@@ -300,7 +325,7 @@ export const PlayQuestModal: React.FC<PlayQuestModalProps> = ({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-fantasy font-bold text-xs shadow-lg transition-all"
+                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-fantasy font-black text-xs border border-indigo-400/40 shadow-neo-purple hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
                   >
                     Return to Quests ✓
                   </button>

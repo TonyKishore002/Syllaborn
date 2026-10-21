@@ -117,6 +117,61 @@ describe('Puzzle Quest - Gameplay, Generation, and Mechanics', () => {
       expect(config.puzzleData!.steps!.length).toBeGreaterThanOrEqual(4);
       expect(config.questions.length).toBeGreaterThanOrEqual(3);
     });
+
+    it('sanitizeGameConfig automatically generates puzzleData when gameMode is puzzle-quest and puzzleData is missing', async () => {
+      const { sanitizeGameConfig } = await import('../../src/lib/game-generator');
+      const incompleteConfig = {
+        questId: 'test-puzzle-quest',
+        topic: 'Graph Theory & Dijkstra',
+        gameMode: 'puzzle-quest' as const,
+        difficulty: 'easy' as const,
+        questions: [
+          {
+            id: 'q1',
+            question: 'What is Dijkstra algorithm?',
+            options: ['Shortest path algorithm', 'Sorting algorithm'],
+            correctAnswerIndex: 0,
+            explanation: 'Finds shortest path in weighted graphs.',
+          },
+        ],
+        puzzleData: null,
+      };
+
+      const result = sanitizeGameConfig(incompleteConfig);
+      expect(result.valid).toBe(true);
+      expect(result.sanitizedConfig.puzzleData).not.toBeNull();
+      expect(result.sanitizedConfig.puzzleData!.pairs!.length).toBeGreaterThanOrEqual(4);
+      expect(result.sanitizedConfig.puzzleData!.steps!.length).toBeGreaterThanOrEqual(4);
+    });
+
+    it('validates concept-matching and step-ordering schemas with term and definition fields', async () => {
+      const { puzzleDataSchema } = await import('../../src/lib/validation');
+      const samplePuzzle = {
+        type: 'concept-matching',
+        prompt: 'Match the concepts below:',
+        pairs: [
+          {
+            id: 'p-1',
+            left: 'Concept Left',
+            right: 'Definition Right',
+            term: 'Concept Left',
+            definition: 'Definition Right',
+            explanation: 'Detailed explanation',
+          },
+        ],
+        steps: [
+          {
+            id: 's-1',
+            order: 1,
+            text: 'Initial step',
+            explanation: 'Step explanation',
+          },
+        ],
+      };
+
+      const parsed = puzzleDataSchema.safeParse(samplePuzzle);
+      expect(parsed.success).toBe(true);
+    });
   });
 
   describe('Gameplay Completion & XP Idempotency for Puzzle Quest', () => {

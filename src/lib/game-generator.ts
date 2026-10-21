@@ -163,6 +163,22 @@ export function sanitizeGameConfig(config: QuestGameConfig): {
     });
   }
 
+  let puzzleData = config.puzzleData || null;
+  if (sanitized.gameMode === 'puzzle-quest' && (!puzzleData || (!puzzleData.pairs?.length && !puzzleData.steps?.length))) {
+    puzzleData = generateTopicGroundedPuzzle(sanitized.topic);
+  } else if (puzzleData?.pairs) {
+    puzzleData.pairs = puzzleData.pairs.map((p, idx) => ({
+      ...p,
+      id: p.id || `pair-${idx + 1}`,
+      left: (p.left || p.term || `Concept #${idx + 1}`).trim(),
+      right: (p.right || p.definition || `Definition #${idx + 1}`).trim(),
+      term: p.term || p.left,
+      definition: p.definition || p.right,
+    }));
+  }
+
+  sanitized.puzzleData = puzzleData;
+
   return {
     valid: errors.length === 0,
     errors,

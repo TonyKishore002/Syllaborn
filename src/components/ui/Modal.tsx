@@ -59,12 +59,12 @@ export const Modal: React.FC<ModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className={cn(
-              'relative w-full rounded-2xl bg-[#0f1222] border border-purple-500/25 shadow-2xl p-6 text-slate-100 z-10 my-8 overflow-hidden',
+              'relative w-full rounded-3xl bg-[#0F1424] border border-white/[0.04] shadow-neu-raised-lg p-6 text-slate-100 z-10 my-8 overflow-hidden backdrop-blur-xl',
               maxWidths[maxWidth]
             )}
           >
             {/* Ambient decorative glow at top of modal */}
-            <div className="absolute top-0 left-1/4 right-1/4 h-1 bg-gradient-to-r from-purple-500 via-cyan-400 to-pink-500 blur-sm" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400" />
 
             <div className="flex items-start justify-between gap-4 mb-4">
               <div>
@@ -74,7 +74,7 @@ export const Modal: React.FC<ModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors focus:outline-none"
+                className="text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-[#161D32] hover:shadow-neu-raised-sm active:shadow-neu-inset-sm transition-all focus:outline-none"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />

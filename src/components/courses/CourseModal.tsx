@@ -102,7 +102,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
       onClose={onClose}
       title={
         <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-purple-400" />
+          <BookOpen className="w-5 h-5 text-indigo-400" />
           <span>{courseToEdit ? 'Edit Course Realm' : 'Inscribe New Course Realm'}</span>
         </div>
       }
@@ -112,7 +112,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-xs font-medium text-slate-300 mb-1">
-            Course Name <span className="text-rose-400">*</span>
+            Course Name <span className="text-indigo-400 font-bold">*</span>
           </label>
           <input
             type="text"
@@ -120,14 +120,14 @@ export const CourseModal: React.FC<CourseModalProps> = ({
             value={courseName}
             onChange={(e) => setCourseName(e.target.value)}
             placeholder="e.g. Data Structures and Algorithms"
-            className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none"
+            className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1">
-              Course Code <span className="text-rose-400">*</span>
+              Course Code <span className="text-indigo-400 font-bold">*</span>
             </label>
             <input
               type="text"
@@ -135,7 +135,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
               value={courseCode}
               onChange={(e) => setCourseCode(e.target.value)}
               placeholder="e.g. CS-301"
-              className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 uppercase focus:outline-none"
+              className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 uppercase focus:outline-none transition-all"
             />
           </div>
 
@@ -148,7 +148,7 @@ export const CourseModal: React.FC<CourseModalProps> = ({
               value={instructorName}
               onChange={(e) => setInstructorName(e.target.value)}
               placeholder="e.g. Dr. Eleanor Vance"
-              className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none"
+              className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
             />
           </div>
         </div>
@@ -163,8 +163,8 @@ export const CourseModal: React.FC<CourseModalProps> = ({
                 key={c}
                 type="button"
                 onClick={() => setColor(c)}
-                className={`w-7 h-7 rounded-xl transition-all ${
-                  color === c ? 'ring-2 ring-white scale-110 shadow-lg' : 'opacity-70 hover:opacity-100'
+                className={`w-7 h-7 rounded-full border border-white/10 shadow-neu-raised-sm active:shadow-neu-inset-sm transition-all ${
+                  color === c ? 'ring-2 ring-indigo-400 scale-110 shadow-neu-raised' : 'opacity-70 hover:opacity-100 hover:scale-105'
                 }`}
                 style={{ backgroundColor: c }}
               />
@@ -181,11 +181,11 @@ export const CourseModal: React.FC<CourseModalProps> = ({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Key concepts, prerequisites, or notes..."
-            className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none resize-none"
+            className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all resize-none"
           />
         </div>
 
-        {error && <p className="text-xs text-rose-400">{error}</p>}
+        {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
 
         <div className="flex justify-end gap-2 pt-2">
           <Button type="button" variant="ghost" size="sm" onClick={onClose}>

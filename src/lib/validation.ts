@@ -56,21 +56,30 @@ export const gameQuestionSchema = z.object({
 
 export const puzzlePairSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
-  left: z.string().min(1),
-  right: z.string().min(1),
+  left: z.string().optional().default(''),
+  right: z.string().optional().default(''),
+  term: z.string().optional(),
+  definition: z.string().optional(),
+  explanation: z.string().optional(),
+  hint: z.string().optional(),
 });
 
 export const puzzleStepSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
-  order: z.number().int(),
+  order: z.number().int().optional().default(1),
   text: z.string().min(1),
+  explanation: z.string().optional(),
 });
 
 export const puzzleDataSchema = z.object({
-  type: z.enum(['matching', 'ordering']),
+  type: z.enum(['matching', 'ordering', 'concept-matching', 'step-ordering']).default('concept-matching'),
   prompt: z.string().min(1),
+  hint: z.string().optional(),
+  explanation: z.string().optional(),
   pairs: z.array(puzzlePairSchema).optional(),
   steps: z.array(puzzleStepSchema).optional(),
+  orderedSteps: z.array(puzzleStepSchema).optional(),
+  scrambledSteps: z.array(puzzleStepSchema).optional(),
 });
 
 export const questGameConfigSchema = z.object({

@@ -69,37 +69,36 @@ export const BossFightsPage: React.FC = () => {
             <h1 className="text-2xl sm:text-3xl font-fantasy font-black text-slate-100">
               Boss Fights
             </h1>
-            <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30">
+            <span className="text-xs font-mono font-black px-3 py-0.5 rounded-full bg-[#070b14] text-rose-300 border border-rose-500/30 shadow-neu-inset-sm">
               {bossAssessments.filter((b) => b.status === 'pending').length} Upcoming
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-1 font-medium">
             Major examinations and high-stakes assessments represented as semester boss encounters.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Button
-            variant="secondary"
+            variant="danger"
             size="sm"
             onClick={() => handleLaunchArena(bossAssessments[0] || null, courses[0] || null)}
-            className="border-rose-500/30 text-rose-300 hover:bg-rose-500/10"
           >
-            <Crown className="w-4 h-4 mr-1.5 text-amber-300" />
+            <Crown className="w-4 h-4 mr-1.5 text-white" />
             <span>Play Boss Slayer Arena</span>
           </Button>
           <Button variant="primary" size="sm" onClick={() => setIsUploadModalOpen(true)}>
-            <FileUp className="w-4 h-4 mr-1.5 text-cyan-300" />
+            <FileUp className="w-4 h-4 mr-1.5 text-white" />
             <span>Upload Syllabus</span>
           </Button>
         </div>
       </div>
 
       {/* Plain English Game Mechanic Explanation */}
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 to-slate-900 border border-purple-500/25 flex items-start gap-3">
-        <Sparkles className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
-        <div className="text-xs text-slate-300 leading-relaxed">
-          <span className="font-bold text-cyan-300 block mb-0.5 font-fantasy">
+      <div className="p-5 rounded-3xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised flex items-start gap-3">
+        <Sparkles className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
+        <div className="text-xs text-slate-300 leading-relaxed font-medium">
+          <span className="font-black text-indigo-300 block mb-0.5 font-fantasy uppercase tracking-wider">
             How Boss Fights Work:
           </span>
           "Complete your preparation quests to reduce the boss's HP."
@@ -118,11 +117,11 @@ export const BossFightsPage: React.FC = () => {
           onAction={() => setIsUploadModalOpen(true)}
         />
       ) : bossAssessments.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-[#101324] border border-purple-500/15 space-y-2">
-          <p className="text-slate-300 font-fantasy text-sm font-bold">
+        <div className="p-12 text-center rounded-3xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised space-y-2">
+          <p className="text-slate-100 font-fantasy text-sm font-black">
             No Boss Fights Scheduled Yet!
           </p>
-          <p className="text-xs text-slate-500 max-w-md mx-auto">
+          <p className="text-xs text-slate-400 max-w-md mx-auto font-medium">
             Your uploaded courses don't have midterms or finals scheduled yet. When exams are added or detected in your syllabi, they will appear here with custom health bars.
           </p>
         </div>
@@ -152,48 +151,51 @@ export const BossFightsPage: React.FC = () => {
             return (
               <Card
                 key={boss.id}
-                className={`p-5 rounded-3xl border transition-all space-y-4 ${
+                className={`p-6 rounded-3xl border border-white/[0.04] shadow-neu-raised hover:shadow-neu-raised-lg transition-all space-y-4 ${
                   isDefeated
-                    ? 'bg-[#0f1422]/70 border-emerald-500/30 opacity-80'
-                    : 'bg-[#101324] border-purple-500/20 hover:border-purple-500/40 shadow-lg'
+                    ? 'bg-[#0E1322] opacity-80'
+                    : 'bg-[#0E1322]'
                 }`}
               >
                 {/* Boss Header */}
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-md shrink-0 ${
-                        isDefeated
-                          ? 'bg-emerald-950/60 border border-emerald-500/40'
-                          : isFinal
-                          ? 'bg-rose-950/60 border border-rose-500/40'
-                          : 'bg-purple-950/60 border border-purple-500/40'
-                      }`}
-                    >
-                      {isDefeated ? '🏆' : isFinal ? '👑' : '🐉'}
+                  <div className="flex items-center gap-3.5">
+                    {/* Circular Neumorphic Dial for Boss Avatar with outer sunken moat */}
+                    <div className="w-16 h-16 rounded-full neu-dial-moat p-1 flex items-center justify-center shrink-0">
+                      <div
+                        className={`w-full h-full rounded-full neu-dial shadow-neu-raised flex items-center justify-center text-2xl border ${
+                          isDefeated
+                            ? 'border-sky-400/40 text-sky-200'
+                            : isFinal
+                            ? 'border-rose-400/40 text-rose-200'
+                            : 'border-white/[0.12] text-amber-200'
+                        }`}
+                      >
+                        {isDefeated ? '🏆' : isFinal ? '👑' : '🐉'}
+                      </div>
                     </div>
 
                     <div>
                       <div className="flex items-center gap-2 mb-0.5">
                         <span
-                          className="w-2 h-2 rounded-full shrink-0"
-                          style={{ backgroundColor: course?.color || '#8b5cf6' }}
+                          className="w-2.5 h-2.5 rounded-full shrink-0 border border-white/20 shadow-neu-raised-sm"
+                          style={{ backgroundColor: course?.color || '#6366f1' }}
                         />
-                        <span className="text-[11px] font-mono text-slate-400">
+                        <span className="text-[11px] font-mono font-bold text-slate-300">
                           {course?.courseCode || 'COURSE'}
                         </span>
                         <span
-                          className={`text-[9px] uppercase font-bold px-1.5 py-0.2 rounded border ${
+                          className={`text-[9px] uppercase font-black px-2 py-0.5 rounded-full border ${
                             isFinal
-                              ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
-                              : 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+                              ? 'bg-rose-500/15 text-rose-300 border-rose-500/30 shadow-neu-inset-sm'
+                              : 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 shadow-neu-inset-sm'
                           }`}
                         >
                           {isFinal ? 'Final Raid Boss' : 'Major Exam Boss'}
                         </span>
                       </div>
 
-                      <h3 className="font-fantasy font-bold text-base text-slate-100">
+                      <h3 className="font-fantasy font-black text-base text-slate-100">
                         {boss.title}
                       </h3>
                     </div>
@@ -205,22 +207,22 @@ export const BossFightsPage: React.FC = () => {
                 </div>
 
                 {/* Course Name */}
-                <p className="text-xs text-purple-300 font-medium">
+                <p className="text-xs text-sky-400 font-bold font-mono">
                   Course: {course?.courseName || 'University Course'}
                 </p>
 
-                {/* Health Bar Section */}
-                <div className="space-y-1.5 p-3 rounded-2xl bg-[#14182e] border border-purple-500/15">
+                {/* Health Bar Section - Sunken Inset Track */}
+                <div className="space-y-2 p-4 rounded-2xl bg-[#060810] border border-white/[0.04] shadow-neu-inset">
                   <div className="flex justify-between items-baseline text-xs">
-                    <span className="font-fantasy font-bold flex items-center gap-1.5 text-rose-300">
+                    <span className="font-fantasy font-black flex items-center gap-1.5 text-rose-400">
                       <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
                       <span>Boss Health:</span>
-                      <span className="font-mono text-slate-200">
+                      <span className="font-mono text-slate-100 font-black">
                         {currentHp} / {maxHp} HP
                       </span>
                     </span>
 
-                    <span className="font-mono text-[11px] text-cyan-300">
+                    <span className="font-mono text-[11px] text-sky-400 font-black">
                       Preparation: {prepPercent}%
                     </span>
                   </div>
@@ -232,7 +234,7 @@ export const BossFightsPage: React.FC = () => {
                     variant="boss_hp"
                   />
 
-                  <div className="flex justify-between items-center text-[10px] text-slate-400 pt-0.5">
+                  <div className="flex justify-between items-center text-[10px] text-slate-300 font-mono font-bold pt-0.5">
                     <span>
                       {hasWeight
                         ? `Grading Weight: ${boss.weightPercent}% of course`
@@ -245,30 +247,28 @@ export const BossFightsPage: React.FC = () => {
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-purple-500/10">
-                  <Button
-                    variant="primary"
-                    size="sm"
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t border-white/[0.04]">
+                  <button
+                    type="button"
                     onClick={() => handleLaunchArena(boss, course || null)}
-                    className="text-xs bg-gradient-to-r from-rose-600 to-purple-600 hover:from-rose-500 hover:to-purple-500 text-white font-fantasy shadow-md"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-gradient-to-r from-[#5357c8] to-[#b8384f] hover:from-[#5c61d6] hover:to-[#c73f57] text-white font-fantasy font-black text-xs border border-indigo-400/25 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5"
                   >
-                    <Gamepad2 className="w-3.5 h-3.5 mr-1 text-amber-300" />
+                    <Gamepad2 className="w-3.5 h-3.5 text-white" />
                     <span>{isDefeated ? "Replay Boss Slayer Arena" : "Fight in Boss Slayer Arena"}</span>
-                  </Button>
+                  </button>
 
                   <div className="flex items-center gap-2">
                     <Button
                       variant="secondary"
                       size="sm"
                       onClick={() => navigate('/quests')}
-                      className="text-xs"
                     >
-                      <Swords className="w-3.5 h-3.5 mr-1 text-cyan-400" />
+                      <Swords className="w-3.5 h-3.5 mr-1 text-sky-400" />
                       <span>Prep Quests</span>
                     </Button>
 
                     {isDefeated && (
-                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-fantasy font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-fantasy font-black bg-[#070b14] text-emerald-300 border border-emerald-500/30 shadow-neu-inset-sm">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Defeated ✓</span>
                       </span>
@@ -280,6 +280,7 @@ export const BossFightsPage: React.FC = () => {
           })}
         </div>
       )}
+
 
       {/* Syllabus Upload Modal */}
       <SyllabusUploadModal

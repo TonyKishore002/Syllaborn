@@ -11,23 +11,27 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading = false, children, disabled, ...props }, ref) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] select-none rounded-xl';
+      'inline-flex items-center justify-center font-semibold tracking-wide transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 disabled:opacity-50 disabled:pointer-events-none select-none rounded-2xl active:translate-y-0.5 active:shadow-neu-inset';
 
     const variants = {
       primary:
-        'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/25 border border-purple-500/30',
+        'bg-gradient-to-r from-[#5357c8] to-[#474bc0] hover:from-[#5b5fe0] hover:to-[#4e53cd] text-white border border-indigo-400/25 shadow-neu-raised hover:shadow-neo-purple active:shadow-neu-inset',
       secondary:
-        'bg-[#1a1e35] hover:bg-[#232847] text-slate-200 border border-slate-700/60 hover:border-purple-500/40',
-      cyan: 'bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white shadow-lg shadow-cyan-600/25 border border-cyan-500/30',
-      pink: 'bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white shadow-lg shadow-pink-600/25 border border-pink-500/30',
+        'bg-gradient-to-br from-[#131828] to-[#0d121e] hover:from-[#182033] hover:to-[#101626] text-sky-200 border border-sky-500/20 shadow-neu-raised-sm active:shadow-neu-inset-sm',
+      cyan:
+        'bg-gradient-to-r from-sky-500/90 to-cyan-500/90 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold border border-sky-300/30 shadow-neu-raised active:shadow-neu-inset',
+      pink:
+        'bg-gradient-to-r from-[#6e4cb8] to-[#5547b0] hover:from-[#7b55ce] hover:to-[#6152c6] text-white border border-violet-400/25 shadow-neu-raised active:shadow-neu-inset',
       emerald:
-        'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/25 border border-emerald-500/30',
+        'bg-gradient-to-r from-[#149573] to-[#118063] hover:from-[#16a781] hover:to-[#138e6e] text-white border border-emerald-400/25 shadow-neu-raised active:shadow-neu-inset',
       danger:
-        'bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-500/40 hover:border-rose-400',
-      ghost: 'text-slate-300 hover:text-white hover:bg-white/5',
+        'bg-gradient-to-r from-[#c93b54] to-[#b33248] hover:from-[#dc435e] hover:to-[#c43951] text-white border border-rose-400/25 shadow-neu-raised active:shadow-neu-inset',
+      ghost:
+        'text-slate-300 hover:text-white hover:bg-[#101524] hover:shadow-neu-raised-sm active:shadow-neu-inset-sm border border-transparent',
       outline:
-        'bg-transparent border border-purple-500/40 text-purple-300 hover:bg-purple-500/10 hover:border-purple-400',
+        'bg-[#0a0d16] border border-indigo-500/25 text-indigo-200 hover:bg-indigo-500/10 hover:border-indigo-400/40 shadow-neu-raised-sm active:shadow-neu-inset-sm',
     };
+
 
     const sizes = {
       sm: 'text-xs px-3 py-1.5 gap-1.5',
@@ -51,3 +55,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = 'Button';
+

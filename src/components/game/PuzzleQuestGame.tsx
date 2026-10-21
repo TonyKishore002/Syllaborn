@@ -16,6 +16,7 @@ import {
 import { QuestGameConfig, PuzzleMatchingPair, PuzzleStepItem } from '../../types';
 import { getProfessorPanicComment } from '../../lib/professor-panic';
 import { soundFX } from '../../lib/audio-effects';
+import { PuzzleQuest3D } from '../game3d/PuzzleQuest3D';
 
 interface PuzzleQuestGameProps {
   gameConfig: QuestGameConfig;
@@ -24,12 +25,105 @@ interface PuzzleQuestGameProps {
   courseTitle?: string;
 }
 
+interface ErrorBoundaryProps {
+  fallback: React.ReactNode;
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class Puzzle3DErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any) {
+    console.warn('Caught error in 3D Puzzle Quest, rendering 2D fallback:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 export const PuzzleQuestGame: React.FC<PuzzleQuestGameProps> = ({
   gameConfig,
   onComplete,
   courseCode,
   courseTitle,
 }) => {
+  const [use3DEngine, setUse3DEngine] = useState<boolean>(true);
+
+  if (use3DEngine) {
+    return (
+      <Puzzle3DErrorBoundary
+        fallback={
+          <PuzzleQuestGame2D
+            gameConfig={gameConfig}
+            onComplete={onComplete}
+            courseCode={courseCode}
+            courseTitle={courseTitle}
+          />
+        }
+      >
+        <div className="relative w-full h-full flex flex-col">
+          {/* Toggle back to 2D */}
+          <div className="absolute top-3.5 right-24 z-20 pointer-events-auto">
+            <button
+              type="button"
+              onClick={() => setUse3DEngine(false)}
+              className="px-2.5 py-1 rounded-lg bg-[#0E1322]/90 hover:bg-[#131B2E] text-[10px] font-bold text-slate-200 border border-slate-700/60 shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
+              title="Switch to Classic 2D Puzzle Cards"
+            >
+              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
+              <span>3D Dungeon (Switch to 2D)</span>
+            </button>
+          </div>
+          <PuzzleQuest3D
+            gameConfig={gameConfig}
+            onComplete={onComplete}
+            courseCode={courseCode}
+            courseTitle={courseTitle}
+            onFallbackTo2D={() => setUse3DEngine(false)}
+          />
+        </div>
+      </Puzzle3DErrorBoundary>
+    );
+  }
+
+  return (
+    <PuzzleQuestGame2D
+      gameConfig={gameConfig}
+      onComplete={onComplete}
+      courseCode={courseCode}
+      courseTitle={courseTitle}
+      onSwitchTo3D={() => setUse3DEngine(true)}
+    />
+  );
+};
+
+interface PuzzleQuestGame2DProps extends PuzzleQuestGameProps {
+  onSwitchTo3D?: () => void;
+}
+
+const PuzzleQuestGame2D: React.FC<PuzzleQuestGame2DProps> = ({
+  gameConfig,
+  onComplete,
+  courseCode,
+  courseTitle,
+  onSwitchTo3D,
+}) => {
+
   const [isMuted, setIsMuted] = useState(soundFX.getMuted());
   const puzzleData = gameConfig.puzzleData;
 
@@ -173,8 +267,11 @@ export const PuzzleQuestGame: React.FC<PuzzleQuestGameProps> = ({
       [steps[i], steps[j]] = [steps[j], steps[i]];
     }
     setOrderedSteps(steps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setMatchedPairs(new Set());
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    setIsPuzzleCompleted(false);
+  }, [gameConfig.topic, puzzleData]);
 
   // ---------------------------------------------------------------------------
   // Matching Handlers
@@ -504,6 +601,18 @@ export const PuzzleQuestGame: React.FC<PuzzleQuestGameProps> = ({
             </button>
           )}
 
+          {onSwitchTo3D && (
+            <button
+              type="button"
+              onClick={onSwitchTo3D}
+              className="px-2.5 py-1 rounded-xl bg-emerald-900/60 hover:bg-emerald-800 text-emerald-200 border border-emerald-500/40 text-[10px] font-mono font-bold flex items-center gap-1 transition-all"
+              title="Switch to 3D Dungeon Chamber"
+            >
+              <Sparkles className="w-3 h-3 text-cyan-300" />
+              <span>Switch to 3D</span>
+            </button>
+          )}
+
           {/* Reset Shuffle Button */}
           <button
             type="button"
@@ -828,7 +937,7 @@ export const PuzzleQuestGame: React.FC<PuzzleQuestGameProps> = ({
               onClick={handleFinish}
               className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-fantasy font-bold text-sm shadow-xl shadow-emerald-950/60 transition-all active:scale-95"
             >
-              Claim Quest Rewards (+75 XP) ⚔️
+              Claim Quest Rewards ⚔️
             </button>
           </div>
         )}

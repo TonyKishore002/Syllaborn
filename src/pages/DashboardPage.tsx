@@ -242,25 +242,22 @@ export const DashboardPage: React.FC = () => {
     return (
       <div className="space-y-8 max-w-4xl mx-auto py-4">
         {/* Casual Adventure Welcome Hero */}
-        <div className="relative rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-[#121630] via-[#101428] to-[#0c0f1e] border-2 border-purple-500/30 shadow-[0_10px_40px_rgba(0,0,0,0.5)] text-center overflow-hidden">
-          {/* Subtle Ambient Light */}
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] pointer-events-none" />
-
+        <div className="relative rounded-3xl p-8 sm:p-12 bg-[#0E1322] border border-white/[0.04] shadow-neu-raised-lg text-center overflow-hidden backdrop-blur-md">
           <div className="relative z-10 max-w-2xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-300 text-xs font-semibold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#070b14] text-indigo-300 border border-indigo-500/30 shadow-neu-inset-sm text-xs font-black font-mono tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               <span>THE CASUAL SEMESTER ADVENTURE</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-fantasy font-black tracking-wide text-slate-100">
+            <h1 className="text-3xl sm:text-4xl font-fantasy font-black tracking-wide text-white">
               Welcome to Syllaborn,{' '}
-              <span className="bg-gradient-to-r from-purple-300 via-cyan-300 to-pink-300 bg-clip-text text-transparent">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-sky-400">
                 {profile?.displayName || 'Hero'}
               </span>
               !
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
               Organize your entire semester by playing a fun, easy-to-understand game.
               Defeat academic monsters, complete bite-sized study quests, and level up without stress.
             </p>
@@ -270,21 +267,21 @@ export const DashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsUploadModalOpen(true)}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-fantasy font-bold text-base shadow-xl shadow-purple-900/40 border border-purple-400/40 transition-all duration-200 active:scale-95 group"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-fantasy font-black text-base border border-indigo-400/30 shadow-neu-raised hover:shadow-neu-raised-lg active:shadow-neu-inset active:translate-y-0.5 transition-all group"
               >
-                <FileUp className="w-5 h-5 text-cyan-300 group-hover:scale-110 transition-transform" />
+                <FileUp className="w-5 h-5 text-indigo-200 group-hover:scale-110 transition-transform" />
                 <span>Upload My Syllabus PDF</span>
-                <ArrowRight className="w-5 h-5 text-purple-200 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 text-indigo-200 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
         </div>
 
         {/* The 5-Step Game Loop Guide */}
-        <div className="rounded-3xl p-6 sm:p-8 bg-[#101324] border border-purple-500/20 shadow-lg">
+        <div className="rounded-3xl p-6 sm:p-8 bg-[#0E1322] border border-white/[0.04] shadow-neu-raised">
           <div className="text-center mb-6">
-            <h3 className="font-fantasy font-bold text-lg text-slate-200">How the Game Works</h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <h3 className="font-fantasy font-black text-lg text-slate-100">How the Game Works</h3>
+            <p className="text-xs text-slate-400 mt-1 font-mono">
               Your semester loop in 5 easy steps. No complicated rules.
             </p>
           </div>
@@ -296,13 +293,13 @@ export const DashboardPage: React.FC = () => {
               { step: '3', title: 'Complete Quests', desc: 'Finish at your own pace', icon: '🎯' },
               { step: '4', title: 'Earn XP', desc: 'Gain experience points', icon: '⭐' },
               { step: '5', title: 'Level Up', desc: 'Vanquish the semester', icon: '👑' },
-            ].map((item, idx) => (
+            ].map((item) => (
               <div
                 key={item.step}
-                className="p-4 rounded-2xl bg-[#14182e] border border-purple-500/15 flex flex-col items-center text-center relative group hover:border-purple-500/40 transition-all"
+                className="p-4 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm flex flex-col items-center text-center relative group hover:border-indigo-500/30 transition-all"
               >
                 <span className="text-2xl mb-2">{item.icon}</span>
-                <span className="text-[11px] font-mono text-purple-400 font-bold mb-1">
+                <span className="text-[11px] font-mono text-sky-400 font-black mb-1">
                   STEP {item.step}
                 </span>
                 <span className="text-xs font-bold text-slate-100 mb-0.5">{item.title}</span>
@@ -321,49 +318,50 @@ export const DashboardPage: React.FC = () => {
     );
   }
 
+
   // -------------------------------------------------------------
   // ACTIVE ADVENTURE DASHBOARD (Show Only What Matters)
   // -------------------------------------------------------------
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       {/* Top Banner: Greeting + Continue Adventure Big Button */}
-      <div className="rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-purple-950/50 via-[#101428] to-[#0c1424] border border-purple-500/25 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-5">
+      <div className="rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-[#101524] to-[#0a0d17] border border-white/[0.05] shadow-neu-raised flex flex-col md:flex-row md:items-center justify-between gap-5 backdrop-blur-md">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest">
+            <span className="text-xs font-mono font-bold text-sky-300 uppercase tracking-widest">
               Semester Adventure Hub
             </span>
-            <span className="text-slate-600">•</span>
-            <span className="text-xs text-slate-400">
+            <span className="text-slate-500">•</span>
+            <span className="text-xs text-slate-300 font-bold font-mono">
               {profile?.universityName || 'Academic Realm'}
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-fantasy font-black text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-fantasy font-black text-white">
             Hey,{' '}
-            <span className="bg-gradient-to-r from-purple-300 via-cyan-300 to-pink-300 bg-clip-text text-transparent">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-sky-300">
               {profile?.displayName || 'Adventurer'}
             </span>
             !
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-300 font-medium mt-1">
             "Ready to defeat one tiny academic monster today?"
           </p>
         </div>
 
-        {/* Large Obvious Button: ▶ Continue Adventure */}
+        {/* Large Tactile Button: ▶ Continue Adventure (Calm, Soft Color) */}
         <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={handleContinueAdventure}
-            className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-fantasy font-bold text-sm shadow-lg shadow-purple-900/40 border border-purple-400/40 transition-all duration-200 active:scale-95 group"
+            className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#5357c8] via-[#4b51bf] to-[#397db8] hover:from-[#5c61d6] hover:to-[#4189c7] text-white font-fantasy font-black text-sm border border-indigo-400/30 shadow-neu-raised hover:shadow-neu-raised-lg active:shadow-neu-inset active:translate-y-0.5 transition-all group"
           >
-            <Play className="w-4 h-4 fill-cyan-300 text-cyan-300 group-hover:scale-110 transition-transform" />
+            <Play className="w-4 h-4 fill-white text-white group-hover:scale-110 transition-transform" />
             <span>▶ Continue Adventure</span>
           </button>
 
-          <Button variant="ghost" size="md" onClick={() => setIsUploadModalOpen(true)}>
-            <FileUp className="w-4 h-4 mr-1.5 text-cyan-400" />
+          <Button variant="secondary" size="md" onClick={() => setIsUploadModalOpen(true)}>
+            <FileUp className="w-4 h-4 mr-1.5 text-sky-300" />
             <span>Upload Syllabus</span>
           </Button>
         </div>
@@ -372,32 +370,35 @@ export const DashboardPage: React.FC = () => {
       {/* The 4 Main Game Blocks */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 1. YOUR LEVEL */}
-        <Card className="p-6 rounded-3xl border-purple-500/20 bg-[#101324] space-y-4">
+        <Card className="p-6 rounded-3xl border border-white/[0.04] bg-[#0E1322] shadow-neu-raised space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-cyan-400" />
-              <h2 className="font-fantasy font-bold text-base text-slate-100">Your Level</h2>
+              <Sparkles className="w-5 h-5 text-indigo-400" />
+              <h2 className="font-fantasy font-black text-base text-slate-100">Your Level</h2>
             </div>
             <button
               type="button"
               onClick={() => navigate('/rewards')}
-              className="text-xs text-purple-400 hover:text-purple-300 font-medium"
+              className="text-xs text-sky-400 hover:text-sky-300 font-bold font-mono underline"
             >
               View Rewards →
             </button>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-fantasy font-black text-xl text-white shadow-lg shadow-purple-900/30 shrink-0">
-              {levelInfo.level}
+          <div className="flex items-center gap-5">
+            {/* Neumorphic Extruded Dial with Sunken Concentric Moat (like reference image) */}
+            <div className="w-20 h-20 rounded-full neu-dial-moat p-1.5 flex items-center justify-center shrink-0">
+              <div className="w-full h-full rounded-full neu-dial flex items-center justify-center font-fantasy font-black text-2xl text-amber-200 border border-white/[0.12] shadow-neu-raised">
+                <span className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{levelInfo.level}</span>
+              </div>
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-baseline mb-1">
-                <span className="font-fantasy font-bold text-sm text-cyan-300 truncate">
+              <div className="flex justify-between items-baseline mb-1.5">
+                <span className="font-fantasy font-bold text-sm text-sky-400 truncate">
                   {levelInfo.levelTitle}
                 </span>
-                <span className="font-mono text-xs text-slate-400 shrink-0">
+                <span className="font-mono text-xs text-slate-300 font-bold shrink-0">
                   {levelInfo.xpInCurrentLevel} / {levelInfo.xpRequiredForNextLevel} XP
                 </span>
               </div>
@@ -410,12 +411,12 @@ export const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-2 border-t border-purple-500/15 flex items-center justify-between text-xs text-slate-400">
-            <span className="flex items-center gap-1.5 font-mono">
-              <Flame className="w-3.5 h-3.5 text-amber-400" />
+          <div className="p-3.5 rounded-2xl bg-[#060810] border border-white/[0.04] shadow-neu-inset flex items-center justify-between text-xs text-slate-300 font-medium">
+            <span className="flex items-center gap-1.5 font-mono font-bold">
+              <Flame className="w-3.5 h-3.5 text-indigo-400" />
               Total Academic XP: {levelInfo.totalXp}
             </span>
-            <span className="text-[11px] text-purple-300 font-medium">
+            <span className="text-[11px] text-amber-300 font-bold font-mono">
               {levelInfo.xpRequiredForNextLevel - levelInfo.xpInCurrentLevel} XP until Level{' '}
               {levelInfo.level + 1}
             </span>
@@ -423,16 +424,16 @@ export const DashboardPage: React.FC = () => {
         </Card>
 
         {/* 4. NEXT BOSS */}
-        <Card className="p-6 rounded-3xl border-purple-500/20 bg-[#101324] space-y-4">
+        <Card className="p-6 rounded-3xl border border-white/[0.04] bg-[#0E1322] shadow-neu-raised space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ShieldAlert className="w-5 h-5 text-rose-400" />
-              <h2 className="font-fantasy font-bold text-base text-slate-100">Next Boss</h2>
+              <h2 className="font-fantasy font-black text-base text-slate-100">Next Boss</h2>
             </div>
             <button
               type="button"
               onClick={() => navigate('/bosses')}
-              className="text-xs text-purple-400 hover:text-purple-300 font-medium"
+              className="text-xs text-rose-400 hover:text-rose-300 font-bold font-mono underline"
             >
               All Bosses →
             </button>
@@ -442,10 +443,10 @@ export const DashboardPage: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-fantasy font-bold text-base text-slate-100">
+                  <h3 className="font-fantasy font-black text-base text-slate-100">
                     {nextBoss.boss.title}
                   </h3>
-                  <p className="text-xs text-purple-300 font-medium">
+                  <p className="text-xs text-sky-400 font-bold font-mono">
                     {nextBoss.course?.courseName || 'Course Exam'}
                   </p>
                 </div>
@@ -454,13 +455,13 @@ export const DashboardPage: React.FC = () => {
                 </Badge>
               </div>
 
-              {/* Boss Health Bar */}
-              <div>
-                <div className="flex justify-between items-center text-xs mb-1">
-                  <span className="text-slate-400 font-medium">
+              {/* Boss Health Bar - Sunken Channel */}
+              <div className="p-4 rounded-2xl bg-[#060810] border border-white/[0.04] shadow-neu-inset space-y-2">
+                <div className="flex justify-between items-center text-xs font-bold font-mono">
+                  <span className="text-rose-400">
                     Boss HP: {nextBoss.currentHp} / {nextBoss.maxHp}
                   </span>
-                  <span className="text-[11px] font-mono text-cyan-300">
+                  <span className="text-[11px] text-sky-400">
                     Preparation: {nextBoss.prepPercent}%
                   </span>
                 </div>
@@ -472,15 +473,15 @@ export const DashboardPage: React.FC = () => {
                 />
               </div>
 
-              <p className="text-[11px] text-slate-400 leading-snug">
+              <p className="text-[11px] text-slate-300 font-medium leading-snug">
                 Complete your preparation quests to reduce the boss's HP.
               </p>
 
-              <div className="pt-2">
+              <div className="pt-1">
                 <Button
                   variant="primary"
                   size="sm"
-                  className="w-full justify-center"
+                  className="w-full justify-center font-black"
                   onClick={() => navigate('/bosses')}
                 >
                   <Swords className="w-4 h-4 mr-1.5" />
@@ -489,9 +490,9 @@ export const DashboardPage: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="p-6 rounded-2xl bg-[#14182e] border border-purple-500/15 text-center text-xs text-slate-400 space-y-2">
-              <p className="text-slate-300 font-medium">No boss encounters scheduled right now.</p>
-              <p className="text-[11px] text-slate-500">
+            <div className="p-6 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-center text-xs text-slate-300 space-y-2">
+              <p className="text-slate-100 font-bold">No boss encounters scheduled right now.</p>
+              <p className="text-[11px] text-slate-400">
                 Major midterm and final exams from your syllabi will appear here as boss fights.
               </p>
             </div>
@@ -499,28 +500,28 @@ export const DashboardPage: React.FC = () => {
         </Card>
 
         {/* 2. TODAY'S QUESTS */}
-        <Card className="p-6 rounded-3xl border-purple-500/20 bg-[#101324] space-y-4 lg:col-span-1">
+        <Card className="p-6 rounded-3xl border border-white/[0.04] bg-[#0E1322] shadow-neu-raised space-y-4 lg:col-span-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Swords className="w-5 h-5 text-cyan-400" />
-              <h2 className="font-fantasy font-bold text-base text-slate-100">Today's Quests</h2>
-              <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              <Swords className="w-5 h-5 text-sky-400" />
+              <h2 className="font-fantasy font-black text-base text-slate-100">Today's Quests</h2>
+              <span className="text-xs font-mono font-black px-2.5 py-0.5 rounded-full bg-[#070b14] text-sky-300 border border-sky-500/30 shadow-neu-inset-sm">
                 {todaysQuests.length}
               </span>
             </div>
             <button
               type="button"
               onClick={() => navigate('/quests')}
-              className="text-xs text-purple-400 hover:text-purple-300 font-medium"
+              className="text-xs text-sky-400 hover:text-sky-300 font-bold font-mono underline"
             >
               All Quests →
             </button>
           </div>
 
           {todaysQuests.length === 0 ? (
-            <div className="p-6 rounded-2xl bg-[#14182e] border border-purple-500/15 text-center text-xs text-slate-400 space-y-1">
-              <p className="text-emerald-400 font-bold">All quests cleared!</p>
-              <p className="text-[11px] text-slate-500">
+            <div className="p-6 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-center text-xs text-slate-300 space-y-1">
+              <p className="text-sky-400 font-bold">All quests cleared!</p>
+              <p className="text-[11px] text-slate-400">
                 Take a breather or upload another syllabus to continue your adventure.
               </p>
             </div>
@@ -529,38 +530,37 @@ export const DashboardPage: React.FC = () => {
               {todaysQuests.map((quest) => (
                 <div
                   key={quest.id}
-                  className="p-3.5 rounded-2xl bg-[#14182e] hover:bg-[#181d38] border border-purple-500/15 hover:border-purple-500/35 transition-all flex items-center justify-between gap-3 group"
+                  className="p-3.5 rounded-2xl bg-[#0E1322] hover:bg-[#12182a] border border-white/[0.03] shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all flex items-center justify-between gap-3 group"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span
-                        className="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold"
+                        className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full border border-white/10 shadow-neu-raised-sm"
                         style={{
-                          backgroundColor: `${quest.courseColor}20`,
-                          color: quest.courseColor,
-                          border: `1px solid ${quest.courseColor}40`,
+                          backgroundColor: quest.courseColor,
+                          color: '#ffffff',
                         }}
                       >
                         {quest.courseCode}
                       </span>
-                      <span className="text-[10px] text-slate-400 flex items-center gap-1 font-mono">
-                        <Clock className="w-3 h-3" />
+                      <span className="text-[10px] text-slate-300 flex items-center gap-1 font-mono font-bold">
+                        <Clock className="w-3 h-3 text-slate-400" />
                         {quest.timeEstimate}
                       </span>
                       <span
-                        className={`text-[9px] uppercase font-bold px-1.5 py-0.2 rounded border ${
+                        className={`text-[9px] uppercase font-black px-2 py-0.5 rounded-full border ${
                           quest.difficulty === 'Easy'
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                            ? 'bg-sky-500/15 text-sky-300 border-sky-500/30 shadow-neu-inset-sm'
                             : quest.difficulty === 'Medium'
-                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                            : 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+                            ? 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 shadow-neu-inset-sm'
+                            : 'bg-rose-500/15 text-rose-300 border-rose-500/30 shadow-neu-inset-sm'
                         }`}
                       >
                         {quest.difficulty}
                       </span>
                     </div>
 
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-200 truncate group-hover:text-cyan-300 transition-colors">
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-100 truncate group-hover:text-sky-300 transition-colors">
                       {quest.title}
                     </h4>
                     <p className="text-[11px] text-slate-400 truncate mt-0.5">
@@ -569,16 +569,16 @@ export const DashboardPage: React.FC = () => {
                   </div>
 
                   {/* Play Quest Action */}
-                  <div className="flex flex-col items-end gap-1 shrink-0">
-                    <span className="text-[11px] font-mono font-bold text-amber-300">
+                  <div className="flex flex-col items-end gap-1.5 shrink-0">
+                    <span className="text-[11px] font-mono font-black text-amber-300">
                       +{quest.xpReward} XP
                     </span>
                     <button
                       type="button"
                       onClick={() => handlePlayQuest(quest)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-fantasy font-semibold text-xs shadow-md shadow-purple-900/30 border border-purple-400/30 transition-all active:scale-95 group"
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-[#5357c8] to-[#397db8] hover:from-[#5c61d6] hover:to-[#4189c7] text-white font-fantasy font-black text-xs border border-indigo-400/25 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5 group"
                     >
-                      <Gamepad2 className="w-3.5 h-3.5 text-cyan-300 group-hover:scale-110 transition-transform" />
+                      <Gamepad2 className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" />
                       <span>Play</span>
                     </button>
                   </div>
@@ -589,19 +589,19 @@ export const DashboardPage: React.FC = () => {
         </Card>
 
         {/* 3. YOUR ADVENTURE (Courses & Progress) */}
-        <Card className="p-6 rounded-3xl border-purple-500/20 bg-[#101324] space-y-4 lg:col-span-1">
+        <Card className="p-6 rounded-3xl border border-white/[0.04] bg-[#0E1322] shadow-neu-raised space-y-4 lg:col-span-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-purple-400" />
-              <h2 className="font-fantasy font-bold text-base text-slate-100">Your Adventure</h2>
-              <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+              <BookOpen className="w-5 h-5 text-indigo-400" />
+              <h2 className="font-fantasy font-black text-base text-slate-100">Your Adventure</h2>
+              <span className="text-xs font-mono font-black px-2.5 py-0.5 rounded-full bg-[#070b14] text-indigo-300 border border-indigo-500/30 shadow-neu-inset-sm">
                 {courses.length} Courses
               </span>
             </div>
             <button
               type="button"
               onClick={() => navigate('/courses')}
-              className="text-xs text-purple-400 hover:text-purple-300 font-medium"
+              className="text-xs text-indigo-400 hover:text-sky-300 font-bold font-mono underline"
             >
               All Courses →
             </button>
@@ -620,27 +620,27 @@ export const DashboardPage: React.FC = () => {
                 <div
                   key={course.id}
                   onClick={() => navigate(`/courses/${course.id}`)}
-                  className="p-3.5 rounded-2xl bg-[#14182e] hover:bg-[#181d38] border border-purple-500/15 hover:border-purple-500/35 transition-all cursor-pointer space-y-2 group"
+                  className="p-3.5 rounded-2xl bg-[#0E1322] hover:bg-[#12182a] border border-white/[0.03] shadow-neu-raised-sm hover:shadow-neu-raised transition-all cursor-pointer space-y-2 group"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
                       <span
-                        className="w-2.5 h-2.5 rounded-full shrink-0"
-                        style={{ backgroundColor: course.color || '#8b5cf6' }}
+                        className="w-3 h-3 rounded-full shrink-0 border border-white/20 shadow-neu-raised-sm"
+                        style={{ backgroundColor: course.color || '#6366f1' }}
                       />
-                      <span className="font-fantasy font-bold text-xs sm:text-sm text-slate-200 truncate group-hover:text-cyan-300 transition-colors">
+                      <span className="font-fantasy font-bold text-xs sm:text-sm text-slate-200 truncate group-hover:text-sky-300 transition-colors">
                         {course.courseName}
                       </span>
                     </div>
-                    <span className="font-mono text-xs text-cyan-300 font-bold shrink-0">
+                    <span className="font-mono text-xs text-sky-400 font-black shrink-0">
                       {percent}%
                     </span>
                   </div>
 
                   <ProgressBar value={percent} size="sm" variant="cyan" />
 
-                  <div className="flex justify-between items-center text-[10px] text-slate-400 pt-0.5">
-                    <span>{course.courseCode}</span>
+                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 pt-0.5">
+                    <span className="font-bold text-slate-300">{course.courseCode}</span>
                     <span>
                       {completedMilestones.length} / {courseMilestones.length} Quests Conquered
                     </span>
@@ -653,17 +653,17 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Visual Game Loop Footer Guide */}
-      <div className="rounded-2xl p-4 bg-[#0d0f1e] border border-purple-500/15 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-center text-xs text-slate-400">
-        <span className="text-purple-300 font-fantasy font-semibold">The Semester Loop:</span>
-        <span className="flex items-center gap-1.5 font-medium">📄 Upload Syllabus</span>
+      <div className="rounded-2xl p-4 bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-center text-xs text-slate-300 font-bold font-mono">
+        <span className="text-indigo-300 font-fantasy font-black uppercase">The Semester Loop:</span>
+        <span className="flex items-center gap-1.5 font-bold">📄 Upload Syllabus</span>
         <span>→</span>
-        <span className="flex items-center gap-1.5 font-medium">⚔️ Get Quests</span>
+        <span className="flex items-center gap-1.5 font-bold">⚔️ Get Quests</span>
         <span>→</span>
-        <span className="flex items-center gap-1.5 font-medium">🎯 Complete Quests</span>
+        <span className="flex items-center gap-1.5 font-bold">🎯 Complete Quests</span>
         <span>→</span>
-        <span className="flex items-center gap-1.5 font-medium">⭐ Earn XP</span>
+        <span className="flex items-center gap-1.5 font-bold">⭐ Earn XP</span>
         <span>→</span>
-        <span className="flex items-center gap-1.5 font-medium">👑 Level Up</span>
+        <span className="flex items-center gap-1.5 font-bold">👑 Level Up</span>
       </div>
 
       {/* Syllabus Upload Modal */}
@@ -684,3 +684,4 @@ export const DashboardPage: React.FC = () => {
     </div>
   );
 };
+

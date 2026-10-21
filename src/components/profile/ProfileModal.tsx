@@ -166,7 +166,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
       onClose={isOnboarding ? () => {} : onClose}
       title={
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-purple-400" />
+          <Sparkles className="w-5 h-5 text-indigo-400" />
           <span>{isOnboarding ? 'Create Your Semester Hero' : 'Hero Profile & Settings'}</span>
         </div>
       }
@@ -179,14 +179,14 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
     >
       {/* Navigation Tabs (when not onboarding) */}
       {!isOnboarding && (
-        <div className="flex border-b border-purple-500/20 mb-4 pb-1 gap-2">
+        <div className="p-1 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm flex gap-1 mb-4">
           <button
             type="button"
             onClick={() => setActiveTab('profile')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'profile'
-                ? 'bg-purple-500/20 text-cyan-300 border border-purple-500/40'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#0E1322] text-white border border-white/[0.05] shadow-neu-raised-sm'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <User className="w-3.5 h-3.5" />
@@ -195,10 +195,10 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
           <button
             type="button"
             onClick={() => setActiveTab('settings')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'settings'
-                ? 'bg-purple-500/20 text-cyan-300 border border-purple-500/40'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#0E1322] text-white border border-white/[0.05] shadow-neu-raised-sm'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <SettingsIcon className="w-3.5 h-3.5" />
@@ -209,8 +209,8 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
       {activeTab === 'profile' ? (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="p-2.5 rounded-xl bg-purple-950/20 border border-purple-500/20 text-[11px] text-purple-300 flex items-start gap-2">
-            <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5 text-cyan-400" />
+          <div className="p-3.5 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-[11px] text-sky-300 flex items-start gap-2 font-medium">
+            <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5 text-sky-400" />
             <span>
               All your progress is saved safely in your local browser storage. No account or remote tracking required.
             </span>
@@ -218,21 +218,21 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1">
-              Student / Display Name <span className="text-rose-400">*</span>
+              Student / Display Name <span className="text-indigo-400 font-bold">*</span>
             </label>
             <div className="relative">
-              <User className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+              <User className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
                 type="text"
                 required
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="e.g. Alex"
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl pl-9 pr-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
             </div>
             {errors.displayName && (
-              <p className="text-[11px] text-rose-400 mt-1">{errors.displayName}</p>
+              <p className="text-[11px] text-rose-400 font-medium mt-1">{errors.displayName}</p>
             )}
           </div>
 
@@ -241,13 +241,13 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
               Adventurer Nickname (Optional)
             </label>
             <div className="relative">
-              <Sparkles className="w-4 h-4 text-purple-400 absolute left-3 top-2.5" />
+              <Sparkles className="w-4 h-4 text-indigo-400 absolute left-3 top-2.5" />
               <input
                 type="text"
                 value={characterName}
                 onChange={(e) => setCharacterName(e.target.value)}
                 placeholder="e.g. Arcane Magus"
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl pl-9 pr-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -263,7 +263,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
                 value={universityName}
                 onChange={(e) => setUniversityName(e.target.value)}
                 placeholder="e.g. University of Science"
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl pl-9 pr-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -271,33 +271,33 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1">
-                Semester Start <span className="text-rose-400">*</span>
+                Semester Start <span className="text-indigo-400 font-bold">*</span>
               </label>
               <input
                 type="date"
                 required
                 value={semesterStartDate}
                 onChange={(e) => setSemesterStartDate(e.target.value)}
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
               {errors.semesterStartDate && (
-                <p className="text-[11px] text-rose-400 mt-1">{errors.semesterStartDate}</p>
+                <p className="text-[11px] text-rose-400 font-medium mt-1">{errors.semesterStartDate}</p>
               )}
             </div>
 
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1">
-                Semester End <span className="text-rose-400">*</span>
+                Semester End <span className="text-indigo-400 font-bold">*</span>
               </label>
               <input
                 type="date"
                 required
                 value={semesterEndDate}
                 onChange={(e) => setSemesterEndDate(e.target.value)}
-                className="w-full bg-[#14182b] border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm focus:border-indigo-500/50 rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none transition-all"
               />
               {errors.semesterEndDate && (
-                <p className="text-[11px] text-rose-400 mt-1">{errors.semesterEndDate}</p>
+                <p className="text-[11px] text-rose-400 font-medium mt-1">{errors.semesterEndDate}</p>
               )}
             </div>
           </div>
@@ -318,11 +318,11 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
         /* Settings & Data Management */
         <div className="space-y-5">
           {/* Professor Panic & Humor Controls */}
-          <div className="p-3.5 rounded-2xl bg-[#121528] border border-purple-500/20 space-y-3">
+          <div className="p-4 rounded-3xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold text-slate-100 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-sky-400" />
                   Professor Panic Companion
                 </span>
                 <p className="text-[11px] text-slate-400">
@@ -334,23 +334,23 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
                 onClick={() =>
                   updateSettings({ companionVisibility: !settings.companionVisibility })
                 }
-                className="text-xs px-2.5 py-1 rounded-lg border border-purple-500/30 bg-purple-500/10 text-cyan-300 hover:bg-purple-500/20 transition-colors"
+                className="text-xs px-3.5 py-1.5 rounded-2xl border border-indigo-500/30 bg-[#0E1322] text-indigo-300 hover:text-white font-semibold shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm transition-all active:translate-y-0.5"
               >
                 {settings.companionVisibility ? 'Hide Companion' : 'Show Companion'}
               </button>
             </div>
 
-            <div className="flex items-center gap-2 pt-1 border-t border-purple-500/15">
-              <span className="text-[11px] text-slate-400">Humor Level:</span>
+            <div className="flex items-center gap-2 pt-2.5 border-t border-white/[0.04]">
+              <span className="text-[11px] text-slate-400 font-medium">Humor Level:</span>
               {(['chill', 'playful', 'chaotic'] as const).map((mode) => (
                 <button
                   key={mode}
                   type="button"
                   onClick={() => updateSettings({ humorIntensity: mode })}
-                  className={`px-2 py-0.5 rounded text-[11px] capitalize border transition-all ${
+                  className={`px-3 py-1 rounded-full text-[11px] capitalize border transition-all ${
                     settings.humorIntensity === mode
-                      ? 'bg-purple-600/30 border-purple-400 text-purple-200 font-bold'
-                      : 'border-slate-700 text-slate-400 hover:text-slate-200'
+                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-bold shadow-neu-raised-sm border-indigo-400/40'
+                      : 'bg-[#070b14] border-white/[0.03] shadow-neu-inset-sm text-slate-400 hover:text-white'
                   }`}
                 >
                   {mode}
@@ -361,20 +361,20 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
           {/* Backup & Data Actions */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold text-slate-200">Local Data Sanctuary</h4>
+            <h4 className="text-xs font-bold text-white tracking-wide uppercase">Local Data Sanctuary</h4>
 
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={exportBackupData}
-                className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-cyan-300 border border-purple-500/30 text-xs font-medium transition-colors"
+                className="flex items-center justify-center gap-2 p-3 rounded-2xl bg-[#0E1322] hover:bg-[#12182a] text-sky-300 border border-sky-500/25 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm text-xs font-bold transition-all active:translate-y-0.5"
               >
                 <Download className="w-4 h-4" />
                 <span>Export JSON Backup</span>
               </button>
 
-              <label className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-[#14182b] hover:bg-[#1a1f38] text-slate-300 border border-slate-700 text-xs font-medium transition-colors cursor-pointer">
-                <Upload className="w-4 h-4 text-purple-400" />
+              <label className="flex items-center justify-center gap-2 p-3 rounded-2xl bg-[#0E1322] hover:bg-[#12182a] text-slate-200 border border-white/[0.04] shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm text-xs font-bold transition-all active:translate-y-0.5 cursor-pointer">
+                <Upload className="w-4 h-4 text-sky-400" />
                 <span>Import Backup</span>
                 <input
                   type="file"
@@ -387,18 +387,18 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
             {/* Import Feedback */}
             {importError && (
-              <p className="text-[11px] text-rose-400 bg-rose-950/20 p-2 rounded-lg border border-rose-500/30">
+              <p className="text-[11px] text-rose-400 bg-rose-950/25 p-3 rounded-2xl border border-rose-800/40 shadow-neu-inset-sm font-medium">
                 {importError}
               </p>
             )}
             {importSuccess && (
-              <p className="text-[11px] text-emerald-400 bg-emerald-950/20 p-2 rounded-lg border border-emerald-500/30">
+              <p className="text-[11px] text-emerald-400 bg-emerald-950/25 p-3 rounded-2xl border border-emerald-800/40 shadow-neu-inset-sm font-medium">
                 {importSuccess}
               </p>
             )}
             {importPreview && (
-              <div className="p-3 rounded-xl bg-[#151930] border border-cyan-500/30 space-y-2">
-                <p className="text-xs text-cyan-300 font-medium">Valid Backup Found:</p>
+              <div className="p-3.5 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm space-y-2">
+                <p className="text-xs text-sky-400 font-bold">Valid Backup Found:</p>
                 <p className="text-[11px] text-slate-300">
                   {importPreview.coursesCount} Courses • {importPreview.milestonesCount} Quests
                 </p>
@@ -414,14 +414,14 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsResetConfirmOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/20 rounded-xl border border-rose-500/20 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 text-xs text-rose-300 bg-[#0E1322] hover:bg-[#151c30] rounded-2xl border border-rose-800/40 shadow-neu-raised-sm hover:shadow-neu-raised active:shadow-neu-inset-sm font-semibold transition-all active:translate-y-0.5"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-3.5 h-3.5 text-rose-400" />
                   <span>Reset All Progress</span>
                 </button>
               ) : (
-                <div className="p-3 rounded-xl bg-rose-950/30 border border-rose-500/40 text-center space-y-2">
-                  <p className="text-xs text-rose-300 font-semibold">
+                <div className="p-4 rounded-3xl bg-[#0E1322] border border-rose-800/50 shadow-neu-raised text-center space-y-2.5">
+                  <p className="text-xs text-rose-300 font-medium">
                     Are you sure? This erases all local courses, quests, and XP.
                   </p>
                   <div className="flex justify-center gap-2">

@@ -30,13 +30,14 @@ export const AppLayout: React.FC = () => {
   const needsOnboarding = profile === null;
 
   return (
-    <div className="min-h-screen bg-[#08090f] text-slate-100 flex flex-col antialiased">
+    <div className="min-h-screen bg-[#0b0d14] text-slate-100 flex flex-col antialiased neo-canvas-grid">
       {/* Sidebar for Desktop & Mobile Drawer */}
       <Sidebar
         onUploadClick={() => setIsUploadModalOpen(true)}
         isMobileOpen={isMobileSidebarOpen}
         onMobileClose={() => setIsMobileSidebarOpen(false)}
       />
+
 
       {/* Main Content Area */}
       <div className="lg:pl-64 flex flex-col flex-1 min-w-0">

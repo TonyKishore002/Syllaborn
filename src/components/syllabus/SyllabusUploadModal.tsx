@@ -627,7 +627,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
       }}
       title={
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-cyan-400" />
+          <Sparkles className="w-5 h-5 text-indigo-400" />
           <span>Syllabus Quest &amp; Game Forge</span>
         </div>
       }
@@ -635,10 +635,10 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
       maxWidth="3xl"
     >
       {/* Dynamic Professor Panic Commentary */}
-      <div className="p-3 rounded-2xl bg-purple-950/25 border border-purple-500/25 flex items-start gap-3 mb-4">
+      <div className="p-4 rounded-3xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm flex items-start gap-3.5 mb-4">
         <span className="text-xl shrink-0 mt-0.5">🧙‍♂️</span>
-        <div className="text-xs text-purple-200 leading-relaxed">
-          <span className="font-fantasy font-bold text-cyan-300 block text-[11px] uppercase tracking-wider mb-0.5">
+        <div className="text-xs text-slate-200 leading-relaxed">
+          <span className="font-bold text-sky-400 block text-[11px] uppercase tracking-wider mb-0.5">
             Professor Panic:
           </span>
           {stage === 'upload' &&
@@ -680,7 +680,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
             }}
           />
 
-          {/* Drag & Drop Zone */}
+          {/* Drag & Drop Zone - Sunken Neumorphic Container */}
           <div
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
@@ -689,12 +689,12 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
               if (file) processSelectedFile(file);
             }}
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-purple-500/30 hover:border-cyan-400/50 rounded-2xl p-8 sm:p-12 text-center bg-[#131627]/60 hover:bg-[#161a30]/80 transition-all cursor-pointer group"
+            className="border border-dashed border-white/10 hover:border-indigo-500/50 rounded-3xl p-8 sm:p-12 text-center bg-[#070b14] hover:bg-[#0a0f1d] shadow-neu-inset transition-all cursor-pointer group"
           >
-            <div className="w-16 h-16 rounded-2xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-purple-300 mx-auto mb-4 group-hover:scale-110 group-hover:text-cyan-300 transition-all shadow-lg shadow-purple-900/20">
-              <FileUp className="w-8 h-8" />
+            <div className="w-16 h-16 rounded-full neu-dial text-indigo-400 border border-white/[0.06] shadow-neu-raised flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all">
+              <FileUp className="w-7 h-7" />
             </div>
-            <h4 className="text-base font-semibold text-slate-100 mb-1">
+            <h4 className="text-base font-bold text-white mb-1">
               Select or Drop Your Syllabus PDF
             </h4>
             <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
@@ -718,7 +718,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
             <button
               type="button"
               onClick={() => setStage('manual_fallback')}
-              className="text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1"
+              className="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 transition-colors"
             >
               <span>Create Course &amp; Quests Manually</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -733,7 +733,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
       {stage === 'processing' && (
         <div className="py-6 px-4 space-y-6">
           <div className="text-center space-y-1">
-            <h4 className="font-fantasy font-bold text-lg text-slate-100">
+            <h4 className="font-bold text-lg text-white">
               Forging Playable Games from Syllabus...
             </h4>
             <p className="text-xs text-slate-400">
@@ -742,7 +742,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
           </div>
 
           {/* Pipeline Visual Stepper */}
-          <div className="p-4 rounded-2xl bg-[#11152a] border border-purple-500/20 space-y-3">
+          <div className="p-5 rounded-3xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset space-y-2.5">
             {PIPELINE_STAGES.map((s, idx) => {
               const currentStepIdx = PIPELINE_STAGES.findIndex((st) => st.key === pipelineStep);
               const isPast = idx < currentStepIdx;
@@ -751,28 +751,28 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
               return (
                 <div
                   key={s.key}
-                  className={`flex items-center justify-between p-2.5 rounded-xl border transition-all ${
+                  className={`flex items-center justify-between p-3 rounded-2xl border transition-all ${
                     isCurrent
-                      ? 'bg-purple-950/60 border-purple-500/50 shadow-md ring-1 ring-purple-500/30'
+                      ? 'bg-[#0E1322] border-indigo-500/40 text-white shadow-neu-raised-sm'
                       : isPast
-                      ? 'bg-[#0d1020] border-emerald-500/30 text-emerald-300'
-                      : 'bg-[#0a0d18] border-slate-800 text-slate-500'
+                      ? 'bg-[#0E1322]/50 border-white/[0.03] text-sky-400 shadow-neu-inset-sm'
+                      : 'bg-[#070b14] border-transparent text-slate-500'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-6 h-6 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${
+                      className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-bold border ${
                         isPast
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                          ? 'bg-sky-500/15 text-sky-400 border-sky-500/30 shadow-neu-inset-sm'
                           : isCurrent
-                          ? 'bg-purple-600 text-white animate-pulse'
-                          : 'bg-slate-800 text-slate-500'
+                          ? 'neu-dial text-white border-indigo-400/40 shadow-neu-raised-sm'
+                          : 'bg-[#0E1322] text-slate-500 border-white/[0.04]'
                       }`}
                     >
                       {isPast ? '✓' : idx + 1}
                     </div>
                     <div>
-                      <span className={`text-xs font-semibold block ${isCurrent ? 'text-cyan-300 font-fantasy' : ''}`}>
+                      <span className={`text-xs font-bold block ${isCurrent ? 'text-white' : ''}`}>
                         {s.label}
                       </span>
                       <span className="text-[10px] text-slate-400">
@@ -784,12 +784,12 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                   </div>
 
                   {isCurrent && (
-                    <span className="text-[10px] font-mono text-purple-300 animate-pulse font-bold">
+                    <span className="text-[10px] font-mono text-indigo-400 animate-pulse font-semibold">
                       Processing...
                     </span>
                   )}
                   {isPast && (
-                    <span className="text-[10px] font-mono text-emerald-400 font-bold">
+                    <span className="text-[10px] font-mono text-sky-400 font-semibold">
                       Completed
                     </span>
                   )}
@@ -800,7 +800,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
 
           {/* Error Message and Recovery Options */}
           {errorMessage && (
-            <div className="p-4 rounded-2xl bg-rose-950/40 border border-rose-500/40 text-rose-300 text-xs space-y-3">
+            <div className="p-4 rounded-3xl bg-rose-950/20 border border-rose-800/40 shadow-neu-inset-sm text-rose-300 text-xs space-y-3">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                 <span>{errorMessage}</span>
@@ -839,7 +839,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
         <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
           {/* Duplicate Course Warning */}
           {isDuplicateCourse && (
-            <div className="p-3 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
+            <div className="p-3.5 rounded-2xl bg-amber-950/25 border border-amber-800/40 text-amber-200 text-xs flex items-center gap-2 shadow-neu-inset-sm">
               <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400" />
               <span>
                 A course with this code or title already exists in your semester. Starting will update this course realm.
@@ -848,34 +848,34 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
           )}
 
           {/* Course Name & Region */}
-          <div className="p-4 rounded-2xl bg-[#14182c] border border-purple-500/20 space-y-3">
+          <div className="p-5 rounded-3xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-medium text-slate-400 mb-1">
+                <label className="block text-[11px] font-medium text-slate-300 mb-1">
                   Course Title
                 </label>
                 <input
                   type="text"
                   value={reviewCourseName}
                   onChange={(e) => setReviewCourseName(e.target.value)}
-                  className="w-full bg-[#0d1020] border border-purple-500/30 rounded-xl px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-cyan-400"
+                  className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-medium text-slate-400 mb-1">
+                <label className="block text-[11px] font-medium text-slate-300 mb-1">
                   Course Code
                 </label>
                 <input
                   type="text"
                   value={reviewCourseCode}
                   onChange={(e) => setReviewCourseCode(e.target.value)}
-                  className="w-full bg-[#0d1020] border border-purple-500/30 rounded-xl px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-cyan-400"
+                  className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500/50 transition-all uppercase"
                 />
               </div>
             </div>
 
             {pageCount > 0 && (
-              <div className="pt-2 border-t border-purple-500/15 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <div className="pt-2 border-t border-white/[0.04] flex items-center justify-between text-[11px] text-slate-400 font-mono">
                 <span>Source: {selectedFile?.name || 'Uploaded Syllabus'}</span>
                 <span>{pageCount} page{pageCount > 1 ? 's' : ''} ({wordCount.toLocaleString()} words)</span>
               </div>
@@ -884,8 +884,8 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
 
           {/* Generated Playable Quests Summary */}
           <div className="space-y-2">
-            <h4 className="text-xs font-fantasy font-bold text-slate-200 flex items-center gap-1.5">
-              <Gamepad2 className="w-4 h-4 text-cyan-400" />
+            <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+              <Gamepad2 className="w-4 h-4 text-sky-400" />
               <span>
                 Generated Playable Quests ({reviewUnits.reduce((acc, u) => acc + u.topics.length, 0)} Quests)
               </span>
@@ -895,9 +895,9 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
               {reviewUnits.map((u) => (
                 <div
                   key={u.id}
-                  className="p-3 rounded-xl bg-[#14182c] border border-purple-500/15 space-y-2"
+                  className="p-3.5 rounded-2xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised-sm space-y-2"
                 >
-                  <div className="flex justify-between items-center text-xs font-semibold text-purple-300">
+                  <div className="flex justify-between items-center text-xs font-bold text-indigo-300">
                     <span>{u.title}</span>
                     <span className="text-[10px] text-slate-400 font-mono">
                       {u.topics.length} Playable Quests
@@ -908,16 +908,16 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                     {u.topics.map((t) => (
                       <div
                         key={t.id}
-                        className="text-[11px] text-slate-300 bg-[#0d1020] p-2 rounded-xl border border-purple-500/10 flex items-center justify-between gap-2"
+                        className="text-[11px] text-slate-200 bg-[#070b14] p-2.5 rounded-xl border border-white/[0.03] shadow-neu-inset-sm flex items-center justify-between gap-2"
                       >
                         <div className="flex items-center gap-2 truncate">
                           <span
-                            className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                            className={`text-[9px] uppercase font-bold px-2 py-0.5 rounded-full border ${
                               t.game_mode === 'do-or-die'
-                                ? 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+                                ? 'bg-rose-500/15 text-rose-400 border-rose-500/30'
                                 : t.game_mode === 'puzzle-quest'
-                                ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
-                                : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30'
+                                ? 'bg-sky-500/15 text-sky-400 border-sky-500/30'
+                                : 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30'
                             }`}
                           >
                             {t.game_mode}
@@ -929,7 +929,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                           <span className="text-[10px] text-slate-400 font-mono">
                             {t.questions.length} Questions
                           </span>
-                          <span className="text-amber-300 font-mono text-[10px] font-bold">
+                          <span className="text-emerald-400 font-mono text-[10px] font-bold">
                             +50 XP
                           </span>
                         </div>
@@ -943,7 +943,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
 
           {/* Assessments & Boss Fights */}
           <div className="space-y-2">
-            <h4 className="text-xs font-fantasy font-bold text-slate-200 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
               <Heart className="w-4 h-4 text-rose-400" />
               <span>Extracted Boss Encounters ({reviewMilestones.length} Exams / Assessments)</span>
             </h4>
@@ -952,17 +952,17 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
               {reviewMilestones.map((m) => (
                 <div
                   key={m.id}
-                  className="p-2.5 rounded-xl bg-[#14182c] border border-rose-500/20 flex items-center justify-between text-xs"
+                  className="p-3 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm flex items-center justify-between text-xs"
                 >
                   <div className="min-w-0">
-                    <span className="font-semibold text-slate-200 block truncate">{m.title}</span>
+                    <span className="font-bold text-slate-100 block truncate">{m.title}</span>
                     <span className="text-[10px] text-slate-400">
                       {m.due_date ? `Due: ${m.due_date}` : 'Date TBA'} •{' '}
                       {m.weight_percent ? `Weight: ${m.weight_percent}%` : 'Standard Exam Scale'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] font-mono text-purple-300">
+                    <span className="text-[10px] font-mono text-sky-400 font-semibold">
                       {m.questions?.length || 4} Boss Challenges
                     </span>
                     <span className="font-mono text-rose-400 font-bold">
@@ -975,7 +975,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
           </div>
 
           {/* Action Footer */}
-          <div className="pt-3 border-t border-purple-500/20 flex items-center justify-between gap-3">
+          <div className="pt-3 border-t border-white/[0.04] flex items-center justify-between gap-3">
             <Button variant="ghost" size="sm" onClick={() => setStage('upload')}>
               Cancel
             </Button>
@@ -983,9 +983,9 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
             <button
               type="button"
               onClick={handleStartMyAdventure}
-              className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-fantasy font-bold text-sm shadow-xl shadow-purple-900/40 border border-purple-400/40 transition-all active:scale-95 group"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold text-sm shadow-neu-raised hover:shadow-neu-raised-lg active:shadow-neu-inset active:translate-y-0.5 transition-all group"
             >
-              <Play className="w-4 h-4 fill-cyan-300 text-cyan-300 group-hover:scale-110 transition-transform" />
+              <Play className="w-4 h-4 fill-white text-white group-hover:scale-105 transition-transform" />
               <span>Start My Adventure</span>
             </button>
           </div>
@@ -997,12 +997,12 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
       {/* ----------------------------------------------------------------- */}
       {stage === 'manual_fallback' && (
         <form onSubmit={handleSaveManualFallback} className="space-y-4">
-          <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/20 text-xs text-purple-300">
+          <div className="p-3.5 rounded-2xl bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm text-xs text-sky-300 font-medium">
             Create your course and initial study quest manually. We will automatically generate playable challenges for it!
           </div>
 
           {manualFormError && (
-            <div className="p-2.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs">
+            <div className="p-2.5 rounded-2xl bg-rose-950/25 border border-rose-800/40 text-rose-300 text-xs shadow-neu-inset-sm">
               {manualFormError}
             </div>
           )}
@@ -1010,7 +1010,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-[11px] font-medium text-slate-300 mb-1">
-                Course Name <span className="text-rose-400">*</span>
+                Course Name <span className="text-indigo-400 font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -1018,7 +1018,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                 value={manualCourseName}
                 onChange={(e) => setManualCourseName(e.target.value)}
                 placeholder="e.g. Data Structures &amp; Algorithms"
-                className="w-full bg-[#14182b] border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-400"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500/50 transition-all"
               />
             </div>
             <div>
@@ -1030,7 +1030,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                 value={manualCourseCode}
                 onChange={(e) => setManualCourseCode(e.target.value)}
                 placeholder="e.g. CS-201"
-                className="w-full bg-[#14182b] border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-400"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500/50 transition-all uppercase"
               />
             </div>
           </div>
@@ -1038,7 +1038,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-[11px] font-medium text-slate-300 mb-1">
-                First Unit / Module <span className="text-rose-400">*</span>
+                First Unit / Module <span className="text-indigo-400 font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -1046,12 +1046,12 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                 value={manualUnitName}
                 onChange={(e) => setManualUnitName(e.target.value)}
                 placeholder="e.g. Linked Lists &amp; Pointer Operations"
-                className="w-full bg-[#14182b] border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-400"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500/50 transition-all"
               />
             </div>
             <div>
               <label className="block text-[11px] font-medium text-slate-300 mb-1">
-                First Quest Title <span className="text-rose-400">*</span>
+                First Quest Title <span className="text-indigo-400 font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -1059,13 +1059,13 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                 value={manualQuestTitle}
                 onChange={(e) => setManualQuestTitle(e.target.value)}
                 placeholder="e.g. Master Singly Linked Lists"
-                className="w-full bg-[#14182b] border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-400"
+                className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-2xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500/50 transition-all"
               />
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-[#14182b] border border-purple-500/15 space-y-3">
-            <span className="text-xs font-semibold text-slate-300 block">
+          <div className="p-4 rounded-3xl bg-[#0E1322] border border-white/[0.04] shadow-neu-raised space-y-3">
+            <span className="text-xs font-bold text-white block">
               Optional Exam / Boss Fight
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -1076,7 +1076,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                   value={manualAssessmentName}
                   onChange={(e) => setManualAssessmentName(e.target.value)}
                   placeholder="e.g. Midterm 1"
-                  className="w-full bg-[#0d1020] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none"
+                  className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-xl px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div>
@@ -1085,7 +1085,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                   type="date"
                   value={manualAssessmentDate}
                   onChange={(e) => setManualAssessmentDate(e.target.value)}
-                  className="w-full bg-[#0d1020] border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none"
+                  className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-xl px-2 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div>
@@ -1097,7 +1097,7 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
                   value={manualAssessmentWeight}
                   onChange={(e) => setManualAssessmentWeight(e.target.value)}
                   placeholder="e.g. 25"
-                  className="w-full bg-[#0d1020] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none"
+                  className="w-full bg-[#070b14] border border-white/[0.03] shadow-neu-inset-sm rounded-xl px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-indigo-500"
                 />
               </div>
             </div>

@@ -13,12 +13,14 @@ import {
   Swords,
   CheckCircle2,
   XCircle,
+  Sparkles,
 } from 'lucide-react';
 import { BossSlayerConfig, BossPhaseId, BossCombatStats } from '../../types/boss';
 import { GameQuestion } from '../../types';
 import { soundFX } from '../../lib/audio-effects';
 import { getProfessorPanicComment, PanicMood } from '../../lib/professor-panic';
 import { triggerLevelUpCelebration } from '../../lib/celebration';
+import { BossSlayer3D } from '../game3d/BossSlayer3D';
 
 interface BossSlayerGameProps {
   config: BossSlayerConfig;
@@ -35,11 +37,16 @@ interface FloatingText {
   y: number;
 }
 
-export const BossSlayerGame: React.FC<BossSlayerGameProps> = ({
+interface BossSlayerGame2DProps extends BossSlayerGameProps {
+  onSwitchTo3D?: () => void;
+}
+
+const BossSlayerGame2D: React.FC<BossSlayerGame2DProps> = ({
   config,
   onComplete,
   onExit,
   alreadyCompleted = false,
+  onSwitchTo3D,
 }) => {
   // Combat State
   const [gameState, setGameState] = useState<'intro' | 'combat' | 'phase_transition' | 'victory' | 'defeat'>('intro');
@@ -525,6 +532,18 @@ export const BossSlayerGame: React.FC<BossSlayerGameProps> = ({
               <Zap className="w-3.5 h-3.5 fill-amber-300" />
               <span>{streak}x Streak</span>
             </span>
+          )}
+
+          {onSwitchTo3D && (
+            <button
+              type="button"
+              onClick={onSwitchTo3D}
+              className="px-2.5 py-1 rounded-xl bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-500/40 text-[10px] font-mono font-bold flex items-center gap-1 transition-all"
+              title="Switch to 3D Action-RPG Arena"
+            >
+              <Sparkles className="w-3 h-3 text-amber-300" />
+              <span>Switch to 3D</span>
+            </button>
           )}
 
           <button
@@ -1033,3 +1052,79 @@ export const BossSlayerGame: React.FC<BossSlayerGameProps> = ({
     </div>
   );
 };
+
+interface ErrorBoundaryProps {
+  fallback: React.ReactNode;
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class Boss3DErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    console.warn('Caught error in 3D Boss Slayer, rendering 2D fallback:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+export const BossSlayerGame: React.FC<BossSlayerGameProps> = (props) => {
+  const [use3DEngine, setUse3DEngine] = useState<boolean>(true);
+
+  if (use3DEngine) {
+    return (
+      <Boss3DErrorBoundary
+        fallback={
+          <BossSlayerGame2D
+            {...props}
+          />
+        }
+      >
+        <div className="relative w-full h-full flex flex-col">
+          {/* Toggle back to 2D */}
+          <div className="absolute top-3.5 right-20 z-20 pointer-events-auto">
+            <button
+              type="button"
+              onClick={() => setUse3DEngine(false)}
+              className="px-2.5 py-1 rounded-lg bg-[#0E1322]/90 hover:bg-[#131B2E] text-[10px] font-bold text-slate-200 border border-slate-700/60 shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
+              title="Switch to Classic 2D RPG"
+            >
+              <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse" />
+              <span>3D Boss (Switch to 2D)</span>
+            </button>
+          </div>
+          <BossSlayer3D
+            config={props.config}
+            onComplete={props.onComplete}
+            onExit={props.onExit}
+            alreadyCompleted={props.alreadyCompleted}
+          />
+        </div>
+      </Boss3DErrorBoundary>
+    );
+  }
+
+  return (
+    <BossSlayerGame2D
+      {...props}
+      onSwitchTo3D={() => setUse3DEngine(true)}
+    />
+  );
+};
+
