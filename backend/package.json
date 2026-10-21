@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Secure server-side AI processing endpoint for Syllaborn",
   "type": "module",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",

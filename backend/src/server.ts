@@ -52,8 +52,12 @@ app.get('/', (_req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🧙 Syllaborn AI Backend listening on port ${PORT}`);
-  console.log(`🌐 Allowed frontend origin: ${FRONTEND_ORIGIN}`);
-  console.log(`🔍 Health endpoint: http://localhost:${PORT}/api/health`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🧙 Syllaborn AI Backend listening on port ${PORT}`);
+    console.log(`🌐 Allowed frontend origin: ${FRONTEND_ORIGIN}`);
+    console.log(`🔍 Health endpoint: http://localhost:${PORT}/api/health`);
+  });
+}
+
+export default app;
