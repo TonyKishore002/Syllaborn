@@ -724,6 +724,24 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
+
+          {/* Error Message banner in Upload stage if an error occurred */}
+          {errorMessage && (
+            <div className="p-4 rounded-3xl bg-rose-950/20 border border-rose-800/40 shadow-neu-inset-sm text-rose-300 text-xs space-y-3 mt-4">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <span className="leading-relaxed">{errorMessage}</span>
+              </div>
+              <div className="flex justify-end gap-2 pt-1">
+                <Button size="sm" variant="ghost" onClick={() => setErrorMessage(null)}>
+                  Dismiss
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => setStage('manual_fallback')}>
+                  Add Manually
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

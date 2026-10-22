@@ -160,7 +160,27 @@ npm run build:backend
 
 ---
 
-## ☁️ Deployment
+## ☁️ Production Deployment
 
-- **Frontend**: Can be built with `npm run build` and deployed to any static host (Cloudflare Pages, Vercel, Netlify, GitHub Pages, or S3). Configure `VITE_API_BASE_URL` to point to your deployed backend URL.
-- **AI Backend**: Can be deployed to any Node.js host (Render, Railway, Fly.io, Cloud Run). Set `OPENAI_API_KEY`, `OPENAI_MODEL`, and set `FRONTEND_ORIGIN` to your deployed frontend domain.
+### Frontend (Vercel)
+1. Deploy the frontend repository root to **Vercel**.
+2. In Vercel Project Settings -> **Environment Variables**:
+   - Add `VITE_API_BASE_URL` set to your deployed backend URL on Render (e.g., `https://syllaborn-backend.onrender.com`).
+   - *Never set `VITE_API_BASE_URL` to `localhost` in production. Syllaborn strictly validates production URLs to prevent broken localhost calls.*
+3. Redeploy your latest deployment to apply the environment variable.
+
+### AI Backend (Render)
+1. In [Render Dashboard](https://dashboard.render.com), create a new **Web Service** pointing to this repository.
+2. Configure service settings:
+   - **Root Directory**: `backend`
+   - **Environment**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+   - **Health Check Path**: `/api/health` (or `/health`)
+3. Add the following **Environment Variables** in Render:
+   - `GEMINI_API_KEY`: Your Google Gemini API Key (or `OPENAI_API_KEY` for OpenAI)
+   - `GEMINI_MODEL`: `gemini-3.5-flash-lite` (default)
+   - `FRONTEND_ORIGIN`: Your Vercel production URL (e.g. `https://syllaborn.vercel.app`)
+   - `ALLOWED_ORIGINS`: Comma-separated allowed domains (e.g. `https://syllaborn.vercel.app,http://localhost:5173`)
+4. Once deployed, copy your Render web service URL (e.g., `https://syllaborn-backend.onrender.com`) and paste it as `VITE_API_BASE_URL` in your Vercel project settings.
+
