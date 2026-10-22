@@ -8,8 +8,10 @@ export interface ApiBaseUrlResult {
 
 /**
  * Resolves the backend API base URL based on Vite environment variables.
- * In development (import.meta.env.DEV), falls back to http://localhost:3001 if omitted.
- * In production, NEVER falls back to localhost; requires a valid deployed backend URL.
+ * - In development (import.meta.env.DEV), falls back to http://localhost:3001 if omitted.
+ * - In production, if VITE_API_BASE_URL is omitted, defaults to same-origin relative URLs (''),
+ *   which automatically routes to /api on Vercel or reverse-proxy deployments.
+ * - In production, explicitly rejects http://localhost / 127.0.0.1 to prevent broken local calls.
  */
 export function getApiBaseUrl(overrideEnv?: { baseUrl?: string; isDev?: boolean }): ApiBaseUrlResult {
   const envUrl = (
@@ -41,7 +43,7 @@ export function getApiBaseUrl(overrideEnv?: { baseUrl?: string; isDev?: boolean 
             error:
               `Configuration Error: VITE_API_BASE_URL is set to "${cleaned}" in a production build. ` +
               `Please update VITE_API_BASE_URL in your Vercel project settings to your deployed backend URL ` +
-              `(e.g., https://your-backend.onrender.com) and redeploy.`,
+              `(e.g., https://your-backend.onrender.com) or remove it to use the same-origin Vercel backend, and redeploy.`,
           };
         }
       } catch {
@@ -50,7 +52,7 @@ export function getApiBaseUrl(overrideEnv?: { baseUrl?: string; isDev?: boolean 
           isConfigured: false,
           error:
             `Configuration Error: VITE_API_BASE_URL ("${cleaned}") is not a valid URL. ` +
-            `Please configure a valid HTTPS URL (e.g., https://your-backend.onrender.com) in your Vercel project settings.`,
+            `Please configure a valid HTTPS URL or remove it to use the same-origin backend.`,
         };
       }
     }
@@ -58,19 +60,16 @@ export function getApiBaseUrl(overrideEnv?: { baseUrl?: string; isDev?: boolean 
     return { url: cleaned, isConfigured: true };
   }
 
-  // Development mode fallback
+  // Development mode fallback: local backend on port 3001
   if (isDev) {
     return { url: 'http://localhost:3001', isConfigured: true };
   }
 
-  // Production with no VITE_API_BASE_URL configured
+  // Production with no VITE_API_BASE_URL configured:
+  // Default to same-origin relative URL ('') so requests route directly to /api on Vercel!
   return {
     url: '',
-    isConfigured: false,
-    error:
-      'AI backend is not configured for production. ' +
-      'Please add the VITE_API_BASE_URL environment variable in your Vercel project settings ' +
-      'pointing to your deployed backend URL (e.g. https://your-backend.onrender.com) and trigger a redeploy.',
+    isConfigured: true,
   };
 }
 
@@ -90,7 +89,7 @@ export async function checkBackendHealth(
 ): Promise<BackendHealth> {
   const { url: baseUrl, isConfigured, error: configError } = getApiBaseUrl(overrideEnv);
 
-  if (!isConfigured || !baseUrl) {
+  if (!isConfigured) {
     return {
       status: 'unconfigured',
       service: 'Syllaborn AI Backend',
@@ -98,7 +97,7 @@ export async function checkBackendHealth(
       aiConfigured: false,
       model: 'unknown',
       reachable: false,
-      error: configError || 'Backend API URL is not configured.',
+      error: configError || 'Backend API URL configuration error.',
     };
   }
 
@@ -106,7 +105,8 @@ export async function checkBackendHealth(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-    const res = await fetch(`${baseUrl}/api/health`, {
+    const healthUrl = baseUrl ? `${baseUrl}/api/health` : '/api/health';
+    const res = await fetch(healthUrl, {
       signal: controller.signal,
     });
     clearTimeout(timeoutId);
@@ -129,6 +129,7 @@ export async function checkBackendHealth(
       reachable: true,
     };
   } catch (err: any) {
+    const target = baseUrl || 'same-origin (/api)';
     return {
       status: 'offline',
       service: 'Syllaborn Backend',
@@ -139,7 +140,7 @@ export async function checkBackendHealth(
       error:
         err.name === 'AbortError'
           ? 'Backend health check timed out (5s)'
-          : `Could not connect to the backend server at ${baseUrl}. Please ensure the backend is running.`,
+          : `Could not connect to the backend server at ${target}. Please ensure the backend is running.`,
     };
   }
 }
@@ -150,10 +151,10 @@ export async function requestSyllabusAnalysis(
 ): Promise<{ success: boolean; data?: AISyllabusResponse; error?: string }> {
   const { url: baseUrl, isConfigured, error: configError } = getApiBaseUrl(overrideEnv);
 
-  if (!isConfigured || !baseUrl) {
+  if (!isConfigured) {
     return {
       success: false,
-      error: configError || 'Backend API URL is not configured for production.',
+      error: configError || 'Backend API URL configuration error.',
     };
   }
 
@@ -162,7 +163,8 @@ export async function requestSyllabusAnalysis(
     // 60-second timeout for AI processing of lengthy syllabus documents
     const timeoutId = setTimeout(() => controller.abort(), 60000);
 
-    const res = await fetch(`${baseUrl}/api/analyze-syllabus`, {
+    const apiUrl = baseUrl ? `${baseUrl}/api/analyze-syllabus` : '/api/analyze-syllabus';
+    const res = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -195,10 +197,11 @@ export async function requestSyllabusAnalysis(
           'AI analysis request timed out after 60 seconds. You can retry with a shorter excerpt or review manually.',
       };
     }
+    const target = baseUrl || 'the AI backend at /api';
     return {
       success: false,
       error:
-        `Failed to contact AI backend at ${baseUrl}. Please verify the backend is running and reachable.`,
+        `Failed to contact ${target}. Please verify the backend is running and reachable.`,
     };
   }
 }

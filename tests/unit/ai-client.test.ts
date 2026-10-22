@@ -24,13 +24,11 @@ describe('ai-client.service: API Base URL and Production Safeguards', () => {
       expect(result.url).toBe('http://localhost:8080');
     });
 
-    it('NEVER falls back to localhost in production mode when VITE_API_BASE_URL is missing', () => {
+    it('defaults to relative same-origin ("") in production mode when VITE_API_BASE_URL is unset', () => {
       const result = getApiBaseUrl({ baseUrl: '', isDev: false });
-      expect(result.isConfigured).toBe(false);
+      expect(result.isConfigured).toBe(true);
       expect(result.url).toBe('');
-      expect(result.error).toContain('AI backend is not configured for production');
-      expect(result.error).toContain('VITE_API_BASE_URL');
-      expect(result.error).not.toContain('localhost:3001');
+      expect(result.error).toBeUndefined();
     });
 
     it('rejects localhost and 127.0.0.1 in production mode with an actionable configuration error', () => {
@@ -60,11 +58,26 @@ describe('ai-client.service: API Base URL and Production Safeguards', () => {
   });
 
   describe('checkBackendHealth', () => {
-    it('returns unconfigured status in production when VITE_API_BASE_URL is unset', async () => {
+    it('calls same-origin /api/health in production when VITE_API_BASE_URL is unset', async () => {
+      const mockResponse = {
+        status: 'ok',
+        service: 'Syllaborn AI Backend',
+        serverTime: '2026-10-22T00:00:00.000Z',
+        aiConfigured: true,
+        provider: 'gemini',
+        model: 'gemini-3.5-flash-lite',
+      };
+
+      const fetchSpy = vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => mockResponse,
+      } as any);
+      global.fetch = fetchSpy;
+
       const health = await checkBackendHealth({ baseUrl: '', isDev: false });
-      expect(health.status).toBe('unconfigured');
-      expect(health.reachable).toBe(false);
-      expect(health.error).toContain('VITE_API_BASE_URL');
+      expect(health.status).toBe('ok');
+      expect(health.reachable).toBe(true);
+      expect(fetchSpy).toHaveBeenCalledWith('/api/health', expect.anything());
     });
 
     it('returns healthy status when backend health endpoint succeeds', async () => {
@@ -100,17 +113,26 @@ describe('ai-client.service: API Base URL and Production Safeguards', () => {
   });
 
   describe('requestSyllabusAnalysis', () => {
-    it('returns immediate error without attempting fetch if backend is unconfigured in production', async () => {
-      const fetchSpy = vi.fn();
+    it('calls same-origin /api/analyze-syllabus in production when VITE_API_BASE_URL is unset', async () => {
+      const mockData = {
+        course_name: 'CS 101',
+        course_code: 'CS 101',
+        units: [],
+        assessments: [],
+      };
+
+      const fetchSpy = vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ success: true, data: mockData }),
+      } as any);
       global.fetch = fetchSpy;
 
       const res = await requestSyllabusAnalysis('Sample syllabus content for CS 101', {
         baseUrl: '',
         isDev: false,
       });
-      expect(res.success).toBe(false);
-      expect(res.error).toContain('AI backend is not configured for production');
-      expect(fetchSpy).not.toHaveBeenCalled();
+      expect(res.success).toBe(true);
+      expect(fetchSpy).toHaveBeenCalledWith('/api/analyze-syllabus', expect.anything());
     });
 
     it('returns extracted AI data when backend successfully analyzes syllabus', async () => {

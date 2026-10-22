@@ -93,6 +93,8 @@ const apiLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 app.use('/api', apiRouter);
+// Support rewrites that strip or keep the /api prefix
+app.use(apiRouter);
 
 // Health check alias for cloud host platforms (Render, AWS, etc.)
 app.get('/health', (_req, res) => {
@@ -109,7 +111,7 @@ app.get('/', (_req, res) => {
   });
 });
 
-if (!process.env.VERCEL) {
+if (!process.env.VERCEL && process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`🧙 Syllaborn AI Backend listening on port ${PORT}`);
     console.log(`🌐 Allowed origins: ${configuredOrigins.length > 0 ? configuredOrigins.join(', ') : 'localhost + *.vercel.app'}`);

@@ -67,10 +67,10 @@ describe('Backend Server: Health Checks & CORS Policy', () => {
     expect(typeof res.json.serverTime).toBe('string');
   });
 
-  it('provides /health route alias redirecting to /api/health for Render/cloud probes', async () => {
+  it('provides /health route alias serving health check directly for Render/cloud probes', async () => {
     const res = await makeRequest('GET', '/health');
-    expect([301, 302]).toContain(res.status);
-    expect(res.headers['location']).toBe('/api/health');
+    expect(res.status).toBe(200);
+    expect(res.json.status).toBe('ok');
   });
 
   it('allows CORS for Vercel production domain https://syllaborn.vercel.app', async () => {
