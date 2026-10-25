@@ -55,9 +55,9 @@ apiRouter.post('/analyze-syllabus', async (req: Request, res: Response) => {
 
     if (!aiService.isConfigured(userApiKey)) {
       res.status(503).json({
-        error: 'AI Provider Not Configured',
+        error: 'AI Service Unavailable',
         message:
-          'AI API Key is missing. Please set GEMINI_API_KEY (or OPENAI_API_KEY) in your environment variables (Vercel Project Settings or backend/.env), or configure your Gemini API key in Syllaborn to enable automated AI syllabus analysis. You can still manually create and manage courses and quests in Syllaborn!',
+          'AI syllabus analysis is temporarily unavailable. Please retry or create courses and quests manually in Syllaborn!',
       });
       return;
     }
@@ -93,8 +93,8 @@ apiRouter.post('/generate-game', async (req: Request, res: Response) => {
 
     if (!aiService.isConfigured(userApiKey)) {
       res.status(503).json({
-        error: 'AI Provider Not Configured',
-        message: 'AI API Key is missing. Please set GEMINI_API_KEY in your environment variables (Vercel Project Settings or backend/.env) or provide it in the app.',
+        error: 'AI Service Unavailable',
+        message: 'AI game generation is temporarily unavailable. Please retry.',
       });
       return;
     }

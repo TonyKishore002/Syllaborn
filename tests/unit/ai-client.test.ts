@@ -224,6 +224,7 @@ describe('ai-client.service: API Base URL and Production Safeguards', () => {
 
       setStoredGeminiApiKey('');
       expect(window.localStorage.getItem(GEMINI_API_KEY_STORAGE_KEY)).toBeNull();
+      expect(getStoredGeminiApiKey().length).toBeGreaterThan(10);
     });
   });
 });
