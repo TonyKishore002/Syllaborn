@@ -9,12 +9,20 @@ import {
   Play,
   Heart,
   Gamepad2,
+  Key,
+  Eye,
+  EyeOff,
+  Check,
 } from 'lucide-react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { useSyllaborn } from '../../hooks/useSyllaborn';
 import { extractTextFromPDF } from '../../services/pdf-extractor.service';
-import { requestSyllabusAnalysis } from '../../services/ai-client.service';
+import {
+  requestSyllabusAnalysis,
+  getStoredGeminiApiKey,
+  setStoredGeminiApiKey,
+} from '../../services/ai-client.service';
 import {
   AISyllabusResponse,
   Course,
@@ -89,7 +97,28 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
   const [wordCount, setWordCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Review State
+  // Gemini API Key Management State
+  const [apiKeyInput, setApiKeyInput] = useState(() => getStoredGeminiApiKey());
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [showKeyConfig, setShowKeyConfig] = useState(false);
+  const [keySavedFeedback, setKeySavedFeedback] = useState(false);
+
+  const handleSaveApiKey = () => {
+    setStoredGeminiApiKey(apiKeyInput);
+    setKeySavedFeedback(true);
+    setTimeout(() => setKeySavedFeedback(false), 2500);
+  };
+
+  const handleSaveApiKeyAndRetry = () => {
+    setStoredGeminiApiKey(apiKeyInput);
+    setKeySavedFeedback(true);
+    setErrorMessage(null);
+    executeAIAnalysis(
+      extractedText,
+      selectedFile?.name || 'syllabus.pdf',
+      selectedFile?.size || 0
+    );
+  };
   const [reviewCourseName, setReviewCourseName] = useState('');
   const [reviewCourseCode, setReviewCourseCode] = useState('');
   const [reviewRegionName, setReviewRegionName] = useState('');
@@ -725,6 +754,66 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
             </button>
           </div>
 
+          {/* Gemini API Key Configuration Section in Upload Stage */}
+          <div className="p-3.5 rounded-2xl bg-[#090D1A] border border-white/[0.04] shadow-neu-inset-sm space-y-2.5">
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2 text-slate-300">
+                <Key className="w-4 h-4 text-indigo-400 shrink-0" />
+                <span className="font-medium">Gemini AI Key:</span>
+                <span className="font-mono text-[11px] text-slate-400">
+                  {apiKeyInput ? `${apiKeyInput.slice(0, 7)}...${apiKeyInput.slice(-4)}` : 'Not configured'}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowKeyConfig((prev) => !prev)}
+                className="text-indigo-400 hover:text-indigo-300 font-medium text-xs transition-colors"
+              >
+                {showKeyConfig ? 'Hide' : apiKeyInput ? 'Change Key' : 'Configure Key'}
+              </button>
+            </div>
+
+            {showKeyConfig && (
+              <div className="pt-2 border-t border-white/[0.04] space-y-2">
+                <p className="text-[11px] text-slate-400">
+                  Enter your Gemini API key to enable automated syllabus extraction and RPG quest generation:
+                </p>
+                <div className="flex items-center gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      type={showApiKey ? 'text' : 'password'}
+                      value={apiKeyInput}
+                      onChange={(e) => setApiKeyInput(e.target.value)}
+                      placeholder="e.g. AQ.Ab8RN6JoEJnI9wKVU-..."
+                      className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-900 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-400 pr-9 font-mono"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowApiKey(!showApiKey)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                    >
+                      {showApiKey ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    disabled={!apiKeyInput.trim()}
+                    onClick={handleSaveApiKey}
+                  >
+                    Save Key
+                  </Button>
+                </div>
+                {keySavedFeedback && (
+                  <div className="text-[11px] text-emerald-400 flex items-center gap-1.5 font-medium">
+                    <Check className="w-3.5 h-3.5" />
+                    Gemini API key saved to browser!
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {/* Error Message banner in Upload stage if an error occurred */}
           {errorMessage && (
             <div className="p-4 rounded-3xl bg-rose-950/20 border border-rose-800/40 shadow-neu-inset-sm text-rose-300 text-xs space-y-3 mt-4">
@@ -821,12 +910,84 @@ export const SyllabusUploadModal: React.FC<SyllabusUploadModalProps> = ({
             <div className="p-4 rounded-3xl bg-rose-950/20 border border-rose-800/40 shadow-neu-inset-sm text-rose-300 text-xs space-y-3">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                <span>{errorMessage}</span>
+                <span className="leading-relaxed">{errorMessage}</span>
               </div>
-              <div className="flex justify-end gap-2 pt-1">
+
+              {/* Instant Gemini API Key Configuration Box */}
+              {(errorMessage.toLowerCase().includes('api key') ||
+                errorMessage.toLowerCase().includes('ai provider') ||
+                showKeyConfig) && (
+                <div className="p-3.5 rounded-2xl bg-[#090D1A] border border-indigo-500/30 text-slate-200 space-y-2.5 mt-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-indigo-300 font-semibold text-xs">
+                      <Key className="w-4 h-4 text-indigo-400 shrink-0" />
+                      <span>Configure Gemini API Key</span>
+                    </div>
+                    <span className="text-[10px] text-indigo-400/80 font-mono">
+                      Stored in your browser
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Paste your Gemini API key below to forge this syllabus into games directly:
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex-1">
+                      <input
+                        type={showApiKey ? 'text' : 'password'}
+                        value={apiKeyInput}
+                        onChange={(e) => setApiKeyInput(e.target.value)}
+                        placeholder="Paste your Gemini API Key (e.g. AQ.Ab...)"
+                        className="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-900 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-400 pr-9 font-mono"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowApiKey(!showApiKey)}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                      >
+                        {showApiKey ? (
+                          <EyeOff className="w-3.5 h-3.5" />
+                        ) : (
+                          <Eye className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      disabled={!apiKeyInput.trim()}
+                      onClick={handleSaveApiKeyAndRetry}
+                      className="shrink-0"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 mr-1" />
+                      Save &amp; Retry
+                    </Button>
+                  </div>
+                  {keySavedFeedback && (
+                    <div className="text-[11px] text-emerald-400 flex items-center gap-1.5 font-medium">
+                      <Check className="w-3.5 h-3.5" />
+                      Key saved! Retrying syllabus analysis...
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="flex flex-wrap justify-end gap-2 pt-1">
                 <Button size="sm" variant="ghost" onClick={() => setStage('upload')}>
                   Back to Upload
                 </Button>
+                {!(
+                  errorMessage.toLowerCase().includes('api key') ||
+                  errorMessage.toLowerCase().includes('ai provider')
+                ) && (
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setShowKeyConfig((prev) => !prev)}
+                  >
+                    <Key className="w-3.5 h-3.5 mr-1" />
+                    {showKeyConfig ? 'Hide Key' : 'API Key Settings'}
+                  </Button>
+                )}
                 <Button
                   size="sm"
                   variant="primary"

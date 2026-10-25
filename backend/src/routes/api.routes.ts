@@ -16,6 +16,27 @@ apiRouter.get('/health', (_req: Request, res: Response) => {
   });
 });
 
+// Helper to extract user-supplied API key from headers or request payload
+function extractApiKey(req: Request): string | undefined {
+  const headerKey =
+    (req.headers['x-gemini-api-key'] as string) ||
+    (req.headers['x-ai-api-key'] as string);
+  if (headerKey && headerKey.trim() !== '') {
+    return headerKey.trim();
+  }
+  const authHeader = req.headers['authorization'];
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const bearerKey = authHeader.slice(7).trim();
+    if (bearerKey && bearerKey !== 'null' && bearerKey !== 'undefined') {
+      return bearerKey;
+    }
+  }
+  if (req.body && typeof req.body.apiKey === 'string' && req.body.apiKey.trim() !== '') {
+    return req.body.apiKey.trim();
+  }
+  return undefined;
+}
+
 // Analyze syllabus endpoint
 apiRouter.post('/analyze-syllabus', async (req: Request, res: Response) => {
   try {
@@ -30,17 +51,18 @@ apiRouter.post('/analyze-syllabus', async (req: Request, res: Response) => {
     }
 
     const { text } = parseResult.data;
+    const userApiKey = extractApiKey(req);
 
-    if (!aiService.isConfigured()) {
+    if (!aiService.isConfigured(userApiKey)) {
       res.status(503).json({
         error: 'AI Provider Not Configured',
         message:
-          'AI API Key is missing. Please set GEMINI_API_KEY (or OPENAI_API_KEY) in your environment variables (Vercel Project Settings or backend/.env) to enable automated AI syllabus analysis. You can still manually create and manage courses and quests in Syllaborn!',
+          'AI API Key is missing. Please set GEMINI_API_KEY (or OPENAI_API_KEY) in your environment variables (Vercel Project Settings or backend/.env), or configure your Gemini API key in Syllaborn to enable automated AI syllabus analysis. You can still manually create and manage courses and quests in Syllaborn!',
       });
       return;
     }
 
-    const extractedData = await aiService.analyzeSyllabus(text);
+    const extractedData = await aiService.analyzeSyllabus(text, userApiKey);
     res.json({
       success: true,
       data: extractedData,
@@ -67,15 +89,17 @@ apiRouter.post('/generate-game', async (req: Request, res: Response) => {
       return;
     }
 
-    if (!aiService.isConfigured()) {
+    const userApiKey = extractApiKey(req);
+
+    if (!aiService.isConfigured(userApiKey)) {
       res.status(503).json({
         error: 'AI Provider Not Configured',
-        message: 'AI API Key is missing. Please set GEMINI_API_KEY in your environment variables (Vercel Project Settings or backend/.env).',
+        message: 'AI API Key is missing. Please set GEMINI_API_KEY in your environment variables (Vercel Project Settings or backend/.env) or provide it in the app.',
       });
       return;
     }
 
-    const gameConfig = await aiService.generateGameForTopic(parseResult.data);
+    const gameConfig = await aiService.generateGameForTopic(parseResult.data, userApiKey);
     res.json({
       success: true,
       data: gameConfig,

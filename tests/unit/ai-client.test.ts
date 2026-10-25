@@ -1,8 +1,11 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import {
   getApiBaseUrl,
   checkBackendHealth,
   requestSyllabusAnalysis,
+  getStoredGeminiApiKey,
+  setStoredGeminiApiKey,
+  GEMINI_API_KEY_STORAGE_KEY,
 } from '../../src/services/ai-client.service';
 
 describe('ai-client.service: API Base URL and Production Safeguards', () => {
@@ -170,6 +173,57 @@ describe('ai-client.service: API Base URL and Production Safeguards', () => {
       });
       expect(res.success).toBe(false);
       expect(res.error).toBe('API key not configured');
+    });
+
+    it('transmits custom x-gemini-api-key header and body apiKey when configured', async () => {
+      const fetchSpy = vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ success: true, data: { course_name: 'Test Course', units: [], assessments: [] } }),
+      } as any);
+      global.fetch = fetchSpy;
+
+      await requestSyllabusAnalysis('Syllabus content', {
+        baseUrl: '',
+        isDev: false,
+        apiKey: 'AQ.TestCustomKey123',
+      });
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/analyze-syllabus',
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'x-gemini-api-key': 'AQ.TestCustomKey123',
+          }),
+          body: expect.stringContaining('"apiKey":"AQ.TestCustomKey123"'),
+        })
+      );
+    });
+  });
+
+  describe('Gemini API Key Local Storage helpers', () => {
+    let mockStore: Record<string, string> = {};
+
+    beforeEach(() => {
+      mockStore = {};
+      (global as any).window = {
+        localStorage: {
+          getItem: (key: string) => mockStore[key] || null,
+          setItem: (key: string, val: string) => {
+            mockStore[key] = String(val);
+          },
+          removeItem: (key: string) => {
+            delete mockStore[key];
+          },
+        },
+      };
+    });
+
+    it('saves and retrieves Gemini API key from localStorage', () => {
+      setStoredGeminiApiKey('MOCK_GEMINI_KEY_ABC123');
+      expect(getStoredGeminiApiKey()).toBe('MOCK_GEMINI_KEY_ABC123');
+
+      setStoredGeminiApiKey('');
+      expect(window.localStorage.getItem(GEMINI_API_KEY_STORAGE_KEY)).toBeNull();
     });
   });
 });

@@ -126,4 +126,16 @@ describe('Backend Server: Health Checks & CORS Policy', () => {
     expect(res.status).toBe(400);
     expect(res.json.error).toBe('Validation Error');
   });
+
+  it('allows x-gemini-api-key header in CORS preflight requests', async () => {
+    const res = await makeRequest('OPTIONS', '/api/analyze-syllabus', {
+      origin: 'https://syllaborn.vercel.app',
+      'access-control-request-method': 'POST',
+      'access-control-request-headers': 'content-type, x-gemini-api-key',
+    });
+
+    expect(res.status).toBe(204);
+    expect(res.headers['access-control-allow-origin']).toBe('https://syllaborn.vercel.app');
+    expect(res.headers['access-control-allow-headers']).toContain('x-gemini-api-key');
+  });
 });

@@ -71,7 +71,16 @@ app.use(
       }
     },
     methods: ['GET', 'POST', 'OPTIONS', 'HEAD'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'X-Requested-With',
+      'x-gemini-api-key',
+      'x-ai-api-key',
+      'X-Gemini-Api-Key',
+      'X-Ai-Api-Key',
+    ],
     credentials: true,
   })
 );

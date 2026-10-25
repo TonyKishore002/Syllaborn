@@ -37,7 +37,50 @@ export class AIService {
     }
   }
 
-  public isConfigured(): boolean {
+  private resolveActiveClient(
+    customApiKey?: string,
+    customModel?: string
+  ): {
+    provider: 'gemini' | 'openai' | 'none';
+    geminiClient: GoogleGenAI | null;
+    openAiClient: OpenAI | null;
+    model: string;
+  } {
+    if (customApiKey && customApiKey.trim() !== '' && customApiKey !== 'your_gemini_api_key_here') {
+      const trimmed = customApiKey.trim();
+      if (trimmed.startsWith('sk-')) {
+        return {
+          provider: 'openai',
+          geminiClient: null,
+          openAiClient: new OpenAI({ apiKey: trimmed }),
+          model: customModel || process.env.OPENAI_MODEL || 'gpt-4o-mini',
+        };
+      } else {
+        return {
+          provider: 'gemini',
+          geminiClient: new GoogleGenAI({ apiKey: trimmed }),
+          openAiClient: null,
+          model: customModel || this.model,
+        };
+      }
+    }
+
+    if (this.provider === 'none') {
+      this.initClient();
+    }
+
+    return {
+      provider: this.provider,
+      geminiClient: this.geminiClient,
+      openAiClient: this.openAiClient,
+      model: customModel || this.model,
+    };
+  }
+
+  public isConfigured(customApiKey?: string): boolean {
+    if (customApiKey && customApiKey.trim() !== '' && customApiKey !== 'your_gemini_api_key_here') {
+      return true;
+    }
     if (this.provider === 'none') {
       this.initClient();
     }
@@ -58,13 +101,15 @@ export class AIService {
     return this.model;
   }
 
-  public async analyzeSyllabus(text: string): Promise<SyllabusExtractionResponse> {
-    if (this.provider === 'none') {
-      this.initClient();
-    }
-    if (this.provider === 'none') {
+  public async analyzeSyllabus(
+    text: string,
+    customApiKey?: string,
+    customModel?: string
+  ): Promise<SyllabusExtractionResponse> {
+    const active = this.resolveActiveClient(customApiKey, customModel);
+    if (active.provider === 'none') {
       throw new Error(
-        'AI key is not configured on the backend. Please add GEMINI_API_KEY to backend/.env and restart the backend server.'
+        'AI key is not configured on the backend. Please add GEMINI_API_KEY to backend/.env or Vercel Project Settings, or provide a Gemini API Key in the application.'
       );
     }
 
@@ -204,9 +249,9 @@ OUTPUT JSON FORMAT:
 
     let responseContent: string | null = null;
 
-    if (this.provider === 'gemini' && this.geminiClient) {
-      const response = await this.geminiClient.models.generateContent({
-        model: this.model,
+    if (active.provider === 'gemini' && active.geminiClient) {
+      const response = await active.geminiClient.models.generateContent({
+        model: active.model,
         contents: `Here is the extracted text from the syllabus PDF to analyze and forge into games:\n\n---\n${text.slice(0, 100000)}\n---`,
         config: {
           systemInstruction: systemPrompt,
@@ -215,9 +260,9 @@ OUTPUT JSON FORMAT:
         },
       });
       responseContent = response.text || null;
-    } else if (this.provider === 'openai' && this.openAiClient) {
-      const completion = await this.openAiClient.chat.completions.create({
-        model: this.model,
+    } else if (active.provider === 'openai' && active.openAiClient) {
+      const completion = await active.openAiClient.chat.completions.create({
+        model: active.model,
         messages: [
           { role: 'system', content: systemPrompt },
           {
@@ -257,11 +302,13 @@ OUTPUT JSON FORMAT:
   /**
    * On-demand game generator for a single quest topic
    */
-  public async generateGameForTopic(req: GenerateGameRequest): Promise<QuestGameConfig> {
-    if (this.provider === 'none') {
-      this.initClient();
-    }
-    if (this.provider === 'none') {
+  public async generateGameForTopic(
+    req: GenerateGameRequest,
+    customApiKey?: string,
+    customModel?: string
+  ): Promise<QuestGameConfig> {
+    const active = this.resolveActiveClient(customApiKey, customModel);
+    if (active.provider === 'none') {
       throw new Error('AI key is not configured on the backend.');
     }
 
@@ -292,9 +339,9 @@ Rules:
 - If gameMode is puzzle-quest, provide puzzleData with either matching pairs or sequential steps.`;
 
     let responseContent: string | null = null;
-    if (this.provider === 'gemini' && this.geminiClient) {
-      const response = await this.geminiClient.models.generateContent({
-        model: this.model,
+    if (active.provider === 'gemini' && active.geminiClient) {
+      const response = await active.geminiClient.models.generateContent({
+        model: active.model,
         contents: `Generate game content for topic: ${req.topicTitle}\nCourse: ${req.courseName || ''}\nExcerpt: ${req.syllabusExcerpt || ''}`,
         config: {
           systemInstruction: systemPrompt,
@@ -303,9 +350,9 @@ Rules:
         },
       });
       responseContent = response.text || null;
-    } else if (this.provider === 'openai' && this.openAiClient) {
-      const completion = await this.openAiClient.chat.completions.create({
-        model: this.model,
+    } else if (active.provider === 'openai' && active.openAiClient) {
+      const completion = await active.openAiClient.chat.completions.create({
+        model: active.model,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Generate game content for topic: ${req.topicTitle}` },

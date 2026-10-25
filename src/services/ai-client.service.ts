@@ -145,9 +145,48 @@ export async function checkBackendHealth(
   }
 }
 
+export const GEMINI_API_KEY_STORAGE_KEY = 'syllaborn_gemini_api_key';
+
+/**
+ * Returns user-configured Gemini API Key from localStorage or environment fallback.
+ */
+export function getStoredGeminiApiKey(): string {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const stored = window.localStorage.getItem(GEMINI_API_KEY_STORAGE_KEY);
+      if (stored && stored.trim()) {
+        return stored.trim();
+      }
+    }
+  } catch {}
+
+  const viteEnvKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (typeof viteEnvKey === 'string' && viteEnvKey.trim()) {
+    return viteEnvKey.trim();
+  }
+
+  return '';
+}
+
+/**
+ * Persists user-configured Gemini API Key into localStorage.
+ */
+export function setStoredGeminiApiKey(key: string): void {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const trimmed = key.trim();
+      if (trimmed) {
+        window.localStorage.setItem(GEMINI_API_KEY_STORAGE_KEY, trimmed);
+      } else {
+        window.localStorage.removeItem(GEMINI_API_KEY_STORAGE_KEY);
+      }
+    }
+  } catch {}
+}
+
 export async function requestSyllabusAnalysis(
   extractedText: string,
-  overrideEnv?: { baseUrl?: string; isDev?: boolean }
+  overrideEnv?: { baseUrl?: string; isDev?: boolean; apiKey?: string }
 ): Promise<{ success: boolean; data?: AISyllabusResponse; error?: string }> {
   const { url: baseUrl, isConfigured, error: configError } = getApiBaseUrl(overrideEnv);
 
@@ -163,14 +202,21 @@ export async function requestSyllabusAnalysis(
     // 60-second timeout for AI processing of lengthy syllabus documents
     const timeoutId = setTimeout(() => controller.abort(), 60000);
 
+    const apiKey = overrideEnv?.apiKey !== undefined ? overrideEnv.apiKey : getStoredGeminiApiKey();
     const apiUrl = baseUrl ? `${baseUrl}/api/analyze-syllabus` : '/api/analyze-syllabus';
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (apiKey) {
+      headers['x-gemini-api-key'] = apiKey;
+    }
+
     const res = await fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         text: extractedText,
+        ...(apiKey ? { apiKey } : {}),
       }),
       signal: controller.signal,
     });
